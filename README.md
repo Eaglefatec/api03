@@ -27,7 +27,7 @@ Projeto desenvolvido pela equipe Eagle do 3º semestre de Banco de Dados da FATE
 ## 🎯 A Dor do Cliente
 O processo atual de emissão, utilização e faturamento das guias envolve diversas etapas manuais e consultas realizadas separadamente pelos funcionários do FUSEX. Na emissão da guia, é necessário consultar informações como procedimento, código, OCS credenciadas, dados contratuais e valores contratados, tornando o processo mais demorado e suscetível a erros.
 
-Além disso, as informações são movimentadas entre diferentes envolvidos — beneficiário, FUSEX, OCS e setores responsáveis pela análise e aprovação — gerando a necessidade de conferências e lançamentos manuais. No faturamento, o gestor precisa conferir a guia, a fatura e o espelho, verificando procedimentos, valores, materiais e contratos, além de identificar e corrigir possíveis divergências por meio de glosas.
+Além disso, as informações são movimentadas entre diferentes envolvidos beneficiário, FUSEX, OCS e setores responsáveis pela análise e aprovação gerando a necessidade de conferências e lançamentos manuais. No faturamento, o gestor precisa conferir a guia, a fatura e o espelho, verificando procedimentos, valores, materiais e contratos, além de identificar e corrigir possíveis divergências por meio de glosas.
 
 Em resumo: o cliente enfrenta um processo fragmentado, manual e sujeito a inconsistências, com dificuldade para acompanhar todas as etapas do atendimento, desde a solicitação médica até o faturamento e a auditoria.
 
