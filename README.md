@@ -25,7 +25,7 @@ Projeto desenvolvido pela equipe Eagle do 3º semestre de Banco de Dados da FATE
 ---
 <a id="a-dor"></a>
 ## 🎯 A Dor do Cliente
-O processo atual de emissão, utilização e faturamento das guias envolve diversas etapas manuais e consultas realizadas separadamente pelos funcionários do FUSEX. Na emissão da guia, é necessário consultar informações como procedimento, código, OCS credenciadas, dados contratuais e valores contratados, tornando o processo mais demorado e suscetível a erros.
+O processo atual de emissão, utilização e faturamento das guias envolve diversas etapas manuais e consultas realizadas separadamente pelos funcionários do FUSEX.
 
 Além disso, as informações são movimentadas entre diferentes envolvidos (beneficiário, FUSEX, OCS e setores responsáveis pela análise e aprovação gerando a necessidade de conferências e lançamentos manuais). No faturamento, o gestor precisa conferir a guia, a fatura e o espelho, verificando procedimentos, valores, materiais e contratos, além de identificar e corrigir possíveis divergências por meio de glosas.
 
@@ -36,8 +36,6 @@ Em resumo: o cliente enfrenta um processo fragmentado, manual e sujeito a incons
 ## 🚀 A Solução para o Cliente
 
 Desenvolver um sistema integrado para gestão de guias, OCS e faturamento, centralizando as informações e automatizando as principais etapas do processo. O sistema permitirá acompanhar a solicitação desde o pedido médico, passando pela autorização, emissão da guia, atendimento na OCS, assinatura do beneficiário, envio do faturamento e auditoria, até a integração com o SisFat.
-
-A solução também poderá utilizar uma pré-guia para facilitar o processo de emissão, permitindo que as informações necessárias sejam preenchidas antecipadamente e reduzindo o trabalho manual do funcionário do FUSEX.
 
 Com a centralização das informações, o sistema busca reduzir erros de preenchimento, agilizar a emissão das guias, facilitar o controle das OCS, diminuir inconsistências no faturamento e garantir maior rastreabilidade de todo o processo.
 
