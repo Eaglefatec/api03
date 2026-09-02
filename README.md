@@ -1,6 +1,6 @@
 # **FLUXO ÚNICO DE SAÚDE E EXAMES - FUSEX - EXÉRCITO BRASILEIRO**
 
-Projeto desenvolvido pela equipe Eagle do 3º semestre de Banco de Dados da FATEC de São José dos Campos, no contexto da metodologia de ensino Aprendizagem por Projetos Integrados (API), em parceria com o Exército Brasileiro .
+Projeto desenvolvido pela equipe Eagle do 3º semestre de Banco de Dados da FATEC de São José dos Campos, no contexto da metodologia de ensino Aprendizagem por Projetos Integrados (API), em parceria com o Exército Brasileiro.
 
 ---
 <div align="center">
