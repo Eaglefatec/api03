@@ -45,10 +45,10 @@ Com a centralização das informações, o sistema busca reduzir erros de preenc
 <a id="backlog-de-produto"></a>
 ## 📋 Backlog de Produto 
 
-> TO DO
-
 | Rank	| Prioridade | User Stories | Estimativa (Pontos) | Sprint |
 | --- | --- | --- | --- | --- |
+
+> TO DO
 
 ---
 
