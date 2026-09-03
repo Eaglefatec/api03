@@ -124,6 +124,8 @@ Além disso, seguimos um padrão de commits para garantir maior rastreabilidade 
 
 > 📋 [Padrão de Commits](https://github.com/Eaglefatec/api03/blob/main/docs/padrão-de-commits.md)
 
+> 🌿 [Git Flow](https://github.com/Eaglefatec/api03/blob/main/docs/git-flow.md)
+
 ---
 <a id="estrutura-do-projeto"></a>
 ## 🗂️ Estrutura do Projeto
