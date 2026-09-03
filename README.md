@@ -4,22 +4,24 @@ Projeto desenvolvido pela equipe Eagle do 3º semestre de Banco de Dados da FATE
 
 ---
 <div align="center">
-    
-[A Dor do Cliente](#a-dor) | 
-[A Solução para o Cliente](#a-solucao) |
-[Backlog de Produto](#backlog-de-produto) | 
-[DoR e DoD](#dor-e-dod) | 
-[Sprints](#sprints) | 
-[Tecnologias Utilizadas](#tecnologias-utilizadas) |
-[Estratégia de Branchs e Padrão de Commits](#padrao-de-commits) |
-[Manual do Usuário](#manual-do-usuario) |  
-[Equipe](#autores) |
-
+  <p>
+    <a href="#a-dor">A Dor</a> &nbsp;|&nbsp;
+    <a href="#a-solucao">A Solução</a> &nbsp;|&nbsp;
+    <a href="#backlog-de-produto">Backlog de Produto</a> &nbsp;|&nbsp;
+    <a href="#dor-e-dod">DoR e DoD</a> &nbsp;|&nbsp;
+    <a href="#sprints">Sprints</a>
+  </p>
+  <p>
+    <a href="#tecnologias-utilizadas">Tecnologias Utilizadas</a> &nbsp;|&nbsp;
+    <a href="#padrao-de-commits">Estratégia de Branchs</a> &nbsp;|&nbsp;
+    <a href="#manual-do-usuario">Manual do Usuário</a> &nbsp;|&nbsp;
+    <a href="#autores">Equipe</a>
+  </p>
 </div>
 
 ---
 <a id="a-dor"></a>
-## 🎯 A Dor do Cliente
+## 🎯 A Dor 
 O processo atual de emissão, utilização e faturamento das guias envolve diversas etapas manuais e consultas realizadas separadamente pelos funcionários do FUSEX.
 
 Além disso, as informações são movimentadas entre diferentes envolvidos (beneficiário, FUSEX, OCS e setores responsáveis pela análise e aprovação gerando a necessidade de conferências e lançamentos manuais). No faturamento, o gestor precisa conferir a guia, a fatura e o espelho, verificando procedimentos, valores, materiais e contratos, além de identificar e corrigir possíveis divergências por meio de glosas.
@@ -28,7 +30,7 @@ Em resumo: o cliente enfrenta um processo fragmentado, manual e sujeito a incons
 
 ---
 <a id="a-solucao"></a>
-## 🚀 A Solução para o Cliente
+## 🚀 A Solução 
 
 Desenvolver um sistema integrado para gestão de guias, OCS e faturamento, centralizando as informações e automatizando as principais etapas do processo. O sistema permitirá acompanhar a solicitação desde o pedido médico, passando pela autorização, emissão da guia, atendimento na OCS, assinatura do beneficiário, envio do faturamento e auditoria, até a integração com o SisFat.
 
