@@ -39,6 +39,11 @@ Desenvolver um sistema integrado para gestão de guias, OCS e faturamento, centr
 
 Com a centralização das informações, o sistema busca reduzir erros de preenchimento, agilizar a emissão das guias, facilitar o controle das OCS, diminuir inconsistências no faturamento e garantir maior rastreabilidade de todo o processo.
 
+**Clique no link abaixo para visualizar o repositório do Frontend e Backend:**
+> 🎨 [Frontend](https://github.com/Eaglefatec/api03-frontend.git)
+
+> ⚙️ [Backend](https://github.com/Eaglefatec/api03-backend.git)
+
 ---
 <a id="backlog-de-produto"></a>
 ## 📋 Backlog de Produto 
@@ -115,27 +120,6 @@ Além disso, seguimos um padrão de commits para garantir maior rastreabilidade 
 ## 📜 Manual do Usuário
 
 **:link: Clique no link abaixo para visualizar o Manual do Usuário:**  
-> TO DO
-
----
-
-<a id="manual-de-instalacao"></a>
-## 📖 Manual de Instalação
-
-> TO DO
-
-### 🌀 Clonando o repositório
-
-> TO DO
-
----
-## ⚙️ Configuração do Backend (Spring MVC)
-
-> TO DO
----
-
-## ⚙️ Configuração do Frontend (React + TypeScript)
-
 > TO DO
 
 ---
