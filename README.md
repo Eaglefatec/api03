@@ -1,6 +1,6 @@
 # **FLUXO ÚNICO DE SAÚDE E EXAMES - FUSEX - EXÉRCITO BRASILEIRO**
 
-Projeto desenvolvido pela equipe Eagle do 3º semestre de Banco de Dados da FATEC de São José dos Campos, no contexto da metodologia de ensino Aprendizagem por Projetos Integrados (API), em parceria com o Exército Brasileiro .
+Projeto desenvolvido pela equipe Eagle do 3º semestre de Banco de Dados da FATEC de São José dos Campos, no contexto da metodologia de ensino Aprendizagem por Projetos Integrados (API), em parceria com o Exército Brasileiro.
 
 ---
 <div align="center">
@@ -25,7 +25,7 @@ Projeto desenvolvido pela equipe Eagle do 3º semestre de Banco de Dados da FATE
 ---
 <a id="a-dor"></a>
 ## 🎯 A Dor do Cliente
-O processo atual de emissão, utilização e faturamento das guias envolve diversas etapas manuais e consultas realizadas separadamente pelos funcionários do FUSEX. Na emissão da guia, é necessário consultar informações como procedimento, código, OCS credenciadas, dados contratuais e valores contratados, tornando o processo mais demorado e suscetível a erros.
+O processo atual de emissão, utilização e faturamento das guias envolve diversas etapas manuais e consultas realizadas separadamente pelos funcionários do FUSEX.
 
 Além disso, as informações são movimentadas entre diferentes envolvidos (beneficiário, FUSEX, OCS e setores responsáveis pela análise e aprovação gerando a necessidade de conferências e lançamentos manuais). No faturamento, o gestor precisa conferir a guia, a fatura e o espelho, verificando procedimentos, valores, materiais e contratos, além de identificar e corrigir possíveis divergências por meio de glosas.
 
@@ -37,18 +37,16 @@ Em resumo: o cliente enfrenta um processo fragmentado, manual e sujeito a incons
 
 Desenvolver um sistema integrado para gestão de guias, OCS e faturamento, centralizando as informações e automatizando as principais etapas do processo. O sistema permitirá acompanhar a solicitação desde o pedido médico, passando pela autorização, emissão da guia, atendimento na OCS, assinatura do beneficiário, envio do faturamento e auditoria, até a integração com o SisFat.
 
-A solução também poderá utilizar uma pré-guia para facilitar o processo de emissão, permitindo que as informações necessárias sejam preenchidas antecipadamente e reduzindo o trabalho manual do funcionário do FUSEX.
-
 Com a centralização das informações, o sistema busca reduzir erros de preenchimento, agilizar a emissão das guias, facilitar o controle das OCS, diminuir inconsistências no faturamento e garantir maior rastreabilidade de todo o processo.
 
 ---
 <a id="backlog-de-produto"></a>
 ## 📋 Backlog de Produto 
 
-> TO DO
-
 | Rank	| Prioridade | User Stories | Estimativa (Pontos) | Sprint |
 | --- | --- | --- | --- | --- |
+
+> TO DO
 
 ---
 
@@ -62,9 +60,9 @@ Com a centralização das informações, o sistema busca reduzir erros de preenc
 ## 👟 Sprints
 | Sprint | Período | Documentação | Vídeo do Incremento | Status |
 |---|---|---|---|---|
-| 1 | 07/09/2026 - 27/09/2026 | [Ver Documentação]() | <div align="center">[Ver Vídeo]()</div> | ✅ TO DO |
-| 2 | 05/10/2026 - 25/10/2026 | [Ver Documentação]() | <div align="center">[Ver Vídeo]()</div> | ✅ TO DO |
-| 3 | 02/11/2026 - 22/11/2026 | [Ver Documentação]() | <div align="center">[Ver Vídeo]()</div> | ✅ TO DO |
+| 1 | 07/09/2026 - 27/09/2026 | [Ver Documentação]() | <div align="center">[Ver Vídeo]()</div> | 🔒 TO DO |
+| 2 | 05/10/2026 - 25/10/2026 | [Ver Documentação]() | <div align="center">[Ver Vídeo]()</div> | 🔒 TO DO |
+| 3 | 02/11/2026 - 22/11/2026 | [Ver Documentação]() | <div align="center">[Ver Vídeo]()</div> | 🔒 TO DO |
 
 ---
 <a id="tecnologias-utilizadas"></a>
@@ -147,10 +145,10 @@ Além disso, seguimos um padrão de commits para garantir maior rastreabilidade 
 
 | Nome      | Função          | Redes Sociais |
 |-----------|-----------------|---------------|
-| Fernando Monteiro | Product Owner | <a href="https://github.com/fernandocosta45"><img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white" alt="GitHub"></a> <a href=""><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=flat&logo=linkedin&logoColor=white" alt="LinkedIn"></a> |
+| Fernando Monteiro | Product Owner | <a href="https://github.com/fernandocosta45"><img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white" alt="GitHub"></a> <a href="https://www.linkedin.com/in/fernando-m-da-costa-818282401/"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=flat&logo=linkedin&logoColor=white" alt="LinkedIn"></a> |
 | Alessandro Cabral | Scrum Master | <a href="https://github.com/alessandrocabralfatec"><img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white" alt="GitHub"></a> <a href="https://www.linkedin.com/in/alessandro-augusto-ferreira-cabral-9b805553//"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=flat&logo=linkedin&logoColor=white" alt="LinkedIn"></a> |
 | Breno Cefas | Desenvolvedor | <a href="https://github.com/cefasbreno"><img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white" alt="GitHub"></a> <a href="https://www.linkedin.com/in/breno-cefas-7aa909271/"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=flat&logo=linkedin&logoColor=white" alt="LinkedIn"></a> |
-| Erick Faria | Desenvolvedor | <a href="https://github.com/ErickvFaria"><img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white" alt="GitHub"></a> <a href=""><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=flat&logo=linkedin&logoColor=white" alt="LinkedIn"></a> |
+| Erick Faria | Desenvolvedor | <a href="https://github.com/ErickvFaria"><img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white" alt="GitHub"></a> <a href="https://www.linkedin.com/in/érick-vinícius-79193b253?utm_source=share_via&utm_content=profile&utm_medium=member_ios"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=flat&logo=linkedin&logoColor=white" alt="LinkedIn"></a> |
 | João Pedro Barni | Desenvolvedor | <a href=""><img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white" alt="GitHub"></a> <a href=""><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=flat&logo=linkedin&logoColor=white" alt="LinkedIn"></a> |
-| Rodrigo Pereira | Desenvolvedor | <a href="https://github.com/ropcastr"><img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white" alt="GitHub"></a> <a href=""><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=flat&logo=linkedin&logoColor=white" alt="LinkedIn"></a> |
+| Rodrigo Pereira | Desenvolvedor | <a href="https://github.com/ropcastr"><img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white" alt="GitHub"></a> <a href="https://www.linkedin.com/in/rpcastro/"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=flat&logo=linkedin&logoColor=white" alt="LinkedIn"></a> |
 | Thayssa Andrade | Desenvolvedora | <a href="https://github.com/Thayssa-Andrade"><img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white" alt="GitHub"></a> <a href="https://www.linkedin.com/in/thayssa-andrade/"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=flat&logo=linkedin&logoColor=white" alt="LinkedIn"></a> |
