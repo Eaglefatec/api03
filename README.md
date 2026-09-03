@@ -7,17 +7,12 @@ Projeto desenvolvido pela equipe Eagle do 3º semestre de Banco de Dados da FATE
     
 [A Dor do Cliente](#a-dor) | 
 [A Solução para o Cliente](#a-solucao) |
-[O Desafio](#o-desafio) | 
 [Backlog de Produto](#backlog-de-produto) | 
 [DoR e DoD](#dor-e-dod) | 
-[Cronograma de Evolução do Projeto](assets/sprint-1/cronograma-evolucao.png) | 
 [Sprints](#sprints) | 
 [Tecnologias Utilizadas](#tecnologias-utilizadas) |
 [Estratégia de Branchs e Padrão de Commits](#padrao-de-commits) |
-[Estrutura do Projeto](#estrutura-do-projeto) | 
-[Manual do Usuário](#manual-do-usuario) | 
-[Manual de Instalação](#manual-de-instalacao) | 
-[Documentação](https://docs.google.com/document/d/1Z_DbshfP_fMyZPNkN-YQ0DQifeGzecKMofmZY3EVt1E/edit?usp=sharing) | 
+[Manual do Usuário](#manual-do-usuario) |  
 [Equipe](#autores) |
 
 </div>
@@ -125,12 +120,6 @@ Além disso, seguimos um padrão de commits para garantir maior rastreabilidade 
 > 📋 [Padrão de Commits](https://github.com/Eaglefatec/api03/blob/main/docs/padrão-de-commits.md)
 
 > 🌿 [Git Flow](https://github.com/Eaglefatec/api03/blob/main/docs/git-flow.md)
-
----
-<a id="estrutura-do-projeto"></a>
-## 🗂️ Estrutura do Projeto
-
-> TO DO
 
 ---
 <a id="manual-do-usuario"></a>
