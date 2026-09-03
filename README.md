@@ -122,7 +122,7 @@ Além disso, seguimos um padrão de commits para garantir maior rastreabilidade 
 
 **🔗 Clique no link abaixo para visualizar o guia completo de Padrão de Commits e Estratégia de Branch:** 
 
-> TO DO
+> 📋 [Padrão de Commits](https://github.com/Eaglefatec/api03/blob/main/docs/padrão-de-commits.md)
 
 ---
 <a id="estrutura-do-projeto"></a>
