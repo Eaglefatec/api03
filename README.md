@@ -77,7 +77,7 @@ Para que uma User Story seja considerada finalizada, os seguintes critérios té
 ## 👟 Sprints
 | Sprint | Período | Documentação | Vídeo do Incremento | Status |
 |---|---|---|---|---|
-| 1 | 07/09/2026 - 27/09/2026 | [Ver Documentação]() | <div align="center">[Ver Vídeo]()</div> | 🔒 TO DO |
+| 1 | 07/09/2026 - 27/09/2026 | [Ver Documentação](https://docs.google.com/document/d/1eZ3Eu4DxbGu6Xt57trghgvPsKqgVh6zzKEHZEWdSqEE/edit?usp=sharing) | <div align="center">[Ver Vídeo]()</div> | 🔒 TO DO |
 | 2 | 05/10/2026 - 25/10/2026 | [Ver Documentação]() | <div align="center">[Ver Vídeo]()</div> | 🔒 TO DO |
 | 3 | 02/11/2026 - 22/11/2026 | [Ver Documentação]() | <div align="center">[Ver Vídeo]()</div> | 🔒 TO DO |
 
