@@ -45,16 +45,16 @@ Com a centralização das informações, o sistema busca reduzir erros de preenc
 <a id="backlog-de-produto"></a>
 ## 📋 Backlog de Produto 
 | Sprint | Prioridade | Rank |    US    | User Story                                                                                                                                            | Dificuldade |
-| :----: | :--------: | ---: | :------: | ----------------------------------------------------------------------------------------------------------------------------------------------------- | :---------: |
-|  **1** |  **Alta**  |    1 | **US03** | Como EG, quero emitir as guias com auxílio digital, para evitar erros de preenchimento.                                                               |    Média    |
-|  **1** |  **Média** |    4 | **US02** | Como Beneficiário, quero fornecer digitalmente uma pré-guia para a Fusex, para ter mais agilidade na emissão da guia.                                 |     Alta    |
-|  **1** |  **Média** |    6 | **US01** | Como médico, quero enviar minha solicitação médica digitalmente para um sistema na Fusex.                                                             |    Baixa    |
-|  **2** |  **Alta**  |    2 | **US08** | Como ACM, quero receber digitalmente a guia, a fatura e o espelho para tornar o processo de lisura mais eficiente e menos sujeito a incorreções.      |    Média    |
-|  **2** |  **Alta**  |    3 | **US09** | Como ACM, quero digitalizar o cruzamento dos dados recebidos da OCS com as condições contratadas, para ter um relatório de divergências automatizado. |     Alta    |
-|  **2** |  **Baixa** |    7 | **US07** | Como OCS, quero receber a Guia e checar a validade dela, para não correr o risco de glosa por perda de validade.                                      |    Baixa    |
-|  **3** |  **Média** |    5 | **US05** | Como EG, quero notificar e enviar a Guia APROVADA digitalmente, para que o Beneficiário possa ter sua solicitação prontamente atendida.               |    Baixa    |
-|  **3** |  **Baixa** |    8 | **US04** | Como EG, quero coletar aprovação das Guias com os responsáveis, para reduzir o tempo atual de validação para menos de três dias.                      |     Alta    |
-|  **3** |  **Baixa** |    9 | **US06** | Como Chefe / Médico, quero assinar as guias digitalmente, para tornar esse processo mais rápido e eficiente.                                          |     Alta    |
+| :----: | :--------: |:----: | :------: | ----------------------------------------------------------------------------------------------------------------------------------------------------- | :---------: |
+|  **1** |  **Alta**  | 1 | **US03** | Como EG, quero emitir as guias com auxílio digital, para evitar erros de preenchimento.                                                               |    Média    |
+|  **1** |  **Média** | 4 | **US02** | Como Beneficiário, quero fornecer digitalmente uma pré-guia para a Fusex, para ter mais agilidade na emissão da guia.                                 |     Alta    |
+|  **1** |  **Média** | 6 | **US01** | Como médico, quero enviar minha solicitação médica digitalmente para um sistema na Fusex.                                                             |    Baixa    |
+|  **2** |  **Alta**  | 2 | **US08** | Como ACM, quero receber digitalmente a guia, a fatura e o espelho para tornar o processo de lisura mais eficiente e menos sujeito a incorreções.      |    Média    |
+|  **2** |  **Alta**  | 3 | **US09** | Como ACM, quero digitalizar o cruzamento dos dados recebidos da OCS com as condições contratadas, para ter um relatório de divergências automatizado. |     Alta    |
+|  **2** |  **Baixa** | 7 | **US07** | Como OCS, quero receber a Guia e checar a validade dela, para não correr o risco de glosa por perda de validade.                                      |    Baixa    |
+|  **3** |  **Média** | 5 | **US05** | Como EG, quero notificar e enviar a Guia APROVADA digitalmente, para que o Beneficiário possa ter sua solicitação prontamente atendida.               |    Baixa    |
+|  **3** |  **Baixa** | 8 | **US04** | Como EG, quero coletar aprovação das Guias com os responsáveis, para reduzir o tempo atual de validação para menos de três dias.                      |     Alta    |
+|  **3** |  **Baixa** | 9 | **US06** | Como Chefe / Médico, quero assinar as guias digitalmente, para tornar esse processo mais rápido e eficiente.                                          |     Alta    |
 
 > ### 🗒️Legenda
 
@@ -95,7 +95,7 @@ Para que uma User Story seja considerada finalizada, os seguintes critérios té
 <a id="sprints"></a>
 ## 👟 Sprints
 | Sprint | Período | Documentação | Vídeo do Incremento | Status |
-|---|---|---|---|---|
+|:---:|---|---|---|---|
 | 1 | 07/09/2026 - 27/09/2026 | [Ver Documentação](https://docs.google.com/document/d/1eZ3Eu4DxbGu6Xt57trghgvPsKqgVh6zzKEHZEWdSqEE/edit?usp=sharing) | <div align="center">[Ver Vídeo]()</div> | 🔓 IN PROGRESS |
 | 2 | 05/10/2026 - 25/10/2026 | [Ver Documentação]() | <div align="center">[Ver Vídeo]()</div> | 🔒 TO DO |
 | 3 | 02/11/2026 - 22/11/2026 | [Ver Documentação]() | <div align="center">[Ver Vídeo]()</div> | 🔒 TO DO |
