@@ -18,7 +18,6 @@ target/
 # Spring Boot
 .env
 .env.local
-application-local.yml
 
 # Uploads
 uploads/
