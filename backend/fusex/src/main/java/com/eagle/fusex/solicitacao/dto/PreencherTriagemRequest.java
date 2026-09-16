@@ -1,0 +1,67 @@
+package com.eagle.fusex.solicitacao.dto;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+
+public class PreencherTriagemRequest {
+
+    @NotBlank(message = "cpfPrec é obrigatório")
+    private String cpfPrec;
+
+    @NotNull(message = "idade é obrigatória")
+    @Positive(message = "idade deve ser um número positivo")
+    private Integer idade;
+
+    @NotBlank(message = "telefone é obrigatório")
+    private String telefone;
+
+    @NotBlank(message = "clinicaLaboratorio é obrigatório")
+    private String clinicaLaboratorio;
+
+    @NotNull(message = "aceitoTermos é obrigatório")
+    private Boolean aceitoTermos;
+
+    public PreencherTriagemRequest() {
+    }
+
+    public String getCpfPrec() {
+        return cpfPrec;
+    }
+
+    public void setCpfPrec(String cpfPrec) {
+        this.cpfPrec = cpfPrec;
+    }
+
+    public Integer getIdade() {
+        return idade;
+    }
+
+    public void setIdade(Integer idade) {
+        this.idade = idade;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public String getClinicaLaboratorio() {
+        return clinicaLaboratorio;
+    }
+
+    public void setClinicaLaboratorio(String clinicaLaboratorio) {
+        this.clinicaLaboratorio = clinicaLaboratorio;
+    }
+
+    public Boolean getAceitoTermos() {
+        return aceitoTermos;
+    }
+
+    public void setAceitoTermos(Boolean aceitoTermos) {
+        this.aceitoTermos = aceitoTermos;
+    }
+}
