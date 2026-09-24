@@ -6,12 +6,14 @@ import com.eagle.fusex.ocs.Procedimento;
 import com.eagle.fusex.ocs.ProcedimentoRepository;
 import com.eagle.fusex.ocs.dto.OcsResponse;
 import com.eagle.fusex.ocs.dto.ProcedimentoResponse;
+import com.eagle.fusex.solicitacao.Especialidade;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 public class OcsController {
@@ -33,9 +35,18 @@ public class OcsController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/ocs")
+    @GetMapping(value = "/ocs", params = "procedimentoId")
     public ResponseEntity<List<OcsResponse>> listarOcsPorProcedimento(@RequestParam String procedimentoId) {
         List<OcsResponse> response = ocsRepository.findByProcedimentos_ProcCodigoDgp(procedimentoId).stream()
+                .map(this::toOcsResponse)
+                .toList();
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping(value = "/ocs", params = "especialidades")
+    public ResponseEntity<List<OcsResponse>> listarOcsPorEspecialidades(@RequestParam Set<Especialidade> especialidades) {
+        List<OcsResponse> response = ocsRepository.findByEspecialidadeIn(especialidades).stream()
                 .map(this::toOcsResponse)
                 .toList();
 

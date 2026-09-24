@@ -1,5 +1,6 @@
 package com.eagle.fusex.ocs;
 
+import com.eagle.fusex.solicitacao.Especialidade;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -43,6 +44,10 @@ public class Ocs {
 
     @Column(name = "ocs_contato_telefone", nullable = false)
     private String ocsContatoTelefone;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "ocs_especialidade", nullable = false)
+    private Especialidade especialidade;
 
     @ManyToMany
     @JoinTable(
@@ -149,5 +154,13 @@ public class Ocs {
 
     public void setProcedimentos(Set<Procedimento> procedimentos) {
         this.procedimentos = procedimentos;
+    }
+
+    public Especialidade getEspecialidade() {
+        return especialidade;
+    }
+
+    public void setEspecialidade(Especialidade especialidade) {
+        this.especialidade = especialidade;
     }
 }

@@ -44,12 +44,17 @@
     font-weight: 600;
     color: #444;
   }
-  input[type=text], input[type=number] {
+  input[type=text], input[type=number], select {
     width: 100%;
     padding: 8px 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 0.95em;
+    background: #fff;
+  }
+  select:disabled {
+    background: #f4f5f7;
+    color: #999;
   }
   .checkbox-line {
     display: flex;
@@ -138,7 +143,9 @@
     <input type="text" id="telefone" required placeholder="(00) 00000-0000">
 
     <label>Clínica/Laboratório de preferência</label>
-    <input type="text" id="clinicaLaboratorio" required>
+    <select id="clinicaLaboratorio" required disabled>
+      <option value="">Carregando clínicas...</option>
+    </select>
 
     <div class="checkbox-line">
       <input type="checkbox" id="aceitoTermos" required>
@@ -164,6 +171,39 @@
   const jaPreenchida = document.getElementById('jaPreenchida');
   const triagemForm = document.getElementById('triagemForm');
   const resultSection = document.getElementById('resultSection');
+  const clinicaSelect = document.getElementById('clinicaLaboratorio');
+
+  async function carregarOcsPorEspecialidades(especialidades) {
+    clinicaSelect.disabled = true;
+    clinicaSelect.innerHTML = '<option value="">Carregando clínicas...</option>';
+
+    if (!especialidades || especialidades.length === 0) {
+      clinicaSelect.innerHTML = '<option value="">Especialidades da solicitação não encontradas</option>';
+      return;
+    }
+
+    try {
+      const query = especialidades.map(encodeURIComponent).join(',');
+      const res = await fetch(`/api/ocs?especialidades=${query}`);
+      const data = await res.json();
+
+      if (data.length === 0) {
+        clinicaSelect.innerHTML = '<option value="">Nenhuma clínica encontrada para as especialidades desta solicitação</option>';
+        return;
+      }
+
+      clinicaSelect.innerHTML = '<option value="">Selecione a clínica...</option>';
+      data.forEach(o => {
+        const option = document.createElement('option');
+        option.value = o.ocsNome;
+        option.textContent = `${o.ocsNome} (${o.ocsEnderecoCidade}/${o.ocsEnderecoUf})`;
+        clinicaSelect.appendChild(option);
+      });
+      clinicaSelect.disabled = false;
+    } catch (err) {
+      clinicaSelect.innerHTML = '<option value="">Erro ao carregar clínicas</option>';
+    }
+  }
 
   async function carregarSolicitacao() {
     if (!token) {
@@ -193,6 +233,7 @@
         jaPreenchida.hidden = false;
       } else {
         triagemForm.hidden = false;
+        carregarOcsPorEspecialidades(data.especialidades);
       }
     } catch (err) {
       loading.hidden = true;
