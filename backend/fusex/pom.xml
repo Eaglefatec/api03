@@ -64,6 +64,25 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!-- CSV parsing (importacao de dados reais: TUSS e precos por OCS) -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-csv</artifactId>
+            <version>1.11.0</version>
+        </dependency>
+
+        <!-- Leitura de planilhas Excel (importacao de TUSS e precos por OCS) -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>5.3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>5.3.0</version>
+        </dependency>
+
         <!-- H2 Database (para desenvolvimento local sem Docker) -->
         <dependency>
             <groupId>com.h2database</groupId>
