@@ -39,6 +39,8 @@
     font-weight: 600;
   }
   a.btn:hover { background: #143c70; }
+  a.btn.secundario { background: #2f9e58; }
+  a.btn.secundario:hover { background: #257e46; }
   .hint {
     margin-top: 24px;
     font-size: 0.8em;
@@ -51,7 +53,9 @@
   <h1>FUSEX</h1>
   <p>Sistema de Solicitação Médica</p>
   <a class="btn" href="medico.html">Acessar como Médico</a>
-  <p class="hint">O beneficiário acessa por um link específico enviado pelo médico após criar a solicitação.</p>
+  <a class="btn secundario" href="guia.html">Consultar Pré-Guia (EG)</a>
+  <a class="btn secundario" href="importacao.html">Importação de Dados</a>
+  <p class="hint">O beneficiário acessa por um link específico enviado pelo médico após criar a solicitação. A consulta de pré-guia exige o token da solicitação (?token=...) na URL.</p>
 </div>
 </body>
 </html>

@@ -1,10 +1,15 @@
 package com.eagle.fusex.solicitacao.service;
 
+import com.eagle.fusex.ocs.Ocs;
+import com.eagle.fusex.ocs.OcsProcedimentoRepository;
+import com.eagle.fusex.ocs.OcsRepository;
+import com.eagle.fusex.shared.exception.OcsInvalidoException;
 import com.eagle.fusex.shared.exception.SolicitacaoNaoEncontradaException;
 import com.eagle.fusex.shared.exception.TriagemJaPreenchidaException;
 import com.eagle.fusex.solicitacao.Especialidade;
 import com.eagle.fusex.solicitacao.SolicitacaoMedica;
 import com.eagle.fusex.solicitacao.SolicitacaoMedicaRepository;
+import com.eagle.fusex.solicitacao.SolicitacaoProcedimentoRepository;
 import com.eagle.fusex.solicitacao.TriagemPreGuia;
 import com.eagle.fusex.solicitacao.TriagemPreGuiaRepository;
 import com.eagle.fusex.solicitacao.dto.PreencherTriagemRequest;
@@ -17,6 +22,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -33,11 +39,21 @@ class TriagemPreGuiaServiceTest {
     @Mock
     private TriagemPreGuiaRepository triagemRepository;
 
+    @Mock
+    private OcsRepository ocsRepository;
+
+    @Mock
+    private SolicitacaoProcedimentoRepository solicitacaoProcedimentoRepository;
+
+    @Mock
+    private OcsProcedimentoRepository ocsProcedimentoRepository;
+
     @InjectMocks
     private TriagemPreGuiaService service;
 
     private SolicitacaoMedica solicitacao;
     private Paciente paciente;
+    private Ocs ocs;
 
     @BeforeEach
     void setUp() {
@@ -55,6 +71,13 @@ class TriagemPreGuiaServiceTest {
         Set<Especialidade> especialidades = new HashSet<>();
         especialidades.add(Especialidade.CARDIOLOGISTA);
         solicitacao.setEspecialidades(especialidades);
+
+        ocs = new Ocs();
+        ocs.setOcsId(1L);
+        ocs.setOcsNome("Clínica Teste");
+
+        when(solicitacaoProcedimentoRepository.findBySolicitacaoMedicaId(anyLong()))
+                .thenReturn(Collections.emptyList());
     }
 
     @Test
@@ -119,7 +142,7 @@ class TriagemPreGuiaServiceTest {
         request.setCpfPrec("12345678901");
         request.setIdade(30);
         request.setTelefone("11999999999");
-        request.setClinicaLaboratorio("Clínica Teste");
+        request.setOcsId(1L);
         request.setAceitoTermos(true);
 
         assertThrows(SolicitacaoNaoEncontradaException.class,
@@ -140,10 +163,30 @@ class TriagemPreGuiaServiceTest {
         request.setCpfPrec("12345678901");
         request.setIdade(30);
         request.setTelefone("11999999999");
-        request.setClinicaLaboratorio("Clínica Teste");
+        request.setOcsId(1L);
         request.setAceitoTermos(true);
 
         assertThrows(TriagemJaPreenchidaException.class,
+                () -> service.preencherTriagem("token-uuid-123", request));
+    }
+
+    @Test
+    void testPreencherTriagem_OcsInexistente_LancaException() {
+        when(solicitacaoRepository.findByTokenPublico("token-uuid-123"))
+                .thenReturn(Optional.of(solicitacao));
+        when(triagemRepository.findBySolicitacaoMedicaId(1L))
+                .thenReturn(Optional.empty());
+        when(ocsRepository.findById(99L))
+                .thenReturn(Optional.empty());
+
+        PreencherTriagemRequest request = new PreencherTriagemRequest();
+        request.setCpfPrec("12345678901");
+        request.setIdade(30);
+        request.setTelefone("11999999999");
+        request.setOcsId(99L);
+        request.setAceitoTermos(true);
+
+        assertThrows(OcsInvalidoException.class,
                 () -> service.preencherTriagem("token-uuid-123", request));
     }
 
@@ -153,12 +196,14 @@ class TriagemPreGuiaServiceTest {
                 .thenReturn(Optional.of(solicitacao));
         when(triagemRepository.findBySolicitacaoMedicaId(1L))
                 .thenReturn(Optional.empty());
+        when(ocsRepository.findById(1L))
+                .thenReturn(Optional.of(ocs));
 
         PreencherTriagemRequest request = new PreencherTriagemRequest();
         request.setCpfPrec("12345678901");
         request.setIdade(30);
         request.setTelefone("11999999999");
-        request.setClinicaLaboratorio("Clínica Teste");
+        request.setOcsId(1L);
         request.setAceitoTermos(true);
 
         TriagemResponse response = service.preencherTriagem("token-uuid-123", request);

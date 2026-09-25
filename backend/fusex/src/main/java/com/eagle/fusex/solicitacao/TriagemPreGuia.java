@@ -1,5 +1,6 @@
 package com.eagle.fusex.solicitacao;
 
+import com.eagle.fusex.ocs.Ocs;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
@@ -24,8 +25,9 @@ public class TriagemPreGuia {
     @Column(nullable = false, length = 20)
     private String telefone;
 
-    @Column(nullable = false, length = 100)
-    private String clinicaLaboratorio;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ocs_id", nullable = false)
+    private Ocs ocs;
 
     @Column(nullable = false)
     private Boolean aceitoTermos;
@@ -81,12 +83,12 @@ public class TriagemPreGuia {
         this.telefone = telefone;
     }
 
-    public String getClinicaLaboratorio() {
-        return clinicaLaboratorio;
+    public Ocs getOcs() {
+        return ocs;
     }
 
-    public void setClinicaLaboratorio(String clinicaLaboratorio) {
-        this.clinicaLaboratorio = clinicaLaboratorio;
+    public void setOcs(Ocs ocs) {
+        this.ocs = ocs;
     }
 
     public Boolean getAceitoTermos() {

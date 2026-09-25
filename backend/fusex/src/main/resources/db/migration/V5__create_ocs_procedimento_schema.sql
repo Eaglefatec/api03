@@ -14,8 +14,8 @@ CREATE TABLE ocs (
 
 CREATE TABLE procedimento (
     proc_codigo_dgp VARCHAR(100) NOT NULL,
-    proc_descricao VARCHAR(255) NOT NULL,
-    proc_quantidade INT UNSIGNED NOT NULL DEFAULT 1,
+    proc_descricao VARCHAR(1000) NOT NULL,
+    proc_quantidade INT NOT NULL DEFAULT 1,
     PRIMARY KEY (proc_codigo_dgp),
     UNIQUE KEY procedimento_unique (proc_descricao)
 );

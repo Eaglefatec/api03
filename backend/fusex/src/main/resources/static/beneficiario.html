@@ -195,8 +195,9 @@
       clinicaSelect.innerHTML = '<option value="">Selecione a clínica...</option>';
       data.forEach(o => {
         const option = document.createElement('option');
-        option.value = o.ocsNome;
-        option.textContent = `${o.ocsNome} (${o.ocsEnderecoCidade}/${o.ocsEnderecoUf})`;
+        option.value = o.ocsId;
+        const local = (o.ocsEnderecoCidade && o.ocsEnderecoUf) ? ` (${o.ocsEnderecoCidade}/${o.ocsEnderecoUf})` : '';
+        option.textContent = `${o.ocsNome}${local}`;
         clinicaSelect.appendChild(option);
       });
       clinicaSelect.disabled = false;
@@ -249,7 +250,7 @@
       cpfPrec: document.getElementById('cpfPrec').value,
       idade: Number(document.getElementById('idade').value),
       telefone: document.getElementById('telefone').value,
-      clinicaLaboratorio: document.getElementById('clinicaLaboratorio').value,
+      ocsId: Number(document.getElementById('clinicaLaboratorio').value),
       aceitoTermos: document.getElementById('aceitoTermos').checked
     };
 

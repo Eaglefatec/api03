@@ -2,12 +2,16 @@ package com.eagle.fusex.solicitacao.service;
 
 import com.eagle.fusex.medico.Medico;
 import com.eagle.fusex.medico.MedicoRepository;
+import com.eagle.fusex.ocs.Procedimento;
+import com.eagle.fusex.ocs.ProcedimentoRepository;
 import com.eagle.fusex.paciente.Paciente;
 import com.eagle.fusex.paciente.PacienteRepository;
 import com.eagle.fusex.shared.exception.MedicoInvalidoException;
+import com.eagle.fusex.shared.exception.ProcedimentoInvalidoException;
 import com.eagle.fusex.solicitacao.Especialidade;
 import com.eagle.fusex.solicitacao.SolicitacaoMedica;
 import com.eagle.fusex.solicitacao.SolicitacaoMedicaRepository;
+import com.eagle.fusex.solicitacao.SolicitacaoProcedimentoRepository;
 import com.eagle.fusex.solicitacao.dto.CriarSolicitacaoRequest;
 import com.eagle.fusex.solicitacao.dto.SolicitacaoResponse;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,6 +21,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -35,12 +40,19 @@ class SolicitacaoMedicaServiceTest {
     @Mock
     private SolicitacaoMedicaRepository solicitacaoRepository;
 
+    @Mock
+    private ProcedimentoRepository procedimentoRepository;
+
+    @Mock
+    private SolicitacaoProcedimentoRepository solicitacaoProcedimentoRepository;
+
     @InjectMocks
     private SolicitacaoMedicaService service;
 
     private Medico medicoCredenciado;
     private Medico medicoNaoCredenciado;
     private Paciente paciente;
+    private Procedimento procedimento;
 
     @BeforeEach
     void setUp() {
@@ -54,6 +66,17 @@ class SolicitacaoMedicaServiceTest {
 
         paciente = new Paciente("João Silva", "12345678901", "OM001");
         paciente.setId(1L);
+
+        procedimento = new Procedimento("DGP001", "Consulta eletiva", 1);
+
+        when(procedimentoRepository.findById("DGP001")).thenReturn(Optional.of(procedimento));
+    }
+
+    private List<CriarSolicitacaoRequest.ProcedimentoQuantidade> umProcedimento() {
+        CriarSolicitacaoRequest.ProcedimentoQuantidade pq = new CriarSolicitacaoRequest.ProcedimentoQuantidade();
+        pq.setProcedimentoCodigoDgp("DGP001");
+        pq.setQuantidade(1);
+        return List.of(pq);
     }
 
     @Test
@@ -78,6 +101,7 @@ class SolicitacaoMedicaServiceTest {
         request.setCpfPrec("12345678901");
         request.setOm("OM001");
         request.setEspecialidades(especialidades);
+        request.setProcedimentos(umProcedimento());
 
         when(medicoRepository.findByIdAndCredenciadoTrue(1L))
                 .thenReturn(Optional.of(medicoCredenciado));
@@ -114,6 +138,7 @@ class SolicitacaoMedicaServiceTest {
         request.setCpfPrec("12345678901");
         request.setOm("OM002");
         request.setEspecialidades(especialidades);
+        request.setProcedimentos(umProcedimento());
 
         when(medicoRepository.findByIdAndCredenciadoTrue(1L))
                 .thenReturn(Optional.of(medicoCredenciado));
@@ -148,6 +173,7 @@ class SolicitacaoMedicaServiceTest {
         request.setCpfPrec("12345678901");
         request.setOm("OM001");
         request.setEspecialidades(especialidades);
+        request.setProcedimentos(umProcedimento());
 
         SolicitacaoMedica solicitacaoAnterior = new SolicitacaoMedica();
         solicitacaoAnterior.setId(99L);
@@ -173,5 +199,43 @@ class SolicitacaoMedicaServiceTest {
 
         assertNotNull(response);
         verify(solicitacaoRepository, times(2)).save(any(SolicitacaoMedica.class));
+    }
+
+    @Test
+    void testCriarSolicitacao_ProcedimentoInvalido_LancaException() {
+        Set<Especialidade> especialidades = new HashSet<>();
+        especialidades.add(Especialidade.CARDIOLOGISTA);
+
+        CriarSolicitacaoRequest.ProcedimentoQuantidade pq = new CriarSolicitacaoRequest.ProcedimentoQuantidade();
+        pq.setProcedimentoCodigoDgp("INEXISTENTE");
+        pq.setQuantidade(1);
+
+        CriarSolicitacaoRequest request = new CriarSolicitacaoRequest();
+        request.setMedicoId(1L);
+        request.setNomePaciente("João Silva");
+        request.setCpfPrec("12345678901");
+        request.setOm("OM001");
+        request.setEspecialidades(especialidades);
+        request.setProcedimentos(List.of(pq));
+
+        when(medicoRepository.findByIdAndCredenciadoTrue(1L))
+                .thenReturn(Optional.of(medicoCredenciado));
+        when(pacienteRepository.findByCpfPrec("12345678901"))
+                .thenReturn(Optional.of(paciente));
+        when(pacienteRepository.save(any(Paciente.class)))
+                .thenReturn(paciente);
+        when(solicitacaoRepository.findByMedicoIdAndPacienteIdAndValidaTrue(1L, 1L))
+                .thenReturn(Optional.empty());
+        when(procedimentoRepository.findById("INEXISTENTE"))
+                .thenReturn(Optional.empty());
+
+        SolicitacaoMedica solicitacaoSalva = new SolicitacaoMedica();
+        solicitacaoSalva.setId(1L);
+        solicitacaoSalva.setTokenPublico("token-uuid");
+
+        when(solicitacaoRepository.save(any(SolicitacaoMedica.class)))
+                .thenReturn(solicitacaoSalva);
+
+        assertThrows(ProcedimentoInvalidoException.class, () -> service.criar(request));
     }
 }
