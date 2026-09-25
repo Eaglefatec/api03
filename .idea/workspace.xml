@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="0f9fad42-de7c-4a3e-9b03-5061b93289b7" name="Changes" comment="fix_api03_backend: Configurar arquivos de projeto do IntelliJ IDEA e atualizar `SecurityConfig`:&#10;- Adicionar arquivos de configuração do IDEA (*.iml, módulos, codificações, etc.).&#10;- Atualizar a configuração do Spring Security para personalizar as definições de CSRF e cabeçalhos de frame em `SecurityConfig.java`.&#10;- Atualizar configuração do Application.yml para carregar o migration que não estava sendo carregado" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DBNavigator.Project.Workspace.Settings">
+    <assistant-settings>
+      <credential-settings>
+        <credentials />
+      </credential-settings>
+      <profile-settings>
+        <profiles />
+      </profile-settings>
+      <mcp-server-settings>
+        <workspace-integration value="false" />
+        <mcp-servers />
+        <mcp-tool-approvals />
+      </mcp-server-settings>
+    </assistant-settings>
+  </component>
+  <component name="DatabaseLocalColorSettings">
+    <colors>
+      <entry key="f22f8e04-a815-4868-9163-df01357d4028" value="" />
+    </colors>
+  </component>
+  <component name="EmbeddingIndexingInfo">
+    <option name="cachedIndexableFilesCount" value="57" />
+    <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "ropcastr"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/Eaglefatec/api03.git",
+    "accountId": "96ad5975-ee9f-4e94-b1ea-af7787251ffe"
+  }
+}]]></component>
+  <component name="MacroExpansionManager">
+    <option name="directoryName" value="6vluYpqS" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="NextEditCompletionFeaturesState">
+    <decayedCancelled>
+      <entry key="MS100" value="1.0870397205620876" />
+      <entry key="MS500" value="3.287383926042761" />
+      <entry key="S2" value="12.822773798330706" />
+      <entry key="S5" value="27.48749743522297" />
+      <entry key="S10" value="43.415787883613895" />
+      <entry key="S30" value="67.82937814815762" />
+      <entry key="S60" value="84.93421505879884" />
+      <entry key="M2" value="117.82963863456692" />
+      <entry key="M5" value="201.24675041771903" />
+      <entry key="M10" value="314.5337492175517" />
+      <entry key="M15" value="397.57998258491347" />
+      <entry key="M30" value="544.1742288715444" />
+      <entry key="H1" value="668.2194721863638" />
+      <entry key="H2" value="753.9884338007662" />
+      <entry key="H4" value="805.4199018067147" />
+      <entry key="D1" value="853.6845078246591" />
+      <entry key="W1" value="862.5120342159469" />
+    </decayedCancelled>
+    <decayedSelected>
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="0.0" />
+      <entry key="S2" value="0.0" />
+      <entry key="S5" value="0.0" />
+      <entry key="S10" value="8.49230114748427E-165" />
+      <entry key="S30" value="3.2163069577484877E-55" />
+      <entry key="S60" value="8.013334701418481E-28" />
+      <entry key="M2" value="4.002454265689378E-14" />
+      <entry key="M5" value="6.630185463070259E-6" />
+      <entry key="M10" value="0.003641447256827035" />
+      <entry key="M15" value="0.029821203565852463" />
+      <entry key="M30" value="0.2442177118573035" />
+      <entry key="H1" value="0.6988813815743574" />
+      <entry key="H2" value="1.1822701014282249" />
+      <entry key="H4" value="1.5377061262751741" />
+      <entry key="D1" value="1.9142730546050735" />
+      <entry key="W1" value="1.9875221621074994" />
+    </decayedSelected>
+    <decayedShown>
+      <entry key="MS100" value="1.0567212056272797" />
+      <entry key="MS500" value="3.2653364677949237" />
+      <entry key="S2" value="12.799825110788348" />
+      <entry key="S5" value="27.46766111461359" />
+      <entry key="S10" value="43.40004964655961" />
+      <entry key="S30" value="67.82112536636944" />
+      <entry key="S60" value="84.9288691103931" />
+      <entry key="M2" value="117.82433186995867" />
+      <entry key="M5" value="201.23999730489982" />
+      <entry key="M10" value="314.5314415549415" />
+      <entry key="M15" value="397.6048207476266" />
+      <entry key="M30" value="544.4150753318634" />
+      <entry key="H1" value="668.916232415091" />
+      <entry key="H2" value="755.1694669137762" />
+      <entry key="H4" value="806.9569311718859" />
+      <entry key="D1" value="855.5986583684619" />
+      <entry key="W1" value="864.4995386137286" />
+    </decayedShown>
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 5,
+  "fromUser": false
+}]]></component>
+  <component name="ProjectId" id="3JplK6xzTMnmJ7w4hi1lctKHXwD" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "CidrDebugProfileConversion": "true",
+    "Maven.fusex [clean].executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "Spring Boot.FusexApplication.executor": "Run",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "python.packages.toolwindow.project.migrated.to.right.top.v2": "true",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
+    "show.migrate.to.gradle.popup": "false",
+    "to.speed.mode.migration.done": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
+    ]
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="FusexApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="fusex" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.eagle.fusex.FusexApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-a203e0a19954-intellij.indexing.shared.core-IU-262.10968.63" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0f9fad42-de7c-4a3e-9b03-5061b93289b7" name="Changes" comment="" />
+      <created>1790365823968</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1790365823968</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="fix_api03_backend: Correção do `SecurityConfig`:&#10;- Adicionar arquivos de configuração do IDEA (*.iml, módulos, codificações, etc.).&#10;- Atualizar a configuração do Spring Security para personalizar as definições de CSRF e cabeçalhos de frame em `SecurityConfig.java`." />
+    <MESSAGE value="Configure IntelliJ project files and update `SecurityConfig` with additional Spring Security settings." />
+    <MESSAGE value="fix_api03_backend: Configurar arquivos de projeto do IntelliJ IDEA e atualizar `SecurityConfig`:&#10;- Adicionar arquivos de configuração do IDEA (*.iml, módulos, codificações, etc.).&#10;- Atualizar a configuração do Spring Security para personalizar as definições de CSRF e cabeçalhos de frame em `SecurityConfig.java`.&#10;- Atualizar configuração do Application.yml para carregar o migration que não estava sendo carregado" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix_api03_backend: Configurar arquivos de projeto do IntelliJ IDEA e atualizar `SecurityConfig`:&#10;- Adicionar arquivos de configuração do IDEA (*.iml, módulos, codificações, etc.).&#10;- Atualizar a configuração do Spring Security para personalizar as definições de CSRF e cabeçalhos de frame em `SecurityConfig.java`.&#10;- Atualizar configuração do Application.yml para carregar o migration que não estava sendo carregado" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
