@@ -66,6 +66,61 @@
     font-size: 0.85em;
   }
   .especialidades input { margin: 0; }
+  .procedimento-wrap { position: relative; }
+  #procedimentoSugestoes {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 10;
+  }
+  #procedimentoSugestoes li {
+    padding: 8px 10px;
+    cursor: pointer;
+    font-size: 0.9em;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  #procedimentoSugestoes li:hover { background: #f0f4ff; }
+  .procedimento-linha { display: flex; gap: 8px; align-items: flex-end; }
+  .procedimento-linha > div:first-child { flex: 1; }
+  .procedimento-linha input[type=number] { width: 80px; }
+  #listaProcedimentos {
+    list-style: none;
+    margin: 10px 0 0;
+    padding: 0;
+  }
+  #listaProcedimentos li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f0f4ff;
+    border-radius: 6px;
+    padding: 8px 10px;
+    margin-bottom: 6px;
+    font-size: 0.85em;
+  }
+  #listaProcedimentos button {
+    margin: 0;
+    width: auto;
+    padding: 2px 8px;
+    background: #c0392b;
+    font-size: 0.85em;
+  }
+  #listaProcedimentos button:hover { background: #a02b1f; }
+  #addProcedimentoBtn {
+    margin-top: 0;
+    width: auto;
+    padding: 8px 14px;
+  }
   button {
     margin-top: 20px;
     width: 100%;
@@ -160,6 +215,19 @@
       <label><input type="checkbox" class="especialidade" value="OUTROS"> Outros</label>
     </div>
 
+    <label>Procedimentos</label>
+    <div class="procedimento-linha">
+      <div class="procedimento-wrap">
+        <input type="text" id="procedimentoBusca" placeholder="Digite o nome do procedimento (min. 3 letras)..." autocomplete="off">
+        <ul id="procedimentoSugestoes" hidden></ul>
+      </div>
+      <div>
+        <input type="number" id="procedimentoQuantidade" min="1" value="1">
+      </div>
+      <button type="button" id="addProcedimentoBtn">Adicionar</button>
+    </div>
+    <ul id="listaProcedimentos"></ul>
+
     <label>Observação (opcional)</label>
     <textarea id="observacao"></textarea>
 
@@ -182,6 +250,92 @@
   const errorBox = document.getElementById('errorMsg');
   const linkOutput = document.getElementById('linkOutput');
 
+  const procedimentoBusca = document.getElementById('procedimentoBusca');
+  const procedimentoSugestoes = document.getElementById('procedimentoSugestoes');
+  const procedimentoQuantidade = document.getElementById('procedimentoQuantidade');
+  const addProcedimentoBtn = document.getElementById('addProcedimentoBtn');
+  const listaProcedimentos = document.getElementById('listaProcedimentos');
+
+  let procedimentoSelecionadoAtual = null;
+  let procedimentosAdicionados = [];
+  let debounceTimer = null;
+
+  procedimentoBusca.addEventListener('input', () => {
+    procedimentoSelecionadoAtual = null;
+    clearTimeout(debounceTimer);
+    const texto = procedimentoBusca.value.trim();
+
+    if (texto.length < 3) {
+      procedimentoSugestoes.hidden = true;
+      procedimentoSugestoes.innerHTML = '';
+      return;
+    }
+
+    debounceTimer = setTimeout(async () => {
+      try {
+        const res = await fetch('/api/procedimentos?busca=' + encodeURIComponent(texto));
+        const data = await res.json();
+        procedimentoSugestoes.innerHTML = '';
+        if (data.length === 0) {
+          procedimentoSugestoes.hidden = true;
+          return;
+        }
+        data.forEach(p => {
+          const li = document.createElement('li');
+          li.textContent = p.procDescricao;
+          li.addEventListener('click', () => {
+            procedimentoSelecionadoAtual = p;
+            procedimentoBusca.value = p.procDescricao;
+            procedimentoSugestoes.hidden = true;
+          });
+          procedimentoSugestoes.appendChild(li);
+        });
+        procedimentoSugestoes.hidden = false;
+      } catch (err) {
+        procedimentoSugestoes.hidden = true;
+      }
+    }, 300);
+  });
+
+  addProcedimentoBtn.addEventListener('click', () => {
+    if (!procedimentoSelecionadoAtual) {
+      errorBox.textContent = 'Selecione um procedimento da lista de sugestões antes de adicionar.';
+      errorBox.hidden = false;
+      return;
+    }
+    const quantidade = Number(procedimentoQuantidade.value) || 1;
+    procedimentosAdicionados.push({
+      procedimentoCodigoDgp: procedimentoSelecionadoAtual.procCodigoDgp,
+      procDescricao: procedimentoSelecionadoAtual.procDescricao,
+      quantidade: quantidade
+    });
+    renderListaProcedimentos();
+
+    procedimentoBusca.value = '';
+    procedimentoQuantidade.value = 1;
+    procedimentoSelecionadoAtual = null;
+    errorBox.hidden = true;
+  });
+
+  function renderListaProcedimentos() {
+    listaProcedimentos.innerHTML = '';
+    procedimentosAdicionados.forEach((p, index) => {
+      const li = document.createElement('li');
+      const span = document.createElement('span');
+      span.textContent = `${p.procDescricao} (qtd: ${p.quantidade})`;
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.textContent = 'Remover';
+      btn.addEventListener('click', () => {
+        procedimentosAdicionados.splice(index, 1);
+        renderListaProcedimentos();
+      });
+      li.appendChild(span);
+      li.appendChild(btn);
+      listaProcedimentos.appendChild(li);
+    });
+  }
+
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     errorBox.hidden = true;
@@ -197,13 +351,23 @@
       return;
     }
 
+    if (procedimentosAdicionados.length === 0) {
+      errorBox.textContent = 'Adicione ao menos um procedimento.';
+      errorBox.hidden = false;
+      return;
+    }
+
     const payload = {
       medicoId: Number(document.getElementById('medicoId').value),
       nomePaciente: document.getElementById('nomePaciente').value,
       om: document.getElementById('om').value,
       cpfPrec: document.getElementById('cpfPrec').value,
       especialidades: especialidades,
-      observacao: document.getElementById('observacao').value
+      observacao: document.getElementById('observacao').value,
+      procedimentos: procedimentosAdicionados.map(p => ({
+        procedimentoCodigoDgp: p.procedimentoCodigoDgp,
+        quantidade: p.quantidade
+      }))
     };
 
     try {
@@ -229,6 +393,8 @@
       linkOutput.value = beneficiarioLink;
       resultBox.hidden = false;
       form.reset();
+      procedimentosAdicionados = [];
+      renderListaProcedimentos();
     } catch (err) {
       errorBox.textContent = err.message;
       errorBox.hidden = false;

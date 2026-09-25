@@ -13,14 +13,18 @@ public class Procedimento {
     @Column(name = "proc_codigo_dgp")
     private String procCodigoDgp;
 
-    @Column(name = "proc_descricao", nullable = false, unique = true)
+    @Column(name = "proc_descricao", nullable = false, length = 1000)
     private String procDescricao;
 
     @Column(name = "proc_quantidade", nullable = false)
     private Integer procQuantidade = 1;
 
-    @ManyToMany(mappedBy = "procedimentos")
-    private Set<Ocs> ocs = new HashSet<>();
+    @Enumerated(EnumType.STRING)
+    @Column(name = "proc_origem", nullable = false)
+    private OrigemProcedimento procOrigem = OrigemProcedimento.TUSS;
+
+    @OneToMany(mappedBy = "procedimento")
+    private Set<OcsProcedimento> ocsProcedimentos = new HashSet<>();
 
     public Procedimento() {
     }
@@ -55,11 +59,19 @@ public class Procedimento {
         this.procQuantidade = procQuantidade;
     }
 
-    public Set<Ocs> getOcs() {
-        return ocs;
+    public OrigemProcedimento getProcOrigem() {
+        return procOrigem;
     }
 
-    public void setOcs(Set<Ocs> ocs) {
-        this.ocs = ocs;
+    public void setProcOrigem(OrigemProcedimento procOrigem) {
+        this.procOrigem = procOrigem;
+    }
+
+    public Set<OcsProcedimento> getOcsProcedimentos() {
+        return ocsProcedimentos;
+    }
+
+    public void setOcsProcedimentos(Set<OcsProcedimento> ocsProcedimentos) {
+        this.ocsProcedimentos = ocsProcedimentos;
     }
 }
