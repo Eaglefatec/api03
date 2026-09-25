@@ -39,9 +39,6 @@ public class TussProcedimentoLoader implements CommandLineRunner {
         this(procedimentoRepository, csvPath, "src/main/resources/" + CSV_PATH_PADRAO);
     }
 
-    // Construtor usado nos testes para injetar um CSV de fixture isolado, sem depender
-    // da resolução de ClassPathResource (que se mostrou não-confiável neste ambiente)
-    // nem cair acidentalmente no fallback de produção.
     TussProcedimentoLoader(ProcedimentoRepository procedimentoRepository, String csvPath, String filesystemFallback) {
         this.procedimentoRepository = procedimentoRepository;
         this.csvPath = csvPath;
