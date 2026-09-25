@@ -1,19 +1,9 @@
-# -*- coding: utf-8 -*-
-"""
-Script de ETL (roda uma vez, fora do build Java) que le as duas planilhas em
-../../../contexto/ (nivel do repositorio) e gera dois CSVs limpos em
-src/main/resources/data/, usados pelos loaders Java (TussProcedimentoLoader,
-OcsPrecoLoader) para popular o banco no startup da aplicacao.
-
-Uso:
-    python extrair_planilhas.py
-"""
 import re
 import unicodedata
 import pandas as pd
 from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent  # .../api03
+BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
 CONTEXTO_DIR = BASE_DIR / "contexto"
 OUTPUT_DIR = Path(__file__).resolve().parent.parent / "src" / "main" / "resources" / "data"
 
@@ -47,9 +37,6 @@ def mapear_especialidade(nome_planilha):
     return ESPECIALIDADE_MAP.get(chave, "OUTROS")
 
 
-# ============================================================
-# 1) TUSS -> tuss_procedimentos.csv
-# ============================================================
 def extrair_tuss():
     print("Lendo Rol TUSS...")
     df = pd.read_excel(TUSS_FILE, sheet_name=0, header=1)
@@ -58,7 +45,6 @@ def extrair_tuss():
     df = df.dropna(subset=["proc_codigo_dgp", "proc_descricao"])
     df["proc_codigo_dgp"] = df["proc_codigo_dgp"].astype(str).str.strip()
     df["proc_descricao"] = df["proc_descricao"].astype(str).str.strip()
-    # remove a linha de titulo da tabela, se caiu junto (codigo nao numerico)
     df = df[df["proc_codigo_dgp"].str.match(r"^\d+$")]
     antes = len(df)
     df = df.drop_duplicates(subset=["proc_codigo_dgp"], keep="first")
@@ -69,7 +55,6 @@ def extrair_tuss():
     df.to_csv(out_path, sep=";", index=False, encoding="utf-8")
     print(f"  Salvo em {out_path}")
 
-    # indice normalizado descricao->codigo para casar com a planilha de precos
     indice = {}
     for _, row in df.iterrows():
         chave = normalizar(row["proc_descricao"])
@@ -78,9 +63,6 @@ def extrair_tuss():
     return indice
 
 
-# ============================================================
-# 2) Precos por OCS -> ocs_precos.csv
-# ============================================================
 def achar_linha_com_texto(df, texto, coluna=0, a_partir_de=0):
     alvo = normalizar(texto)
     for i in range(a_partir_de, len(df)):
@@ -93,13 +75,12 @@ def achar_linha_com_texto(df, texto, coluna=0, a_partir_de=0):
 def extrair_planilha_ocs(nome_aba, df, indice_tuss, contador_local):
     linhas_saida = []
 
-    # --- Tabela 1: dados do contrato ---
     linha_tabela1 = achar_linha_com_texto(df, "Tabela 1")
     if linha_tabela1 is None:
         print(f"  [AVISO] '{nome_aba}': nao achei 'Tabela 1', pulando aba")
         return linhas_saida, contador_local
 
-    linha_header1 = linha_tabela1 + 2  # 1 linha em branco entre o titulo e o header
+    linha_header1 = linha_tabela1 + 2
     linha_dados1 = linha_header1 + 1
     try:
         ocs_nome = str(df.iat[linha_dados1, 0]).strip()
@@ -120,7 +101,6 @@ def extrair_planilha_ocs(nome_aba, df, indice_tuss, contador_local):
     ocs_inicio_str = "" if pd.isna(ocs_inicio) else pd.to_datetime(ocs_inicio).strftime("%Y-%m-%d")
     ocs_termino_str = "" if pd.isna(ocs_termino) else pd.to_datetime(ocs_termino).strftime("%Y-%m-%d")
 
-    # --- Especialidades ---
     linha_especialidades_label = achar_linha_com_texto(df, "Especialidades", a_partir_de=linha_dados1)
     especialidades = []
     if linha_especialidades_label is not None:
@@ -136,7 +116,6 @@ def extrair_planilha_ocs(nome_aba, df, indice_tuss, contador_local):
     especialidades = sorted(set(especialidades)) or ["OUTROS"]
     especialidades_str = ",".join(especialidades)
 
-    # --- Tabela 2: procedimentos com valores ---
     linha_tabela2 = achar_linha_com_texto(df, "Tabela 2", a_partir_de=linha_dados1)
     if linha_tabela2 is None:
         print(f"  [AVISO] '{nome_aba}': nao achei 'Tabela 2', só contrato+especialidades salvos")
@@ -152,7 +131,7 @@ def extrair_planilha_ocs(nome_aba, df, indice_tuss, contador_local):
     while i < len(df):
         nr_ordem = df.iat[i, 0]
         if pd.isna(nr_ordem) and pd.isna(df.iat[i, 2]) and pd.isna(df.iat[i, 4]):
-            break  # linha totalmente vazia = fim da tabela
+            break
 
         descricao_cel = df.iat[i, 1] if df.shape[1] > 1 else None
         if not pd.isna(descricao_cel) and str(descricao_cel).strip():
