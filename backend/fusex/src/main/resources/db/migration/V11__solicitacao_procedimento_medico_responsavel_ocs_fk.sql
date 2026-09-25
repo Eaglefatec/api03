@@ -1,10 +1,8 @@
--- ===== Medico responsavel (opcional): audita/assina a guia, pessoa diferente do medico emissor =====
 ALTER TABLE solicitacao_medica ADD COLUMN medico_responsavel_id BIGINT NULL;
 ALTER TABLE solicitacao_medica
     ADD CONSTRAINT fk_solicitacao_medico_responsavel
     FOREIGN KEY (medico_responsavel_id) REFERENCES medico(id);
 
--- ===== Procedimentos escolhidos pelo medico na criacao da solicitacao, com quantidade por item =====
 CREATE TABLE solicitacao_procedimento (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     solicitacao_id BIGINT NOT NULL,
@@ -17,10 +15,8 @@ CREATE TABLE solicitacao_procedimento (
 
 CREATE INDEX idx_solicitacao_procedimento_solicitacao ON solicitacao_procedimento(solicitacao_id);
 
--- ===== triagem_pre_guia: clinica_laboratorio (texto livre) -> ocs_id (FK real) =====
 ALTER TABLE triagem_pre_guia ADD COLUMN ocs_id BIGINT NULL;
 
--- backfill best-effort por nome exato, caso existam registros de teste manuais
 UPDATE triagem_pre_guia t
     SET ocs_id = (SELECT o.ocs_id FROM ocs o WHERE o.ocs_nome = t.clinica_laboratorio LIMIT 1)
     WHERE t.ocs_id IS NULL;
