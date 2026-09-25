@@ -36,7 +36,7 @@ public class SecurityConfig {
             .csrf().disable()
             .authorizeHttpRequests((authorize) -> authorize
                 .requestMatchers("/solicitacoes/publico/**").permitAll()
-                .requestMatchers("/encaminhamentos/**", "/solicitacoes/**").authenticated()
+                .requestMatchers("/encaminhamentos/**", "/solicitacoes/**", "/importacao/**").authenticated()
                 .anyRequest().permitAll()
             )
             .httpBasic();
