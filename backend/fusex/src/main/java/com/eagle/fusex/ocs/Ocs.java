@@ -3,6 +3,7 @@ package com.eagle.fusex.ocs;
 import com.eagle.fusex.solicitacao.Especialidade;
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,47 +16,57 @@ public class Ocs {
     @Column(name = "ocs_id")
     private Long ocsId;
 
-    @Column(name = "ocs_nome", nullable = false)
+    @Column(name = "ocs_nome", nullable = false, unique = true)
     private String ocsNome = "OCS";
 
-    @Column(name = "ocs_inscricao_federal", nullable = false, unique = true)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "ocs_tipo", nullable = false)
+    private TipoOcs ocsTipo = TipoOcs.OCS;
+
+    @Column(name = "ocs_contrato_numero")
+    private String ocsContratoNumero;
+
+    @Column(name = "ocs_inicio_vigencia")
+    private LocalDate ocsInicioVigencia;
+
+    @Column(name = "ocs_termino_vigencia")
+    private LocalDate ocsTerminoVigencia;
+
+    @Column(name = "ocs_inscricao_federal", unique = true)
     private String ocsInscricaoFederal;
 
-    @Column(name = "ocs_endereco", nullable = false)
+    @Column(name = "ocs_endereco")
     private String ocsEndereco;
 
-    @Column(name = "ocs_endereco_numero", nullable = false)
+    @Column(name = "ocs_endereco_numero")
     private String ocsEnderecoNumero;
 
-    @Column(name = "ocs_endereco_bairro", nullable = false)
+    @Column(name = "ocs_endereco_bairro")
     private String ocsEnderecoBairro;
 
-    @Column(name = "ocs_endereco_cidade", nullable = false)
+    @Column(name = "ocs_endereco_cidade")
     private String ocsEnderecoCidade;
 
-    @Column(name = "ocs_endereco_uf", nullable = false)
+    @Column(name = "ocs_endereco_uf")
     private String ocsEnderecoUf;
 
-    @Column(name = "ocs_endereco_cep", nullable = false)
+    @Column(name = "ocs_endereco_cep")
     private String ocsEnderecoCep;
 
-    @Column(name = "ocs_contato_nome", nullable = false)
+    @Column(name = "ocs_contato_nome")
     private String ocsContatoNome;
 
-    @Column(name = "ocs_contato_telefone", nullable = false)
+    @Column(name = "ocs_contato_telefone")
     private String ocsContatoTelefone;
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "ocs_especialidade_item", joinColumns = @JoinColumn(name = "ocs_id"))
+    @Column(name = "especialidade")
     @Enumerated(EnumType.STRING)
-    @Column(name = "ocs_especialidade", nullable = false)
-    private Especialidade especialidade;
+    private Set<Especialidade> especialidades = new HashSet<>();
 
-    @ManyToMany
-    @JoinTable(
-            name = "ocs_procedimento",
-            joinColumns = @JoinColumn(name = "ocs_id"),
-            inverseJoinColumns = @JoinColumn(name = "proc_codigo_dgp")
-    )
-    private Set<Procedimento> procedimentos = new HashSet<>();
+    @OneToMany(mappedBy = "ocs")
+    private Set<OcsProcedimento> ocsProcedimentos = new HashSet<>();
 
     public Ocs() {
     }
@@ -74,6 +85,38 @@ public class Ocs {
 
     public void setOcsNome(String ocsNome) {
         this.ocsNome = ocsNome;
+    }
+
+    public TipoOcs getOcsTipo() {
+        return ocsTipo;
+    }
+
+    public void setOcsTipo(TipoOcs ocsTipo) {
+        this.ocsTipo = ocsTipo;
+    }
+
+    public String getOcsContratoNumero() {
+        return ocsContratoNumero;
+    }
+
+    public void setOcsContratoNumero(String ocsContratoNumero) {
+        this.ocsContratoNumero = ocsContratoNumero;
+    }
+
+    public LocalDate getOcsInicioVigencia() {
+        return ocsInicioVigencia;
+    }
+
+    public void setOcsInicioVigencia(LocalDate ocsInicioVigencia) {
+        this.ocsInicioVigencia = ocsInicioVigencia;
+    }
+
+    public LocalDate getOcsTerminoVigencia() {
+        return ocsTerminoVigencia;
+    }
+
+    public void setOcsTerminoVigencia(LocalDate ocsTerminoVigencia) {
+        this.ocsTerminoVigencia = ocsTerminoVigencia;
     }
 
     public String getOcsInscricaoFederal() {
@@ -148,19 +191,19 @@ public class Ocs {
         this.ocsContatoTelefone = ocsContatoTelefone;
     }
 
-    public Set<Procedimento> getProcedimentos() {
-        return procedimentos;
+    public Set<Especialidade> getEspecialidades() {
+        return especialidades;
     }
 
-    public void setProcedimentos(Set<Procedimento> procedimentos) {
-        this.procedimentos = procedimentos;
+    public void setEspecialidades(Set<Especialidade> especialidades) {
+        this.especialidades = especialidades;
     }
 
-    public Especialidade getEspecialidade() {
-        return especialidade;
+    public Set<OcsProcedimento> getOcsProcedimentos() {
+        return ocsProcedimentos;
     }
 
-    public void setEspecialidade(Especialidade especialidade) {
-        this.especialidade = especialidade;
+    public void setOcsProcedimentos(Set<OcsProcedimento> ocsProcedimentos) {
+        this.ocsProcedimentos = ocsProcedimentos;
     }
 }

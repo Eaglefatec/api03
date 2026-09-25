@@ -2,16 +2,22 @@ package com.eagle.fusex.solicitacao.service;
 
 import com.eagle.fusex.medico.Medico;
 import com.eagle.fusex.medico.MedicoRepository;
+import com.eagle.fusex.ocs.Procedimento;
+import com.eagle.fusex.ocs.ProcedimentoRepository;
 import com.eagle.fusex.paciente.Paciente;
 import com.eagle.fusex.paciente.PacienteRepository;
 import com.eagle.fusex.shared.exception.MedicoInvalidoException;
+import com.eagle.fusex.shared.exception.ProcedimentoInvalidoException;
 import com.eagle.fusex.solicitacao.SolicitacaoMedica;
 import com.eagle.fusex.solicitacao.SolicitacaoMedicaRepository;
+import com.eagle.fusex.solicitacao.SolicitacaoProcedimento;
+import com.eagle.fusex.solicitacao.SolicitacaoProcedimentoRepository;
 import com.eagle.fusex.solicitacao.dto.CriarSolicitacaoRequest;
 import com.eagle.fusex.solicitacao.dto.SolicitacaoResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -21,13 +27,19 @@ public class SolicitacaoMedicaService {
     private final MedicoRepository medicoRepository;
     private final PacienteRepository pacienteRepository;
     private final SolicitacaoMedicaRepository solicitacaoRepository;
+    private final ProcedimentoRepository procedimentoRepository;
+    private final SolicitacaoProcedimentoRepository solicitacaoProcedimentoRepository;
 
     public SolicitacaoMedicaService(MedicoRepository medicoRepository,
                                     PacienteRepository pacienteRepository,
-                                    SolicitacaoMedicaRepository solicitacaoRepository) {
+                                    SolicitacaoMedicaRepository solicitacaoRepository,
+                                    ProcedimentoRepository procedimentoRepository,
+                                    SolicitacaoProcedimentoRepository solicitacaoProcedimentoRepository) {
         this.medicoRepository = medicoRepository;
         this.pacienteRepository = pacienteRepository;
         this.solicitacaoRepository = solicitacaoRepository;
+        this.procedimentoRepository = procedimentoRepository;
+        this.solicitacaoProcedimentoRepository = solicitacaoProcedimentoRepository;
     }
 
     @Transactional
@@ -50,6 +62,8 @@ public class SolicitacaoMedicaService {
         solicitacao.setValida(true);
 
         SolicitacaoMedica salva = solicitacaoRepository.save(solicitacao);
+
+        persistirProcedimentos(salva, request.getProcedimentos());
 
         String linkBeneficiario = "/solicitacoes/publico/" + salva.getTokenPublico();
 
@@ -75,6 +89,23 @@ public class SolicitacaoMedicaService {
         paciente.setNome(request.getNomePaciente());
         paciente.setOm(request.getOm());
         pacienteRepository.save(paciente);
+    }
+
+    private void persistirProcedimentos(SolicitacaoMedica solicitacao,
+                                        List<CriarSolicitacaoRequest.ProcedimentoQuantidade> procedimentosRequest) {
+        List<SolicitacaoProcedimento> vinculos = procedimentosRequest.stream()
+                .map(pq -> {
+                    Procedimento procedimento = procedimentoRepository.findById(pq.getProcedimentoCodigoDgp())
+                            .orElseThrow(() -> new ProcedimentoInvalidoException(
+                                    "Procedimento inválido: " + pq.getProcedimentoCodigoDgp()));
+                    SolicitacaoProcedimento vinculo = new SolicitacaoProcedimento();
+                    vinculo.setSolicitacaoMedica(solicitacao);
+                    vinculo.setProcedimento(procedimento);
+                    vinculo.setQuantidade(pq.getQuantidade());
+                    return vinculo;
+                }).toList();
+
+        solicitacaoProcedimentoRepository.saveAll(vinculos);
     }
 
     private void invalidarSolicitacaoAnterior(Long medicoId, Long pacienteId) {

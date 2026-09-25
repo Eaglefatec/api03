@@ -23,6 +23,10 @@ public class SolicitacaoMedica {
     @JoinColumn(name = "paciente_id", nullable = false)
     private Paciente paciente;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "medico_responsavel_id", nullable = true)
+    private Medico medicoResponsavel;
+
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "solicitacao_especialidade", joinColumns = @JoinColumn(name = "solicitacao_id"))
     @Column(name = "especialidade")
@@ -71,6 +75,14 @@ public class SolicitacaoMedica {
 
     public void setPaciente(Paciente paciente) {
         this.paciente = paciente;
+    }
+
+    public Medico getMedicoResponsavel() {
+        return medicoResponsavel;
+    }
+
+    public void setMedicoResponsavel(Medico medicoResponsavel) {
+        this.medicoResponsavel = medicoResponsavel;
     }
 
     public Set<Especialidade> getEspecialidades() {

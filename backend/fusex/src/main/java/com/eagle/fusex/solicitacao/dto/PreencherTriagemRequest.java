@@ -16,8 +16,9 @@ public class PreencherTriagemRequest {
     @NotBlank(message = "telefone é obrigatório")
     private String telefone;
 
-    @NotBlank(message = "clinicaLaboratorio é obrigatório")
-    private String clinicaLaboratorio;
+    @NotNull(message = "ocsId é obrigatório")
+    @Positive(message = "ocsId deve ser positivo")
+    private Long ocsId;
 
     @NotNull(message = "aceitoTermos é obrigatório")
     private Boolean aceitoTermos;
@@ -49,12 +50,12 @@ public class PreencherTriagemRequest {
         this.telefone = telefone;
     }
 
-    public String getClinicaLaboratorio() {
-        return clinicaLaboratorio;
+    public Long getOcsId() {
+        return ocsId;
     }
 
-    public void setClinicaLaboratorio(String clinicaLaboratorio) {
-        this.clinicaLaboratorio = clinicaLaboratorio;
+    public void setOcsId(Long ocsId) {
+        this.ocsId = ocsId;
     }
 
     public Boolean getAceitoTermos() {

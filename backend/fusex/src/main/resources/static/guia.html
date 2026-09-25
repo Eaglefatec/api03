@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUSEX - Consulta de Pré-Guia</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    background: #f4f5f7;
+    margin: 0;
+    padding: 24px 16px;
+    color: #222;
+  }
+  .container {
+    max-width: 560px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  }
+  h1 {
+    font-size: 1.3em;
+    margin-top: 0;
+    color: #1a4d8f;
+  }
+  h2 {
+    font-size: 0.95em;
+    color: #1a4d8f;
+    margin: 24px 0 10px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid #e5e5e5;
+  }
+  label {
+    display: block;
+    margin-top: 12px;
+    margin-bottom: 4px;
+    font-size: 0.9em;
+    font-weight: 600;
+    color: #444;
+  }
+  input[type=text], input[type=password] {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.95em;
+  }
+  .row2 { display: flex; gap: 12px; }
+  .row2 > div { flex: 1; }
+  button {
+    margin-top: 20px;
+    width: 100%;
+    padding: 10px;
+    background: #1a4d8f;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    cursor: pointer;
+  }
+  button:hover { background: #143c70; }
+  hr { border: none; border-top: 1px solid #e5e5e5; margin: 20px 0; }
+  .campo { display: flex; justify-content: space-between; padding: 5px 0; font-size: 0.9em; border-bottom: 1px solid #f5f5f5; }
+  .campo .rotulo { color: #777; }
+  .campo .valor { font-weight: 600; text-align: right; }
+  .valor.pendente { color: #b08600; font-weight: normal; font-style: italic; }
+  .proc-item {
+    background: #f0f4ff;
+    border-radius: 6px;
+    padding: 8px 10px;
+    margin-top: 6px;
+    font-size: 0.85em;
+  }
+  #errorMsg, #loading {
+    margin-top: 16px;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 0.9em;
+  }
+  #errorMsg {
+    background: #fdecea;
+    border: 1px solid #f3b4ac;
+    color: #a02b1f;
+  }
+  #loading { text-align: center; color: #888; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Consulta de Pré-Guia</h1>
+  <p style="font-size:0.85em; color:#777; margin-top:-8px;">Visão consolidada para auxiliar o preenchimento da guia — rascunho, não substitui a emissão oficial.</p>
+
+  <div id="loginSection">
+    <h2>Autenticação</h2>
+    <div class="row2">
+      <div>
+        <label>Usuário</label>
+        <input type="text" id="user" value="medico">
+      </div>
+      <div>
+        <label>Senha</label>
+        <input type="password" id="pass">
+      </div>
+    </div>
+    <button id="consultarBtn" type="button">Consultar Pré-Guia</button>
+  </div>
+
+  <div id="loading" hidden>Carregando...</div>
+  <div id="errorMsg" hidden></div>
+
+  <div id="resultado" hidden>
+    <h2>Beneficiário</h2>
+    <div class="campo"><span class="rotulo">Nome</span><span class="valor" id="benNome"></span></div>
+    <div class="campo"><span class="rotulo">Idade</span><span class="valor" id="benIdade"></span></div>
+    <div class="campo"><span class="rotulo">CPF/PREC</span><span class="valor" id="benCpf"></span></div>
+    <div class="campo"><span class="rotulo">Telefone</span><span class="valor" id="benTelefone"></span></div>
+
+    <h2>OCS</h2>
+    <div class="campo"><span class="rotulo">Nome</span><span class="valor" id="ocsNome"></span></div>
+    <div class="campo"><span class="rotulo">CNPJ</span><span class="valor" id="ocsCnpj"></span></div>
+    <div class="campo"><span class="rotulo">Endereço</span><span class="valor" id="ocsEndereco"></span></div>
+    <div class="campo"><span class="rotulo">Contato</span><span class="valor" id="ocsContato"></span></div>
+    <div class="campo"><span class="rotulo">Telefone</span><span class="valor" id="ocsTelefone"></span></div>
+
+    <h2>Médico Emissor</h2>
+    <div class="campo"><span class="rotulo">Nome</span><span class="valor" id="emissorNome"></span></div>
+    <div class="campo"><span class="rotulo">CRM</span><span class="valor" id="emissorCrm"></span></div>
+
+    <h2>Médico Responsável</h2>
+    <div class="campo"><span class="rotulo">Nome</span><span class="valor" id="responsavelNome"></span></div>
+    <div class="campo"><span class="rotulo">CRM</span><span class="valor" id="responsavelCrm"></span></div>
+
+    <h2>Procedimentos</h2>
+    <div id="procedimentosLista"></div>
+
+    <h2>Informações Gerais</h2>
+    <div class="campo"><span class="rotulo">Data</span><span class="valor" id="infoData"></span></div>
+    <div class="campo"><span class="rotulo">Unidade Gestora de Origem</span><span class="valor" id="infoUnidade"></span></div>
+  </div>
+</div>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const token = params.get('token');
+
+  const loginSection = document.getElementById('loginSection');
+  const loading = document.getElementById('loading');
+  const errorMsg = document.getElementById('errorMsg');
+  const resultado = document.getElementById('resultado');
+
+  function preencher(id, valor, rotuloPendente) {
+    const el = document.getElementById(id);
+    if (valor === null || valor === undefined || valor === '') {
+      el.textContent = rotuloPendente || 'Não informado';
+      el.classList.add('pendente');
+    } else {
+      el.textContent = valor;
+      el.classList.remove('pendente');
+    }
+  }
+
+  async function consultar() {
+    errorMsg.hidden = true;
+    resultado.hidden = true;
+
+    if (!token) {
+      errorMsg.textContent = 'Link inválido: token não informado na URL.';
+      errorMsg.hidden = false;
+      return;
+    }
+
+    const user = document.getElementById('user').value;
+    const pass = document.getElementById('pass').value;
+
+    loading.hidden = false;
+
+    try {
+      const res = await fetch(`/api/solicitacoes/${token}/pre-guia`, {
+        headers: { 'Authorization': 'Basic ' + btoa(user + ':' + pass) }
+      });
+      const data = await res.json();
+      loading.hidden = true;
+
+      if (!res.ok) {
+        errorMsg.textContent = data.error || 'Não foi possível consultar a pré-guia.';
+        errorMsg.hidden = false;
+        return;
+      }
+
+      preencher('benNome', data.beneficiario.nome);
+      preencher('benIdade', data.beneficiario.idade);
+      preencher('benCpf', data.beneficiario.cpfPrec);
+      preencher('benTelefone', data.beneficiario.telefone);
+
+      const ocs = data.ocs || {};
+      preencher('ocsNome', ocs.ocsNome);
+      preencher('ocsCnpj', ocs.ocsInscricaoFederal, 'Não cadastrado');
+      const endereco = [ocs.ocsEndereco, ocs.ocsEnderecoNumero, ocs.ocsEnderecoBairro, ocs.ocsEnderecoCidade, ocs.ocsEnderecoUf]
+        .filter(Boolean).join(', ');
+      preencher('ocsEndereco', endereco, 'Não cadastrado');
+      preencher('ocsContato', ocs.ocsContatoNome, 'Não cadastrado');
+      preencher('ocsTelefone', ocs.ocsContatoTelefone, 'Não cadastrado');
+
+      preencher('emissorNome', data.medicoEmissor && data.medicoEmissor.nome);
+      preencher('emissorCrm', data.medicoEmissor && data.medicoEmissor.crm);
+
+      preencher('responsavelNome', data.medicoResponsavel && data.medicoResponsavel.nome, 'Não atribuído');
+      preencher('responsavelCrm', data.medicoResponsavel && data.medicoResponsavel.crm, 'Não atribuído');
+
+      const procDiv = document.getElementById('procedimentosLista');
+      procDiv.innerHTML = '';
+      (data.procedimentos || []).forEach(p => {
+        const div = document.createElement('div');
+        div.className = 'proc-item';
+        div.innerHTML = `<strong>${p.procedimentoDescricao}</strong><br>Código DGP: ${p.procedimentoCodigoDgp} — Quantidade: ${p.quantidade}`;
+        procDiv.appendChild(div);
+      });
+      if ((data.procedimentos || []).length === 0) {
+        procDiv.innerHTML = '<span style="color:#999; font-size:0.85em;">Nenhum procedimento associado.</span>';
+      }
+
+      const dataFormatada = data.informacoesGerais && data.informacoesGerais.data
+        ? new Date(data.informacoesGerais.data).toLocaleString('pt-BR')
+        : null;
+      preencher('infoData', dataFormatada);
+      preencher('infoUnidade', data.informacoesGerais && data.informacoesGerais.unidadeGestoraOrigem);
+
+      resultado.hidden = false;
+    } catch (err) {
+      loading.hidden = true;
+      errorMsg.textContent = 'Erro ao consultar a pré-guia. Tente novamente.';
+      errorMsg.hidden = false;
+    }
+  }
+
+  document.getElementById('consultarBtn').addEventListener('click', consultar);
+</script>
+</body>
+</html>
