@@ -92,7 +92,6 @@
   #procedimentoSugestoes li:hover { background: #f0f4ff; }
   .procedimento-linha { display: flex; gap: 8px; align-items: flex-end; }
   .procedimento-linha > div:first-child { flex: 1; }
-  .procedimento-linha input[type=number] { width: 80px; }
   #listaProcedimentos {
     list-style: none;
     margin: 10px 0 0;
@@ -168,7 +167,7 @@
 </style>
 </head>
 <body>
-<div class="container">
+<div class=\"container\">
   <h1>Nova Solicitação Médica</h1>
 
   <h2>Autenticação</h2>
@@ -221,9 +220,6 @@
         <input type="text" id="procedimentoBusca" placeholder="Digite o nome do procedimento (min. 3 letras)..." autocomplete="off">
         <ul id="procedimentoSugestoes" hidden></ul>
       </div>
-      <div>
-        <input type="number" id="procedimentoQuantidade" min="1" value="1">
-      </div>
       <button type="button" id="addProcedimentoBtn">Adicionar</button>
     </div>
     <ul id="listaProcedimentos"></ul>
@@ -252,7 +248,6 @@
 
   const procedimentoBusca = document.getElementById('procedimentoBusca');
   const procedimentoSugestoes = document.getElementById('procedimentoSugestoes');
-  const procedimentoQuantidade = document.getElementById('procedimentoQuantidade');
   const addProcedimentoBtn = document.getElementById('addProcedimentoBtn');
   const listaProcedimentos = document.getElementById('listaProcedimentos');
 
@@ -303,16 +298,14 @@
       errorBox.hidden = false;
       return;
     }
-    const quantidade = Number(procedimentoQuantidade.value) || 1;
     procedimentosAdicionados.push({
       procedimentoCodigoDgp: procedimentoSelecionadoAtual.procCodigoDgp,
       procDescricao: procedimentoSelecionadoAtual.procDescricao,
-      quantidade: quantidade
+      quantidade: 1
     });
     renderListaProcedimentos();
 
     procedimentoBusca.value = '';
-    procedimentoQuantidade.value = 1;
     procedimentoSelecionadoAtual = null;
     errorBox.hidden = true;
   });
@@ -322,7 +315,7 @@
     procedimentosAdicionados.forEach((p, index) => {
       const li = document.createElement('li');
       const span = document.createElement('span');
-      span.textContent = `${p.procDescricao} (qtd: ${p.quantidade})`;
+      span.textContent = p.procDescricao;
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.textContent = 'Remover';

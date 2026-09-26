@@ -4,7 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0f9fad42-de7c-4a3e-9b03-5061b93289b7" name="Changes" comment="fix_api03_backend: Configurar arquivos de projeto do IntelliJ IDEA e atualizar `SecurityConfig`:&#10;- Adicionar arquivos de configuração do IDEA (*.iml, módulos, codificações, etc.).&#10;- Atualizar a configuração do Spring Security para personalizar as definições de CSRF e cabeçalhos de frame em `SecurityConfig.java`.&#10;- Atualizar configuração do Application.yml para carregar o migration que não estava sendo carregado" />
+    <list default="true" id="131b5a3d-72c1-4473-a190-06e07f917a99" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/db-forest-config.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/data_sources_history.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/data_sources_history.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/fusex/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/solicitacao/dto/PreGuiaConsolidadaResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/solicitacao/dto/PreGuiaConsolidadaResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/solicitacao/dto/SolicitacaoPublicaResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/solicitacao/dto/SolicitacaoPublicaResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/solicitacao/service/PreGuiaConsolidadaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/solicitacao/service/PreGuiaConsolidadaService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/solicitacao/service/TriagemPreGuiaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/solicitacao/service/TriagemPreGuiaService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/resources/static/beneficiario.html" beforeDir="false" afterPath="$PROJECT_DIR$/backend/fusex/src/main/resources/static/beneficiario.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/resources/static/guia.html" beforeDir="false" afterPath="$PROJECT_DIR$/backend/fusex/src/main/resources/static/guia.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/resources/static/medico.html" beforeDir="false" afterPath="$PROJECT_DIR$/backend/fusex/src/main/resources/static/medico.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/test/java/com/eagle/fusex/solicitacao/service/PreGuiaConsolidadaServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/fusex/src/test/java/com/eagle/fusex/solicitacao/service/PreGuiaConsolidadaServiceTest.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -27,11 +42,12 @@
   </component>
   <component name="DatabaseLocalColorSettings">
     <colors>
-      <entry key="f22f8e04-a815-4868-9163-df01357d4028" value="" />
+      <entry key="04dc183d-e678-4d78-8260-59199db53e57" value="" />
+      <entry key="ca2ee3a4-747d-43b9-b57f-918792885ed5" value="" />
     </colors>
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="57" />
+    <option name="cachedIndexableFilesCount" value="111" />
     <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
   </component>
   <component name="Git.Settings">
@@ -42,18 +58,18 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "ropcastr"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;ropcastr&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Eaglefatec/api03.git",
-    "accountId": "96ad5975-ee9f-4e94-b1ea-af7787251ffe"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Eaglefatec/api03.git&quot;,
+    &quot;accountId&quot;: &quot;96ad5975-ee9f-4e94-b1ea-af7787251ffe&quot;
   }
-}]]></component>
+}</component>
   <component name="MacroExpansionManager">
     <option name="directoryName" value="6vluYpqS" />
   </component>
@@ -70,67 +86,67 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.0870397205620876" />
-      <entry key="MS500" value="3.287383926042761" />
-      <entry key="S2" value="12.822773798330706" />
-      <entry key="S5" value="27.48749743522297" />
-      <entry key="S10" value="43.415787883613895" />
-      <entry key="S30" value="67.82937814815762" />
-      <entry key="S60" value="84.93421505879884" />
-      <entry key="M2" value="117.82963863456692" />
-      <entry key="M5" value="201.24675041771903" />
-      <entry key="M10" value="314.5337492175517" />
-      <entry key="M15" value="397.57998258491347" />
-      <entry key="M30" value="544.1742288715444" />
-      <entry key="H1" value="668.2194721863638" />
-      <entry key="H2" value="753.9884338007662" />
-      <entry key="H4" value="805.4199018067147" />
-      <entry key="D1" value="853.6845078246591" />
-      <entry key="W1" value="862.5120342159469" />
+      <entry key="MS100" value="1.0000007810233096" />
+      <entry key="MS500" value="1.205089771957618" />
+      <entry key="S2" value="7.899777343304928" />
+      <entry key="S5" value="24.100764862657435" />
+      <entry key="S10" value="45.13703417756927" />
+      <entry key="S30" value="102.19461202522855" />
+      <entry key="S60" value="143.2204925800541" />
+      <entry key="M2" value="184.02710111852448" />
+      <entry key="M5" value="274.44169335228344" />
+      <entry key="M10" value="468.9262908521758" />
+      <entry key="M15" value="724.7232209946553" />
+      <entry key="M30" value="1514.9305419637326" />
+      <entry key="H1" value="2639.385138803825" />
+      <entry key="H2" value="3740.495343626144" />
+      <entry key="H4" value="4554.710594872798" />
+      <entry key="D1" value="5438.097552460974" />
+      <entry key="W1" value="5613.080948794721" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
       <entry key="MS500" value="0.0" />
       <entry key="S2" value="0.0" />
       <entry key="S5" value="0.0" />
-      <entry key="S10" value="8.49230114748427E-165" />
-      <entry key="S30" value="3.2163069577484877E-55" />
-      <entry key="S60" value="8.013334701418481E-28" />
-      <entry key="M2" value="4.002454265689378E-14" />
-      <entry key="M5" value="6.630185463070259E-6" />
-      <entry key="M10" value="0.003641447256827035" />
-      <entry key="M15" value="0.029821203565852463" />
-      <entry key="M30" value="0.2442177118573035" />
-      <entry key="H1" value="0.6988813815743574" />
-      <entry key="H2" value="1.1822701014282249" />
-      <entry key="H4" value="1.5377061262751741" />
-      <entry key="D1" value="1.9142730546050735" />
-      <entry key="W1" value="1.9875221621074994" />
+      <entry key="S10" value="0.0" />
+      <entry key="S30" value="1.4889640089623804E-137" />
+      <entry key="S60" value="5.452261004628335E-69" />
+      <entry key="M2" value="1.0440181662864715E-34" />
+      <entry key="M5" value="3.8732751353738735E-14" />
+      <entry key="M10" value="2.7832380909053355E-7" />
+      <entry key="M15" value="5.370846302304841E-5" />
+      <entry key="M30" value="0.010364203611637906" />
+      <entry key="H1" value="0.14397359867112713" />
+      <entry key="H2" value="0.5366070836610587" />
+      <entry key="H4" value="1.0359604889232281" />
+      <entry key="D1" value="1.7923199028766095" />
+      <entry key="W1" value="1.9689193573886938" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="1.0567212056272797" />
-      <entry key="MS500" value="3.2653364677949237" />
-      <entry key="S2" value="12.799825110788348" />
-      <entry key="S5" value="27.46766111461359" />
-      <entry key="S10" value="43.40004964655961" />
-      <entry key="S30" value="67.82112536636944" />
-      <entry key="S60" value="84.9288691103931" />
-      <entry key="M2" value="117.82433186995867" />
-      <entry key="M5" value="201.23999730489982" />
-      <entry key="M10" value="314.5314415549415" />
-      <entry key="M15" value="397.6048207476266" />
-      <entry key="M30" value="544.4150753318634" />
-      <entry key="H1" value="668.916232415091" />
-      <entry key="H2" value="755.1694669137762" />
-      <entry key="H4" value="806.9569311718859" />
-      <entry key="D1" value="855.5986583684619" />
-      <entry key="W1" value="864.4995386137286" />
+      <entry key="MS100" value="0.9726557018349716" />
+      <entry key="MS500" value="1.1981645846264415" />
+      <entry key="S2" value="7.886921300268604" />
+      <entry key="S5" value="24.084929455986785" />
+      <entry key="S10" value="45.12210725392817" />
+      <entry key="S30" value="102.18324503672885" />
+      <entry key="S60" value="143.21251379532524" />
+      <entry key="M2" value="184.0219775253993" />
+      <entry key="M5" value="274.4386406581686" />
+      <entry key="M10" value="468.92366874581944" />
+      <entry key="M15" value="724.7205474861095" />
+      <entry key="M30" value="1514.9379069656059" />
+      <entry key="H1" value="2639.5262281156824" />
+      <entry key="H2" value="3741.0297009947203" />
+      <entry key="H4" value="4555.745093679644" />
+      <entry key="D1" value="5439.889562235287" />
+      <entry key="W1" value="5615.049821872736" />
     </decayedShown>
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 5,
-  "fromUser": false
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5,
+  &quot;fromUser&quot;: false
+}</component>
   <component name="ProjectId" id="3JplK6xzTMnmJ7w4hi1lctKHXwD" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -147,11 +163,14 @@
     "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.MCP Project settings loaded": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Spring Boot.FusexApplication.executor": "Run",
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
     "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "feat-us03",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
@@ -160,7 +179,7 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "python.packages.toolwindow.project.migrated.to.right.top.v2": "true",
-    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "show.migrate.to.gradle.popup": "false",
     "to.speed.mode.migration.done": "true"
   },
@@ -188,7 +207,7 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="0f9fad42-de7c-4a3e-9b03-5061b93289b7" name="Changes" comment="" />
+      <changelist id="131b5a3d-72c1-4473-a190-06e07f917a99" name="Changes" comment="" />
       <created>1790365823968</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
