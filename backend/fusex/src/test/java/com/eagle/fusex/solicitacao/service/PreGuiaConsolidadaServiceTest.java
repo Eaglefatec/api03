@@ -2,6 +2,8 @@ package com.eagle.fusex.solicitacao.service;
 
 import com.eagle.fusex.medico.Medico;
 import com.eagle.fusex.ocs.Ocs;
+import com.eagle.fusex.ocs.OcsProcedimento;
+import com.eagle.fusex.ocs.OcsProcedimentoRepository;
 import com.eagle.fusex.ocs.Procedimento;
 import com.eagle.fusex.paciente.Paciente;
 import com.eagle.fusex.shared.exception.SolicitacaoNaoEncontradaException;
@@ -19,6 +21,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -36,6 +39,9 @@ class PreGuiaConsolidadaServiceTest {
 
     @Mock
     private SolicitacaoProcedimentoRepository solicitacaoProcedimentoRepository;
+
+    @Mock
+    private OcsProcedimentoRepository ocsProcedimentoRepository;
 
     @InjectMocks
     private PreGuiaConsolidadaService service;
@@ -117,17 +123,22 @@ class PreGuiaConsolidadaServiceTest {
     }
 
     @Test
-    void testConsultar_ComSucesso_MultiplosProcedimentos() {
+    void testConsultar_ComSucesso_MultiplosProcedimentosEPreco() {
         Procedimento procedimento1 = new Procedimento("DGP001", "Consulta eletiva", 1);
         Procedimento procedimento2 = new Procedimento("DGP002", "ECG", 1);
 
         SolicitacaoProcedimento vinculo1 = new SolicitacaoProcedimento();
         vinculo1.setProcedimento(procedimento1);
         vinculo1.setQuantidade(1);
+        vinculo1.setValorNoMomento(new BigDecimal("60.00"));
 
         SolicitacaoProcedimento vinculo2 = new SolicitacaoProcedimento();
         vinculo2.setProcedimento(procedimento2);
         vinculo2.setQuantidade(2);
+        vinculo2.setValorNoMomento(null);
+
+        OcsProcedimento op2 = new OcsProcedimento();
+        op2.setValor(new BigDecimal("21.00"));
 
         when(solicitacaoRepository.findByTokenPublico("token-uuid-123"))
                 .thenReturn(Optional.of(solicitacao));
@@ -135,12 +146,16 @@ class PreGuiaConsolidadaServiceTest {
                 .thenReturn(Optional.of(triagem));
         when(solicitacaoProcedimentoRepository.findBySolicitacaoMedicaId(1L))
                 .thenReturn(List.of(vinculo1, vinculo2));
+        when(ocsProcedimentoRepository.findByOcs_OcsIdAndProcedimento_ProcCodigoDgp(1L, "DGP002"))
+                .thenReturn(Optional.of(op2));
 
         PreGuiaConsolidadaResponse response = service.consultar("token-uuid-123");
 
         assertNotNull(response);
         assertEquals(2, response.getProcedimentos().size());
         assertEquals("DGP001", response.getProcedimentos().get(0).getProcedimentoCodigoDgp());
-        assertEquals(2, response.getProcedimentos().get(1).getQuantidade());
+        assertEquals(new BigDecimal("60.00"), response.getProcedimentos().get(0).getValor());
+        assertEquals("DGP002", response.getProcedimentos().get(1).getProcedimentoCodigoDgp());
+        assertEquals(new BigDecimal("21.00"), response.getProcedimentos().get(1).getValor());
     }
 }

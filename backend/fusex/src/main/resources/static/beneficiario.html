@@ -78,8 +78,7 @@
   }
   button:hover { background: #143c70; }
   #loading { text-align: center; color: #888; padding: 20px 0; }
-  #errorSection, #jaPreenchida {
-    margin-top: 12px;
+  #errorSection, #jaPreenchida {\n    margin-top: 12px;
     padding: 12px;
     border-radius: 6px;
     font-size: 0.9em;
@@ -123,11 +122,18 @@
     <p><strong>Paciente:</strong> <span id="nomePaciente"></span></p>
     <p><strong>OM:</strong> <span id="om"></span></p>
     <p><strong>Especialidades:</strong> <span id="especialidades"></span></p>
-    <p><strong>Observação:</strong> <span id="observacao"></span></p>
+    <div style="margin-top: 10px;">
+      <p style="margin: 6px 0 4px;"><strong>Procedimentos:</strong></p>
+      <div id="procedimentosInfoLista"></div>
+    </div>
+    <p style="margin-top: 10px;"><strong>Observação:</strong> <span id="observacao"></span></p>
   </div>
 
   <div id="errorSection" hidden></div>
-  <div id="jaPreenchida" hidden>Esta solicitação já foi preenchida anteriormente.</div>
+  <div id="jaPreenchida" hidden>
+    <div>Esta solicitação já foi preenchida anteriormente.</div>
+    <button type="button" id="btnJaPreenchida" style="margin-top: 12px;">Consultar Pré-Guia</button>
+  </div>
 
   <form id="triagemForm" hidden>
     <hr>
@@ -140,7 +146,7 @@
     <input type="number" id="idade" required min="0">
 
     <label>Telefone</label>
-    <input type="text" id="telefone" required placeholder="(00) 00000-0000">
+    <input type="text" id="telefone" required placeholder="(00) 00000-0000" maxlength="15">
 
     <label>Clínica/Laboratório de preferência</label>
     <select id="clinicaLaboratorio" required disabled>
@@ -158,6 +164,7 @@
   <div id="resultSection" hidden>
     <h2 id="resultMensagem"></h2>
     <div id="opcoes"></div>
+    <button type="button" id="btnConsultarGuia" style="margin-top: 16px;">Consultar Pré-Guia</button>
   </div>
 </div>
 
@@ -172,6 +179,29 @@
   const triagemForm = document.getElementById('triagemForm');
   const resultSection = document.getElementById('resultSection');
   const clinicaSelect = document.getElementById('clinicaLaboratorio');
+  const telInput = document.getElementById('telefone');
+
+  telInput.addEventListener('input', (e) => {
+    let v = e.target.value.replace(/\D/g, '');
+    if (v.length > 11) v = v.slice(0, 11);
+    if (v.length > 10) {
+      v = `(${v.slice(0, 2)}) ${v.slice(2, 7)}-${v.slice(7)}`;
+    } else if (v.length > 6) {
+      v = `(${v.slice(0, 2)}) ${v.slice(2, 6)}-${v.slice(6)}`;
+    } else if (v.length > 2) {
+      v = `(${v.slice(0, 2)}) ${v.slice(2)}`;
+    } else if (v.length > 0) {
+      v = `(${v}`;
+    }
+    e.target.value = v;
+  });
+
+  function irParaPreGuia() {
+    window.location.href = `guia.html?token=${encodeURIComponent(token)}`;
+  }
+
+  document.getElementById('btnConsultarGuia').addEventListener('click', irParaPreGuia);
+  document.getElementById('btnJaPreenchida').addEventListener('click', irParaPreGuia);
 
   async function carregarOcsPorEspecialidades(especialidades) {
     clinicaSelect.disabled = true;
@@ -228,6 +258,22 @@
       document.getElementById('nomePaciente').textContent = data.nomePaciente;
       document.getElementById('om').textContent = data.om;
       document.getElementById('especialidades').textContent = (data.especialidades || []).join(', ');
+
+      const procLista = document.getElementById('procedimentosInfoLista');
+      procLista.innerHTML = '';
+      if (data.procedimentos && data.procedimentos.length > 0) {
+        data.procedimentos.forEach(p => {
+          const item = document.createElement('div');
+          item.className = 'opcao';
+          item.style.marginTop = '4px';
+          item.style.padding = '8px 10px';
+          item.innerHTML = `<strong>${p.descricao}</strong><br><span style="color:#666; font-size:0.85em;">Código DGP: ${p.codigoDgp}</span>`;
+          procLista.appendChild(item);
+        });
+      } else {
+        procLista.innerHTML = '<span style="color:#888; font-size:0.9em;">Nenhum procedimento informado.</span>';
+      }
+
       document.getElementById('observacao').textContent = data.observacao || '-';
 
       if (data.triagemPreenchida) {

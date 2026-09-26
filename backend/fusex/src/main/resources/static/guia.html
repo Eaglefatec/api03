@@ -73,6 +73,7 @@
     padding: 8px 10px;
     margin-top: 6px;
     font-size: 0.85em;
+    line-height: 1.45;
   }
   #errorMsg, #loading {
     margin-top: 16px;
@@ -128,10 +129,6 @@
     <h2>Médico Emissor</h2>
     <div class="campo"><span class="rotulo">Nome</span><span class="valor" id="emissorNome"></span></div>
     <div class="campo"><span class="rotulo">CRM</span><span class="valor" id="emissorCrm"></span></div>
-
-    <h2>Médico Responsável</h2>
-    <div class="campo"><span class="rotulo">Nome</span><span class="valor" id="responsavelNome"></span></div>
-    <div class="campo"><span class="rotulo">CRM</span><span class="valor" id="responsavelCrm"></span></div>
 
     <h2>Procedimentos</h2>
     <div id="procedimentosLista"></div>
@@ -207,15 +204,15 @@
       preencher('emissorNome', data.medicoEmissor && data.medicoEmissor.nome);
       preencher('emissorCrm', data.medicoEmissor && data.medicoEmissor.crm);
 
-      preencher('responsavelNome', data.medicoResponsavel && data.medicoResponsavel.nome, 'Não atribuído');
-      preencher('responsavelCrm', data.medicoResponsavel && data.medicoResponsavel.crm, 'Não atribuído');
-
       const procDiv = document.getElementById('procedimentosLista');
       procDiv.innerHTML = '';
       (data.procedimentos || []).forEach(p => {
+        const precoFormatado = (p.valor !== null && p.valor !== undefined)
+          ? Number(p.valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+          : 'Não informado';
         const div = document.createElement('div');
         div.className = 'proc-item';
-        div.innerHTML = `<strong>${p.procedimentoDescricao}</strong><br>Código DGP: ${p.procedimentoCodigoDgp} — Quantidade: ${p.quantidade}`;
+        div.innerHTML = `<strong>${p.procedimentoDescricao}</strong><br>Código DGP: ${p.procedimentoCodigoDgp}<br>Preço: ${precoFormatado}`;
         procDiv.appendChild(div);
       });
       if ((data.procedimentos || []).length === 0) {

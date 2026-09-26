@@ -50,12 +50,21 @@ public class TriagemPreGuiaService {
         boolean triagemPreenchida = triagemRepository.findBySolicitacaoMedicaId(solicitacao.getId())
                 .isPresent();
 
+        List<SolicitacaoPublicaResponse.ProcedimentoResumo> procedimentos = solicitacaoProcedimentoRepository
+                .findBySolicitacaoMedicaId(solicitacao.getId()).stream()
+                .map(sp -> new SolicitacaoPublicaResponse.ProcedimentoResumo(
+                        sp.getProcedimento().getProcCodigoDgp(),
+                        sp.getProcedimento().getProcDescricao()
+                ))
+                .toList();
+
         return new SolicitacaoPublicaResponse(
                 solicitacao.getPaciente().getNome(),
                 solicitacao.getPaciente().getOm(),
                 solicitacao.getEspecialidades(),
                 solicitacao.getObservacao(),
-                triagemPreenchida
+                triagemPreenchida,
+                procedimentos
         );
     }
 

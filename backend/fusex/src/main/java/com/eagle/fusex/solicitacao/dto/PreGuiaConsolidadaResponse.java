@@ -3,6 +3,7 @@ package com.eagle.fusex.solicitacao.dto;
 import com.eagle.fusex.medico.dto.MedicoResumoResponse;
 import com.eagle.fusex.ocs.dto.OcsResponse;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -131,14 +132,20 @@ public class PreGuiaConsolidadaResponse {
         private String procedimentoCodigoDgp;
         private String procedimentoDescricao;
         private Integer quantidade;
+        private BigDecimal valor;
 
         public ProcedimentoQuantidadeInfo() {
         }
 
         public ProcedimentoQuantidadeInfo(String procedimentoCodigoDgp, String procedimentoDescricao, Integer quantidade) {
+            this(procedimentoCodigoDgp, procedimentoDescricao, quantidade, null);
+        }
+
+        public ProcedimentoQuantidadeInfo(String procedimentoCodigoDgp, String procedimentoDescricao, Integer quantidade, BigDecimal valor) {
             this.procedimentoCodigoDgp = procedimentoCodigoDgp;
             this.procedimentoDescricao = procedimentoDescricao;
             this.quantidade = quantidade;
+            this.valor = valor;
         }
 
         public String getProcedimentoCodigoDgp() {
@@ -163,6 +170,14 @@ public class PreGuiaConsolidadaResponse {
 
         public void setQuantidade(Integer quantidade) {
             this.quantidade = quantidade;
+        }
+
+        public BigDecimal getValor() {
+            return valor;
+        }
+
+        public void setValor(BigDecimal valor) {
+            this.valor = valor;
         }
     }
 

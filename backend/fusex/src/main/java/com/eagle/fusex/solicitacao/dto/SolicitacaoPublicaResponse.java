@@ -2,6 +2,8 @@ package com.eagle.fusex.solicitacao.dto;
 
 import com.eagle.fusex.solicitacao.Especialidade;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 public class SolicitacaoPublicaResponse {
@@ -11,17 +13,54 @@ public class SolicitacaoPublicaResponse {
     private Set<Especialidade> especialidades;
     private String observacao;
     private Boolean triagemPreenchida;
+    private List<ProcedimentoResumo> procedimentos = new ArrayList<>();
+
+    public static class ProcedimentoResumo {
+        private String codigoDgp;
+        private String descricao;
+
+        public ProcedimentoResumo() {
+        }
+
+        public ProcedimentoResumo(String codigoDgp, String descricao) {
+            this.codigoDgp = codigoDgp;
+            this.descricao = descricao;
+        }
+
+        public String getCodigoDgp() {
+            return codigoDgp;
+        }
+
+        public void setCodigoDgp(String codigoDgp) {
+            this.codigoDgp = codigoDgp;
+        }
+
+        public String getDescricao() {
+            return descricao;
+        }
+
+        public void setDescricao(String descricao) {
+            this.descricao = descricao;
+        }
+    }
 
     public SolicitacaoPublicaResponse() {
     }
 
     public SolicitacaoPublicaResponse(String nomePaciente, String om, Set<Especialidade> especialidades,
                                       String observacao, Boolean triagemPreenchida) {
+        this(nomePaciente, om, especialidades, observacao, triagemPreenchida, new ArrayList<>());
+    }
+
+    public SolicitacaoPublicaResponse(String nomePaciente, String om, Set<Especialidade> especialidades,
+                                      String observacao, Boolean triagemPreenchida,
+                                      List<ProcedimentoResumo> procedimentos) {
         this.nomePaciente = nomePaciente;
         this.om = om;
         this.especialidades = especialidades;
         this.observacao = observacao;
         this.triagemPreenchida = triagemPreenchida;
+        this.procedimentos = procedimentos != null ? procedimentos : new ArrayList<>();
     }
 
     public String getNomePaciente() {
@@ -62,5 +101,13 @@ public class SolicitacaoPublicaResponse {
 
     public void setTriagemPreenchida(Boolean triagemPreenchida) {
         this.triagemPreenchida = triagemPreenchida;
+    }
+
+    public List<ProcedimentoResumo> getProcedimentos() {
+        return procedimentos;
+    }
+
+    public void setProcedimentos(List<ProcedimentoResumo> procedimentos) {
+        this.procedimentos = procedimentos != null ? procedimentos : new ArrayList<>();
     }
 }
