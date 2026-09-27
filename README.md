@@ -7,13 +7,13 @@ Projeto desenvolvido pela equipe Eagle do 3º semestre de Banco de Dados da FATE
   <p>
     <a href="#a-dor">A Dor</a> &nbsp;|&nbsp;
     <a href="#a-solucao">A Solução</a> &nbsp;|&nbsp;
-    <a href="#backlog-de-produto">Backlog de Produto</a> &nbsp;|&nbsp;
+    <a href="#backlog-do-produto">Backlog do Produto</a> &nbsp;|&nbsp;
     <a href="#dor-e-dod">DoR e DoD</a> &nbsp;|&nbsp;
-    <a href="#sprints">Sprints</a>
+    <a href="#sprints">Cronograma de Sprints</a>
   </p>
   <p>
     <a href="#tecnologias-utilizadas">Tecnologias Utilizadas</a> &nbsp;|&nbsp;
-    <a href="#padrao-de-commits">Estratégia de Branchs</a> &nbsp;|&nbsp;
+    <a href="#padrao-de-commits">Estratégia de Branches</a> &nbsp;|&nbsp;
     <a href="#manual-do-usuario">Manual do Usuário</a> &nbsp;|&nbsp;
     <a href="#autores">Equipe</a>
   </p>
@@ -42,8 +42,8 @@ Com a centralização das informações, o sistema busca reduzir erros de preenc
 > ⚙️ [Backend](https://github.com/Eaglefatec/api03-backend.git)
 
 ---
-<a id="backlog-de-produto"></a>
-## 📋 Backlog de Produto 
+<a id="backlog-do-produto"></a>
+## 📋 Backlog do Produto 
 | Sprint | Prioridade | Rank |    US    | User Story                                                                                                                                            | Dificuldade |
 | :----: | :--------: |:----: | :------: | ----------------------------------------------------------------------------------------------------------------------------------------------------- | :---------: |
 |  **1** |  **Alta**  | 1 | **US03** | Como EG, quero emitir as guias com auxílio digital, para evitar erros de preenchimento.                                                               |    Média    |
@@ -56,7 +56,7 @@ Com a centralização das informações, o sistema busca reduzir erros de preenc
 |  **3** |  **Baixa** | 8 | **US04** | Como EG, quero coletar aprovação das Guias com os responsáveis, para reduzir o tempo atual de validação para menos de três dias.                      |     Alta    |
 |  **3** |  **Baixa** | 9 | **US06** | Como Chefe / Médico, quero assinar as guias digitalmente, para tornar esse processo mais rápido e eficiente.                                          |     Alta    |
 
-> ### 🗒️Legenda
+> ### 🗒️ Legenda
 
 |          Sigla         | Significado                                      |
 | :--------------------: | ------------------------------------------------ |
@@ -93,10 +93,10 @@ Para que uma User Story seja considerada finalizada, os seguintes critérios té
 
 ---
 <a id="sprints"></a>
-## 👟 Sprints
+## 🗓️ Cronograma de Sprints
 | Sprint | Período | Documentação | Vídeo do Incremento | Status |
 |:---:|---|---|---|---|
-| 1 | 07/09/2026 - 27/09/2026 | [Ver Documentação](https://docs.google.com/document/d/1eZ3Eu4DxbGu6Xt57trghgvPsKqgVh6zzKEHZEWdSqEE/edit?usp=sharing) | <div align="center">[Ver Vídeo]()</div> | 🔓 IN PROGRESS |
+| 1 | 07/09/2026 - 27/09/2026 | [Ver Documentação](https://docs.google.com/document/d/1eZ3Eu4DxbGu6Xt57trghgvPsKqgVh6zzKEHZEWdSqEE/edit?usp=sharing) | <div align="center">[Ver Vídeo](https://youtu.be/bo2MY-XA9kM)</div> | 🔓 IN PROGRESS |
 | 2 | 05/10/2026 - 25/10/2026 | [Ver Documentação]() | <div align="center">[Ver Vídeo]()</div> | 🔒 TO DO |
 | 3 | 02/11/2026 - 22/11/2026 | [Ver Documentação]() | <div align="center">[Ver Vídeo]()</div> | 🔒 TO DO |
 
@@ -131,7 +131,7 @@ Para que uma User Story seja considerada finalizada, os seguintes critérios té
 
 ---
 <a id="padrao-de-commits"></a>
-## 🌿 Estratégia de Branch e 📝 Padrão de Commits
+## 🌿 Estratégia de Branches e Padrão de Commits
 
 O projeto adota uma estratégia de versionamento inspirada no **Git Flow**, utilizando o sistema de controle de versão **Git**. 
 
