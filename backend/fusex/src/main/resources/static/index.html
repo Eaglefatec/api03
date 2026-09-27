@@ -3,59 +3,161 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FUSEX</title>
+<title>FUSEX - Sistema de Regulação e Saúde Suplementar</title>
+<link rel="stylesheet" href="css/fusex-theme.css">
 <style>
-  * { box-sizing: border-box; }
-  body {
-    font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    background: #f4f5f7;
-    margin: 0;
-    padding: 24px 16px;
-    color: #222;
-    display: flex;
+  .portal-wrap {
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  .portal-body {
+    flex: 1;
+    display: flex;
     align-items: center;
     justify-content: center;
+    padding: 32px 16px;
   }
-  .container {
-    max-width: 420px;
+  .portal-card {
+    max-width: 480px;
     width: 100%;
-    background: #fff;
-    border-radius: 8px;
-    padding: 32px 24px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-    text-align: center;
   }
-  h1 { color: #1a4d8f; margin-top: 0; }
-  p { color: #666; font-size: 0.9em; }
-  a.btn {
-    display: block;
-    margin-top: 16px;
-    padding: 12px;
-    background: #1a4d8f;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 4px;
-    font-weight: 600;
-  }
-  a.btn:hover { background: #143c70; }
-  a.btn.secundario { background: #2f9e58; }
-  a.btn.secundario:hover { background: #257e46; }
-  .hint {
+  .portal-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
     margin-top: 24px;
-    font-size: 0.8em;
-    color: #999;
+  }
+  .portal-btn {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    background: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    color: var(--text-main);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--shadow-sm);
+  }
+  .portal-btn:hover {
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    background: var(--bg-subtle);
+  }
+  .portal-btn.primary {
+    background: var(--color-primary);
+    color: #fff;
+    border-color: transparent;
+  }
+  .portal-btn.primary:hover {
+    background: var(--color-primary-hover);
+  }
+  .portal-btn-icon {
+    font-size: 1.4em;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.15);
+  }
+  .portal-btn:not(.primary) .portal-btn-icon {
+    background: var(--color-primary-light);
+    color: var(--color-primary);
+  }
+  .portal-btn-info {
+    flex: 1;
+    text-align: left;
+  }
+  .portal-btn-title {
+    font-weight: 600;
+    font-size: 0.95em;
+  }
+  .portal-btn-desc {
+    font-size: 0.78em;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+  .info-box {
+    margin-top: 24px;
+    padding: 14px 16px;
+    background: var(--bg-muted);
+    border-radius: var(--radius-sm);
+    font-size: 0.82em;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+  .footer {
+    text-align: center;
+    padding: 16px;
+    font-size: 0.78em;
+    color: var(--text-subtle);
+    border-top: 1px solid var(--border-color);
   }
 </style>
 </head>
 <body>
-<div class="container">
-  <h1>FUSEX</h1>
-  <p>Sistema de Solicitação Médica</p>
-  <a class="btn" href="medico.html">Acessar como Médico</a>
-  <a class="btn secundario" href="guia.html">Consultar Pré-Guia (EG)</a>
-  <a class="btn secundario" href="importacao.html">Importação de Dados</a>
-  <p class="hint">O beneficiário acessa por um link específico enviado pelo médico após criar a solicitação. A consulta de pré-guia exige o token da solicitação (?token=...) na URL.</p>
+<div class="portal-wrap">
+  <header class="app-header">
+    <div class="brand-badge">
+      <span class="brand-logo">FUSEX</span>
+      <div>
+        <div class="brand-title">Fundo de Saúde do Exército</div>
+        <div class="brand-subtitle">Regulação Médica &amp; Auditoria de Guias</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="portal-body">
+    <div class="card portal-card">
+      <div style="text-align: center; margin-bottom: 20px;">
+        <h1 class="card-title">Portal de Atendimento</h1>
+        <p class="card-subtitle">Selecione o módulo de acesso de acordo com o seu perfil</p>
+      </div>
+
+      <div class="portal-options">
+        <a class="portal-btn primary" href="login.html">
+          <div class="portal-btn-icon">🩺</div>
+          <div class="portal-btn-info">
+            <div class="portal-btn-title">Acesso Médico</div>
+            <div class="portal-btn-desc">Emissão de pedidos, triagem inicial e encaminhamentos</div>
+          </div>
+          <span style="font-size: 1.1em;">→</span>
+        </a>
+
+        <a class="portal-btn" href="guia.html">
+          <div class="portal-btn-icon">📋</div>
+          <div class="portal-btn-info">
+            <div class="portal-btn-title">Consulta de Pré-Guia (EG)</div>
+            <div class="portal-btn-desc">Conferência, auditoria de valores e homologação de guia</div>
+          </div>
+          <span style="font-size: 1.1em;">→</span>
+        </a>
+
+        <a class="portal-btn" href="importacao.html">
+          <div class="portal-btn-icon">⚙️</div>
+          <div class="portal-btn-info">
+            <div class="portal-btn-title">Importação &amp; Tabelas</div>
+            <div class="portal-btn-desc">Carga de procedimentos TUSS e tabelas de preços OCS</div>
+          </div>
+          <span style="font-size: 1.1em;">→</span>
+        </a>
+      </div>
+
+      <div class="info-box">
+        <strong>ℹ️ Informação ao Beneficiário:</strong><br>
+        O paciente acessa o formulário de triagem diretamente através do link exclusivo gerado pelo médico após a criação da solicitação.
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    FUSEX &bull; Diretoria de Saúde &bull; Ministério da Defesa
+  </footer>
 </div>
 </body>
 </html>

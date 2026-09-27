@@ -929,7 +929,7 @@ fusex\\_db|schema||spring||UPDATE|G</Grants>
       <AutoIntrospectionLevel>3</AutoIntrospectionLevel>
       <Current>1</Current>
       <LastIntrospectionLevel>3</LastIntrospectionLevel>
-      <LastIntrospectionLocalTimestamp>2026-09-26.21:44:57</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2026-09-27.16:18:47</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
     <schema id="289" parent="1" name="information_schema">
@@ -954,419 +954,726 @@ fusex\\_db|schema||spring||UPDATE|G</Grants>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="295" parent="288" name="paciente">
+    <table id="295" parent="288" name="ocs">
       <DetailsLevel>3</DetailsLevel>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="296" parent="288" name="solicitacao_especialidade">
+    <table id="296" parent="288" name="ocs_especialidade_item">
       <DetailsLevel>3</DetailsLevel>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="297" parent="288" name="solicitacao_medica">
+    <table id="297" parent="288" name="ocs_procedimento">
       <DetailsLevel>3</DetailsLevel>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="298" parent="288" name="triagem_pre_guia">
+    <table id="298" parent="288" name="paciente">
       <DetailsLevel>3</DetailsLevel>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <column id="299" parent="292" name="id">
+    <table id="299" parent="288" name="procedimento">
+      <DetailsLevel>3</DetailsLevel>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <table id="300" parent="288" name="solicitacao_especialidade">
+      <DetailsLevel>3</DetailsLevel>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <table id="301" parent="288" name="solicitacao_medica">
+      <DetailsLevel>3</DetailsLevel>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <table id="302" parent="288" name="solicitacao_procedimento">
+      <DetailsLevel>3</DetailsLevel>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <table id="303" parent="288" name="triagem_pre_guia">
+      <DetailsLevel>3</DetailsLevel>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <column id="304" parent="292" name="id">
       <AutoIncrement>1</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>bigint|0s</StoredType>
     </column>
-    <column id="300" parent="292" name="medico_id">
+    <column id="305" parent="292" name="medico_id">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>bigint|0s</StoredType>
     </column>
-    <column id="301" parent="292" name="data_hora">
+    <column id="306" parent="292" name="data_hora">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StoredType>datetime|0s</StoredType>
     </column>
-    <column id="302" parent="292" name="nome_arquivo">
+    <column id="307" parent="292" name="nome_arquivo">
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StoredType>varchar(255)|0s</StoredType>
     </column>
-    <column id="303" parent="292" name="caminho_arquivo">
+    <column id="308" parent="292" name="caminho_arquivo">
       <NotNull>1</NotNull>
       <Position>5</Position>
       <StoredType>varchar(500)|0s</StoredType>
     </column>
-    <column id="304" parent="292" name="tipo_arquivo">
+    <column id="309" parent="292" name="tipo_arquivo">
       <NotNull>1</NotNull>
       <Position>6</Position>
       <StoredType>varchar(50)|0s</StoredType>
     </column>
-    <column id="305" parent="292" name="tamanho_bytes">
+    <column id="310" parent="292" name="tamanho_bytes">
       <NotNull>1</NotNull>
       <Position>7</Position>
       <StoredType>bigint|0s</StoredType>
     </column>
-    <column id="306" parent="292" name="status">
+    <column id="311" parent="292" name="status">
       <NotNull>1</NotNull>
       <Position>8</Position>
       <StoredType>varchar(50)|0s</StoredType>
     </column>
-    <column id="307" parent="292" name="created_at">
+    <column id="312" parent="292" name="created_at">
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <Position>9</Position>
       <StoredType>datetime|0s</StoredType>
     </column>
-    <foreign-key id="308" parent="292" name="encaminhamento_ibfk_1">
+    <foreign-key id="313" parent="292" name="encaminhamento_ibfk_1">
       <ColNames>medico_id</ColNames>
       <RefColNames>id</RefColNames>
       <RefTableName>medico</RefTableName>
     </foreign-key>
-    <index id="309" parent="292" name="PRIMARY">
+    <index id="314" parent="292" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="310" parent="292" name="idx_encaminhamento_medico_id">
+    <index id="315" parent="292" name="idx_encaminhamento_medico_id">
       <ColNames>medico_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="311" parent="292" name="idx_encaminhamento_data_hora">
+    <index id="316" parent="292" name="idx_encaminhamento_data_hora">
       <ColNames>data_hora</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="312" parent="292" name="PRIMARY">
+    <key id="317" parent="292" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="313" parent="293" name="installed_rank">
+    <column id="318" parent="293" name="installed_rank">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="314" parent="293" name="version">
+    <column id="319" parent="293" name="version">
       <Position>2</Position>
       <StoredType>varchar(50)|0s</StoredType>
     </column>
-    <column id="315" parent="293" name="description">
+    <column id="320" parent="293" name="description">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StoredType>varchar(200)|0s</StoredType>
     </column>
-    <column id="316" parent="293" name="type">
+    <column id="321" parent="293" name="type">
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StoredType>varchar(20)|0s</StoredType>
     </column>
-    <column id="317" parent="293" name="script">
+    <column id="322" parent="293" name="script">
       <NotNull>1</NotNull>
       <Position>5</Position>
       <StoredType>varchar(1000)|0s</StoredType>
     </column>
-    <column id="318" parent="293" name="checksum">
+    <column id="323" parent="293" name="checksum">
       <Position>6</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="319" parent="293" name="installed_by">
+    <column id="324" parent="293" name="installed_by">
       <NotNull>1</NotNull>
       <Position>7</Position>
       <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="320" parent="293" name="installed_on">
+    <column id="325" parent="293" name="installed_on">
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>8</Position>
       <StoredType>timestamp|0s</StoredType>
     </column>
-    <column id="321" parent="293" name="execution_time">
+    <column id="326" parent="293" name="execution_time">
       <NotNull>1</NotNull>
       <Position>9</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="322" parent="293" name="success">
+    <column id="327" parent="293" name="success">
       <NotNull>1</NotNull>
       <Position>10</Position>
       <StoredType>tinyint(1)|0s</StoredType>
     </column>
-    <index id="323" parent="293" name="PRIMARY">
+    <index id="328" parent="293" name="PRIMARY">
       <ColNames>installed_rank</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="324" parent="293" name="flyway_schema_history_s_idx">
+    <index id="329" parent="293" name="flyway_schema_history_s_idx">
       <ColNames>success</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="325" parent="293" name="PRIMARY">
+    <key id="330" parent="293" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="326" parent="294" name="id">
-      <AutoIncrement>2</AutoIncrement>
+    <column id="331" parent="294" name="id">
+      <AutoIncrement>3</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>bigint|0s</StoredType>
     </column>
-    <column id="327" parent="294" name="nome">
+    <column id="332" parent="294" name="nome">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>varchar(255)|0s</StoredType>
     </column>
-    <column id="328" parent="294" name="crm">
+    <column id="333" parent="294" name="crm">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StoredType>varchar(20)|0s</StoredType>
     </column>
-    <column id="329" parent="294" name="credenciado">
+    <column id="334" parent="294" name="credenciado">
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StoredType>tinyint(1)|0s</StoredType>
     </column>
-    <column id="330" parent="294" name="created_at">
+    <column id="335" parent="294" name="created_at">
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <Position>5</Position>
       <StoredType>datetime|0s</StoredType>
     </column>
-    <index id="331" parent="294" name="PRIMARY">
+    <index id="336" parent="294" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="332" parent="294" name="crm">
+    <index id="337" parent="294" name="crm">
       <ColNames>crm</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="333" parent="294" name="PRIMARY">
+    <key id="338" parent="294" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <key id="334" parent="294" name="crm">
+    <key id="339" parent="294" name="crm">
       <UnderlyingIndexName>crm</UnderlyingIndexName>
     </key>
-    <column id="335" parent="295" name="id">
-      <AutoIncrement>1</AutoIncrement>
+    <column id="340" parent="295" name="ocs_id">
+      <AutoIncrement>40</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>bigint|0s</StoredType>
     </column>
-    <column id="336" parent="295" name="nome">
+    <column id="341" parent="295" name="ocs_nome">
+      <DefaultExpression>&apos;OCS&apos;</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>varchar(100)|0s</StoredType>
+    </column>
+    <column id="342" parent="295" name="ocs_inscricao_federal">
+      <Position>3</Position>
+      <StoredType>varchar(14)|0s</StoredType>
+    </column>
+    <column id="343" parent="295" name="ocs_endereco">
+      <Position>4</Position>
+      <StoredType>varchar(100)|0s</StoredType>
+    </column>
+    <column id="344" parent="295" name="ocs_endereco_numero">
+      <Position>5</Position>
+      <StoredType>varchar(100)|0s</StoredType>
+    </column>
+    <column id="345" parent="295" name="ocs_endereco_bairro">
+      <Position>6</Position>
+      <StoredType>varchar(100)|0s</StoredType>
+    </column>
+    <column id="346" parent="295" name="ocs_endereco_cidade">
+      <Position>7</Position>
+      <StoredType>varchar(100)|0s</StoredType>
+    </column>
+    <column id="347" parent="295" name="ocs_endereco_uf">
+      <Position>8</Position>
+      <StoredType>varchar(100)|0s</StoredType>
+    </column>
+    <column id="348" parent="295" name="ocs_endereco_cep">
+      <Position>9</Position>
+      <StoredType>varchar(8)|0s</StoredType>
+    </column>
+    <column id="349" parent="295" name="ocs_contato_nome">
+      <Position>10</Position>
+      <StoredType>varchar(100)|0s</StoredType>
+    </column>
+    <column id="350" parent="295" name="ocs_contato_telefone">
+      <Position>11</Position>
+      <StoredType>varchar(100)|0s</StoredType>
+    </column>
+    <column id="351" parent="295" name="ocs_tipo">
+      <DefaultExpression>&apos;OCS&apos;</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>12</Position>
+      <StoredType>varchar(10)|0s</StoredType>
+    </column>
+    <column id="352" parent="295" name="ocs_contrato_numero">
+      <Position>13</Position>
+      <StoredType>varchar(50)|0s</StoredType>
+    </column>
+    <column id="353" parent="295" name="ocs_inicio_vigencia">
+      <Position>14</Position>
+      <StoredType>date|0s</StoredType>
+    </column>
+    <column id="354" parent="295" name="ocs_termino_vigencia">
+      <Position>15</Position>
+      <StoredType>date|0s</StoredType>
+    </column>
+    <index id="355" parent="295" name="PRIMARY">
+      <ColNames>ocs_id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="356" parent="295" name="uk_ocs_nome">
+      <ColNames>ocs_nome</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="357" parent="295" name="ocs_inscricao_federal">
+      <ColNames>ocs_inscricao_federal</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="358" parent="295" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <key id="359" parent="295" name="uk_ocs_nome">
+      <UnderlyingIndexName>uk_ocs_nome</UnderlyingIndexName>
+    </key>
+    <key id="360" parent="295" name="ocs_inscricao_federal">
+      <UnderlyingIndexName>ocs_inscricao_federal</UnderlyingIndexName>
+    </key>
+    <column id="361" parent="296" name="ocs_id">
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>bigint|0s</StoredType>
+    </column>
+    <column id="362" parent="296" name="especialidade">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>varchar(50)|0s</StoredType>
+    </column>
+    <foreign-key id="363" parent="296" name="ocs_especialidade_item_ibfk_1">
+      <ColNames>ocs_id</ColNames>
+      <RefColNames>ocs_id</RefColNames>
+      <RefTableName>ocs</RefTableName>
+    </foreign-key>
+    <index id="364" parent="296" name="PRIMARY">
+      <ColNames>ocs_id
+especialidade</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="365" parent="296" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="366" parent="297" name="ocs_id">
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>bigint|0s</StoredType>
+    </column>
+    <column id="367" parent="297" name="proc_codigo_dgp">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>varchar(100)|0s</StoredType>
+    </column>
+    <column id="368" parent="297" name="valor">
+      <DefaultExpression>0.00</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StoredType>decimal(10,2 digit)|0s</StoredType>
+    </column>
+    <column id="369" parent="297" name="tabela_referencia">
+      <Position>4</Position>
+      <StoredType>varchar(500)|0s</StoredType>
+    </column>
+    <column id="370" parent="297" name="descricao_grupo">
+      <Position>5</Position>
+      <StoredType>varchar(500)|0s</StoredType>
+    </column>
+    <foreign-key id="371" parent="297" name="ocs_procedimento_ibfk_1">
+      <ColNames>ocs_id</ColNames>
+      <RefColNames>ocs_id</RefColNames>
+      <RefTableName>ocs</RefTableName>
+    </foreign-key>
+    <foreign-key id="372" parent="297" name="ocs_procedimento_ibfk_2">
+      <ColNames>proc_codigo_dgp</ColNames>
+      <RefColNames>proc_codigo_dgp</RefColNames>
+      <RefTableName>procedimento</RefTableName>
+    </foreign-key>
+    <index id="373" parent="297" name="PRIMARY">
+      <ColNames>ocs_id
+proc_codigo_dgp</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="374" parent="297" name="proc_codigo_dgp">
+      <ColNames>proc_codigo_dgp</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="375" parent="297" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="376" parent="298" name="id">
+      <AutoIncrement>2</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>bigint|0s</StoredType>
+    </column>
+    <column id="377" parent="298" name="nome">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>varchar(255)|0s</StoredType>
     </column>
-    <column id="337" parent="295" name="cpf_prec">
+    <column id="378" parent="298" name="cpf_prec">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StoredType>varchar(20)|0s</StoredType>
     </column>
-    <column id="338" parent="295" name="om">
+    <column id="379" parent="298" name="om">
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StoredType>varchar(10)|0s</StoredType>
     </column>
-    <column id="339" parent="295" name="created_at">
+    <column id="380" parent="298" name="created_at">
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>5</Position>
       <StoredType>timestamp|0s</StoredType>
     </column>
-    <index id="340" parent="295" name="PRIMARY">
+    <column id="381" parent="298" name="idade">
+      <Position>6</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="382" parent="298" name="telefone">
+      <Position>7</Position>
+      <StoredType>varchar(20)|0s</StoredType>
+    </column>
+    <index id="383" parent="298" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="341" parent="295" name="cpf_prec">
+    <index id="384" parent="298" name="cpf_prec">
       <ColNames>cpf_prec</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="342" parent="295" name="PRIMARY">
+    <key id="385" parent="298" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <key id="343" parent="295" name="cpf_prec">
+    <key id="386" parent="298" name="cpf_prec">
       <UnderlyingIndexName>cpf_prec</UnderlyingIndexName>
     </key>
-    <column id="344" parent="296" name="solicitacao_id">
+    <column id="387" parent="299" name="proc_codigo_dgp">
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>varchar(100)|0s</StoredType>
+    </column>
+    <column id="388" parent="299" name="proc_descricao">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>varchar(1000)|0s</StoredType>
+    </column>
+    <column id="389" parent="299" name="proc_quantidade">
+      <DefaultExpression>1</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="390" parent="299" name="proc_origem">
+      <DefaultExpression>&apos;TUSS&apos;</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StoredType>varchar(20)|0s</StoredType>
+    </column>
+    <index id="391" parent="299" name="PRIMARY">
+      <ColNames>proc_codigo_dgp</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="392" parent="299" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="393" parent="300" name="solicitacao_id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>bigint|0s</StoredType>
     </column>
-    <column id="345" parent="296" name="especialidade">
+    <column id="394" parent="300" name="especialidade">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>varchar(50)|0s</StoredType>
     </column>
-    <foreign-key id="346" parent="296" name="solicitacao_especialidade_ibfk_1">
+    <foreign-key id="395" parent="300" name="solicitacao_especialidade_ibfk_1">
       <ColNames>solicitacao_id</ColNames>
       <RefColNames>id</RefColNames>
       <RefTableName>solicitacao_medica</RefTableName>
     </foreign-key>
-    <index id="347" parent="296" name="PRIMARY">
+    <index id="396" parent="300" name="PRIMARY">
       <ColNames>solicitacao_id
 especialidade</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="348" parent="296" name="PRIMARY">
+    <key id="397" parent="300" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="349" parent="297" name="id">
-      <AutoIncrement>1</AutoIncrement>
+    <column id="398" parent="301" name="id">
+      <AutoIncrement>10</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>bigint|0s</StoredType>
     </column>
-    <column id="350" parent="297" name="medico_id">
+    <column id="399" parent="301" name="medico_id">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>bigint|0s</StoredType>
     </column>
-    <column id="351" parent="297" name="paciente_id">
+    <column id="400" parent="301" name="paciente_id">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StoredType>bigint|0s</StoredType>
     </column>
-    <column id="352" parent="297" name="observacao">
+    <column id="401" parent="301" name="observacao">
       <Position>4</Position>
       <StoredType>varchar(500)|0s</StoredType>
     </column>
-    <column id="353" parent="297" name="token_publico">
+    <column id="402" parent="301" name="token_publico">
       <NotNull>1</NotNull>
       <Position>5</Position>
       <StoredType>varchar(255)|0s</StoredType>
     </column>
-    <column id="354" parent="297" name="valida">
+    <column id="403" parent="301" name="valida">
       <DefaultExpression>1</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>6</Position>
       <StoredType>tinyint(1)|0s</StoredType>
     </column>
-    <column id="355" parent="297" name="data_criacao">
+    <column id="404" parent="301" name="data_criacao">
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>7</Position>
       <StoredType>timestamp|0s</StoredType>
     </column>
-    <foreign-key id="356" parent="297" name="solicitacao_medica_ibfk_1">
+    <column id="405" parent="301" name="medico_responsavel_id">
+      <Position>8</Position>
+      <StoredType>bigint|0s</StoredType>
+    </column>
+    <foreign-key id="406" parent="301" name="solicitacao_medica_ibfk_1">
       <ColNames>medico_id</ColNames>
       <RefColNames>id</RefColNames>
       <RefTableName>medico</RefTableName>
     </foreign-key>
-    <foreign-key id="357" parent="297" name="solicitacao_medica_ibfk_2">
+    <foreign-key id="407" parent="301" name="solicitacao_medica_ibfk_2">
       <ColNames>paciente_id</ColNames>
       <RefColNames>id</RefColNames>
       <RefTableName>paciente</RefTableName>
     </foreign-key>
-    <index id="358" parent="297" name="PRIMARY">
+    <foreign-key id="408" parent="301" name="fk_solicitacao_medico_responsavel">
+      <ColNames>medico_responsavel_id</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>medico</RefTableName>
+    </foreign-key>
+    <index id="409" parent="301" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="359" parent="297" name="token_publico">
+    <index id="410" parent="301" name="token_publico">
       <ColNames>token_publico</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="360" parent="297" name="idx_solicitacao_medico_paciente">
+    <index id="411" parent="301" name="idx_solicitacao_medico_paciente">
       <ColNames>medico_id
 paciente_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="361" parent="297" name="paciente_id">
+    <index id="412" parent="301" name="paciente_id">
       <ColNames>paciente_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="362" parent="297" name="idx_solicitacao_token">
+    <index id="413" parent="301" name="idx_solicitacao_token">
       <ColNames>token_publico</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="363" parent="297" name="PRIMARY">
+    <index id="414" parent="301" name="fk_solicitacao_medico_responsavel">
+      <ColNames>medico_responsavel_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="415" parent="301" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <key id="364" parent="297" name="token_publico">
+    <key id="416" parent="301" name="token_publico">
       <UnderlyingIndexName>token_publico</UnderlyingIndexName>
     </key>
-    <column id="365" parent="298" name="id">
-      <AutoIncrement>1</AutoIncrement>
+    <column id="417" parent="302" name="id">
+      <AutoIncrement>10</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>bigint|0s</StoredType>
     </column>
-    <column id="366" parent="298" name="solicitacao_id">
+    <column id="418" parent="302" name="solicitacao_id">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>bigint|0s</StoredType>
     </column>
-    <column id="367" parent="298" name="cpf_prec">
+    <column id="419" parent="302" name="proc_codigo_dgp">
       <NotNull>1</NotNull>
       <Position>3</Position>
-      <StoredType>varchar(20)|0s</StoredType>
+      <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="368" parent="298" name="idade">
+    <column id="420" parent="302" name="quantidade">
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="369" parent="298" name="telefone">
-      <NotNull>1</NotNull>
+    <column id="421" parent="302" name="valor_no_momento">
       <Position>5</Position>
-      <StoredType>varchar(20)|0s</StoredType>
+      <StoredType>decimal(10,2 digit)|0s</StoredType>
     </column>
-    <column id="370" parent="298" name="clinica_laboratorio">
-      <NotNull>1</NotNull>
-      <Position>6</Position>
-      <StoredType>varchar(100)|0s</StoredType>
-    </column>
-    <column id="371" parent="298" name="aceito_termos">
-      <NotNull>1</NotNull>
-      <Position>7</Position>
-      <StoredType>tinyint(1)|0s</StoredType>
-    </column>
-    <column id="372" parent="298" name="data_criacao">
-      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>8</Position>
-      <StoredType>timestamp|0s</StoredType>
-    </column>
-    <foreign-key id="373" parent="298" name="triagem_pre_guia_ibfk_1">
+    <foreign-key id="422" parent="302" name="solicitacao_procedimento_ibfk_1">
       <ColNames>solicitacao_id</ColNames>
       <RefColNames>id</RefColNames>
       <RefTableName>solicitacao_medica</RefTableName>
     </foreign-key>
-    <index id="374" parent="298" name="PRIMARY">
+    <foreign-key id="423" parent="302" name="solicitacao_procedimento_ibfk_2">
+      <ColNames>proc_codigo_dgp</ColNames>
+      <RefColNames>proc_codigo_dgp</RefColNames>
+      <RefTableName>procedimento</RefTableName>
+    </foreign-key>
+    <index id="424" parent="302" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="375" parent="298" name="solicitacao_id">
-      <ColNames>solicitacao_id</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <index id="376" parent="298" name="idx_triagem_solicitacao">
+    <index id="425" parent="302" name="idx_solicitacao_procedimento_solicitacao">
       <ColNames>solicitacao_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="377" parent="298" name="PRIMARY">
+    <index id="426" parent="302" name="proc_codigo_dgp">
+      <ColNames>proc_codigo_dgp</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="427" parent="302" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <key id="378" parent="298" name="solicitacao_id">
+    <column id="428" parent="303" name="id">
+      <AutoIncrement>7</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>bigint|0s</StoredType>
+    </column>
+    <column id="429" parent="303" name="solicitacao_id">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>bigint|0s</StoredType>
+    </column>
+    <column id="430" parent="303" name="cpf_prec">
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StoredType>varchar(20)|0s</StoredType>
+    </column>
+    <column id="431" parent="303" name="idade">
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="432" parent="303" name="telefone">
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+      <StoredType>varchar(20)|0s</StoredType>
+    </column>
+    <column id="433" parent="303" name="aceito_termos">
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+      <StoredType>tinyint(1)|0s</StoredType>
+    </column>
+    <column id="434" parent="303" name="data_criacao">
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>7</Position>
+      <StoredType>timestamp|0s</StoredType>
+    </column>
+    <column id="435" parent="303" name="ocs_id">
+      <NotNull>1</NotNull>
+      <Position>8</Position>
+      <StoredType>bigint|0s</StoredType>
+    </column>
+    <foreign-key id="436" parent="303" name="triagem_pre_guia_ibfk_1">
+      <ColNames>solicitacao_id</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>solicitacao_medica</RefTableName>
+    </foreign-key>
+    <foreign-key id="437" parent="303" name="fk_triagem_ocs">
+      <ColNames>ocs_id</ColNames>
+      <RefColNames>ocs_id</RefColNames>
+      <RefTableName>ocs</RefTableName>
+    </foreign-key>
+    <index id="438" parent="303" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="439" parent="303" name="solicitacao_id">
+      <ColNames>solicitacao_id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="440" parent="303" name="idx_triagem_solicitacao">
+      <ColNames>solicitacao_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <index id="441" parent="303" name="fk_triagem_ocs">
+      <ColNames>ocs_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="442" parent="303" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <key id="443" parent="303" name="solicitacao_id">
       <UnderlyingIndexName>solicitacao_id</UnderlyingIndexName>
     </key>
   </database-model>

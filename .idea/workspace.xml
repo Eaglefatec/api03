@@ -5,20 +5,100 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="131b5a3d-72c1-4473-a190-06e07f917a99" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/db-forest-config.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/api03.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/csv-editor.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/ca2ee3a4-747d-43b9-b57f-918792885ed5.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/ca2ee3a4-747d-43b9-b57f-918792885ed5.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/data_sources_history.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/data_sources_history.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f22f8e04-a815-4868-9163-df01357d4028.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f22f8e04-a815-4868-9163-df01357d4028/storage_v2/_src_/schema/information_schema.FNRwLQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f22f8e04-a815-4868-9163-df01357d4028/storage_v2/_src_/schema/performance_schema.kIw0nw.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/fusex/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/fusex/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/solicitacao/dto/PreGuiaConsolidadaResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/solicitacao/dto/PreGuiaConsolidadaResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/solicitacao/dto/SolicitacaoPublicaResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/solicitacao/dto/SolicitacaoPublicaResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/solicitacao/service/PreGuiaConsolidadaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/solicitacao/service/PreGuiaConsolidadaService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/solicitacao/service/TriagemPreGuiaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/solicitacao/service/TriagemPreGuiaService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/fusex/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/config/DataInitializer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/config/OcsCadastroLoader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/config/OcsPrecoLoader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/config/TussProcedimentoLoader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/encaminhamento/Encaminhamento.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/encaminhamento/EncaminhamentoController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/encaminhamento/EncaminhamentoRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/encaminhamento/EncaminhamentoService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/encaminhamento/StatusEncaminhamento.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/encaminhamento/dto/EncaminhamentoResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/importacao/ImportacaoController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/importacao/OcsCadastroImportacaoService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/importacao/OcsPrecoImportacaoService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/importacao/PlanilhaUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/importacao/TussImportacaoService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/importacao/dto/ImportacaoResumoResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/medico/Medico.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/medico/MedicoRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/medico/dto/MedicoResumoResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/ocs/Ocs.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/ocs/OcsProcedimento.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/ocs/OcsProcedimentoId.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/ocs/OcsProcedimentoRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/ocs/OcsRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/ocs/OrigemProcedimento.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/ocs/Procedimento.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/ocs/ProcedimentoRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/ocs/TipoOcs.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/ocs/controller/OcsController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/ocs/dto/OcsResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/ocs/dto/ProcedimentoResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/paciente/Paciente.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/paciente/PacienteRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/shared/exception/ArquivoInvalidoException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/shared/exception/GlobalExceptionHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/shared/exception/MedicoInvalidoException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/shared/exception/OcsInvalidoException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/shared/exception/ProcedimentoInvalidoException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/shared/exception/SolicitacaoNaoEncontradaException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/shared/exception/TriagemJaPreenchidaException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/shared/exception/TriagemNaoPreenchidaException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/shared/storage/FileStorageService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/shared/storage/LocalFileStorageService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/solicitacao/Especialidade.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/solicitacao/SolicitacaoMedica.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/solicitacao/SolicitacaoMedicaRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/solicitacao/SolicitacaoProcedimento.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/solicitacao/SolicitacaoProcedimentoRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/solicitacao/TriagemPreGuia.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/solicitacao/TriagemPreGuiaRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/solicitacao/controller/SolicitacaoMedicoController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/solicitacao/controller/SolicitacaoPublicoController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/solicitacao/dto/CriarSolicitacaoRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/solicitacao/dto/PreGuiaConsolidadaResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/solicitacao/dto/PreencherTriagemRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/solicitacao/dto/SolicitacaoPublicaResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/solicitacao/dto/SolicitacaoResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/solicitacao/dto/TriagemResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/solicitacao/service/PreGuiaConsolidadaService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/solicitacao/service/SolicitacaoMedicaService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/java/com/eagle/fusex/solicitacao/service/TriagemPreGuiaService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/fusex/src/main/resources/application.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/resources/static/beneficiario.html" beforeDir="false" afterPath="$PROJECT_DIR$/backend/fusex/src/main/resources/static/beneficiario.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/resources/static/guia.html" beforeDir="false" afterPath="$PROJECT_DIR$/backend/fusex/src/main/resources/static/guia.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/resources/static/importacao.html" beforeDir="false" afterPath="$PROJECT_DIR$/backend/fusex/src/main/resources/static/importacao.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/backend/fusex/src/main/resources/static/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/fusex/src/main/resources/static/medico.html" beforeDir="false" afterPath="$PROJECT_DIR$/backend/fusex/src/main/resources/static/medico.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/fusex/src/test/java/com/eagle/fusex/solicitacao/service/PreGuiaConsolidadaServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/fusex/src/test/java/com/eagle/fusex/solicitacao/service/PreGuiaConsolidadaServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/test/java/com/eagle/fusex/config/OcsCadastroLoaderTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/test/java/com/eagle/fusex/config/OcsPrecoLoaderTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/test/java/com/eagle/fusex/config/TussProcedimentoLoaderTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/test/java/com/eagle/fusex/encaminhamento/EncaminhamentoControllerTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/test/java/com/eagle/fusex/encaminhamento/EncaminhamentoServiceTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/test/java/com/eagle/fusex/importacao/OcsCadastroImportacaoServiceTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/test/java/com/eagle/fusex/importacao/OcsPrecoImportacaoServiceTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/test/java/com/eagle/fusex/importacao/TussImportacaoServiceTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/test/java/com/eagle/fusex/medico/MedicoRepositoryTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/test/java/com/eagle/fusex/ocs/OcsRepositoryTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/test/java/com/eagle/fusex/solicitacao/SolicitacaoMedicaRepositoryTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/test/java/com/eagle/fusex/solicitacao/controller/SolicitacaoMedicoControllerTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/test/java/com/eagle/fusex/solicitacao/controller/SolicitacaoPublicoControllerTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/test/java/com/eagle/fusex/solicitacao/service/PreGuiaConsolidadaServiceTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/test/java/com/eagle/fusex/solicitacao/service/SolicitacaoMedicaServiceTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/fusex/src/test/java/com/eagle/fusex/solicitacao/service/TriagemPreGuiaServiceTest.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +127,7 @@
     </colors>
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="111" />
+    <option name="cachedIndexableFilesCount" value="258" />
     <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
   </component>
   <component name="Git.Settings">
@@ -173,6 +253,7 @@
     "git-widget-placeholder": "feat-us03",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/dasmi/OneDrive/Documents/Antigravity/api03",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",

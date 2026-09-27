@@ -24,7 +24,7 @@
       <driver-ref>h2.unified</driver-ref>
       <synchronize>true</synchronize>
       <imported>true</imported>
-      <remarks>C:/Users/dasmi/IdeaProjects/api03/backend/fusex/src/main/resources/application.yml</remarks>
+      <remarks>C:/Users/dasmi/OneDrive/Documents/Antigravity/api03/backend/fusex/src/main/resources/application.yml</remarks>
       <jdbc-driver>org.h2.Driver</jdbc-driver>
       <jdbc-url>jdbc:h2:mem:testdb;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE</jdbc-url>
       <jdbc-additional-properties>
@@ -48,7 +48,7 @@
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <imported>true</imported>
-      <remarks>C:/Users/dasmi/IdeaProjects/api03/backend/fusex/src/main/resources/application-local.yml</remarks>
+      <remarks>C:/Users/dasmi/OneDrive/Documents/Antigravity/api03/backend/fusex/src/main/resources/application-local.yml</remarks>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://localhost:3306/fusex_db?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=UTC</jdbc-url>
       <jdbc-additional-properties>
