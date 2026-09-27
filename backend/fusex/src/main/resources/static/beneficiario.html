@@ -1,338 +1,309 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FUSEX - Solicitação Médica</title>
-<style>
-  * { box-sizing: border-box; }
-  body {
-    font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    background: #f4f5f7;
-    margin: 0;
-    padding: 24px 16px;
-    color: #222;
-  }
-  .container {
-    max-width: 480px;
-    margin: 0 auto;
-    background: #fff;
-    border-radius: 8px;
-    padding: 24px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-  }
-  h1 {
-    font-size: 1.3em;
-    margin-top: 0;
-    color: #1a4d8f;
-  }
-  h2 {
-    font-size: 1em;
-    color: #555;
-    margin-top: 24px;
-  }
-  .info p {
-    margin: 6px 0;
-    font-size: 0.95em;
-  }
-  .info strong { color: #444; }
-  label {
-    display: block;
-    margin-top: 12px;
-    margin-bottom: 4px;
-    font-size: 0.9em;
-    font-weight: 600;
-    color: #444;
-  }
-  input[type=text], input[type=number], select {
-    width: 100%;
-    padding: 8px 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 0.95em;
-    background: #fff;
-  }
-  select:disabled {
-    background: #f4f5f7;
-    color: #999;
-  }
-  .checkbox-line {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 16px;
-    font-size: 0.9em;
-    font-weight: normal;
-  }
-  .checkbox-line input { width: auto; margin: 0; }
-  button {
-    margin-top: 20px;
-    width: 100%;
-    padding: 10px;
-    background: #1a4d8f;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    font-size: 1em;
-    cursor: pointer;
-  }
-  button:hover { background: #143c70; }
-  #loading { text-align: center; color: #888; padding: 20px 0; }
-  #errorSection, #jaPreenchida {\n    margin-top: 12px;
-    padding: 12px;
-    border-radius: 6px;
-    font-size: 0.9em;
-  }
-  #errorSection {
-    background: #fdecea;
-    border: 1px solid #f3b4ac;
-    color: #a02b1f;
-  }
-  #jaPreenchida {
-    background: #fff6e0;
-    border: 1px solid #f0d68a;
-    color: #7a5c00;
-  }
-  #resultSection {
-    margin-top: 16px;
-    padding: 14px;
-    background: #e7f6ec;
-    border: 1px solid #a7dcb5;
-    border-radius: 6px;
-  }
-  #resultSection h2 { margin-top: 0; color: #1f7a3d; }
-  .opcao {
-    background: #fff;
-    border: 1px solid #cfe9d8;
-    border-radius: 6px;
-    padding: 10px 12px;
-    margin-top: 8px;
-    font-size: 0.9em;
-  }
-  hr { border: none; border-top: 1px solid #e5e5e5; margin: 20px 0; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FUSEX - Atendimento e Triagem do Beneficiário</title>
+  <link rel="stylesheet" href="css/fusex-theme.css">
 </head>
 <body>
-<div class="container">
-  <h1>Solicitação Médica</h1>
 
-  <div id="loading">Carregando...</div>
+  <!-- Header Institucional -->
+  <header class="app-header">
+    <a href="index.html" class="brand-badge">
+      <div class="brand-logo">FUSEX</div>
+      <div>
+        <div class="brand-title">Fundo de Saúde do Exército</div>
+        <div class="brand-subtitle">Atendimento e Triagem do Beneficiário</div>
+      </div>
+    </a>
+  </header>
 
-  <div id="infoSection" class="info" hidden>
-    <p><strong>Paciente:</strong> <span id="nomePaciente"></span></p>
-    <p><strong>OM:</strong> <span id="om"></span></p>
-    <p><strong>Especialidades:</strong> <span id="especialidades"></span></p>
-    <div style="margin-top: 10px;">
-      <p style="margin: 6px 0 4px;"><strong>Procedimentos:</strong></p>
-      <div id="procedimentosInfoLista"></div>
+  <main class="app-container">
+    <div class="card">
+      <h1 class="card-title">Solicitação de Procedimento Médico</h1>
+      <p class="card-subtitle">Verifique os dados da solicitação encaminhada pelo médico e complete a triagem para agendamento.</p>
+
+      <!-- Estado: Carregando -->
+      <div id="loading" class="alert alert-info" style="justify-content: center;">
+        <span>Carregando dados da solicitação...</span>
+      </div>
+
+      <!-- Estado: Erro -->
+      <div id="errorSection" class="alert alert-error" hidden></div>
+
+      <!-- Estado: Já Preenchida -->
+      <div id="jaPreenchida" class="alert alert-warning" style="display: none; flex-direction: column; gap: 12px;">
+        <div style="font-weight: 600;">Esta solicitação já foi preenchida anteriormente.</div>
+        <div style="font-size: 0.9em;">Os dados de triagem e a escolha da clínica já foram registrados no sistema.</div>
+        <button type="button" id="btnJaPreenchida" class="btn btn-primary" style="margin-top: 4px;">Consultar Pré-Guia</button>
+      </div>
+
+      <!-- Resumo da Solicitação Médica -->
+      <div id="infoSection" style="display: none; margin-top: 16px;">
+        <h2 class="section-title">Dados da Solicitação Médica</h2>
+        <div class="kv-list">
+          <div class="kv-row">
+            <span class="kv-label">Paciente</span>
+            <span class="kv-val" id="nomePaciente">-</span>
+          </div>
+          <div class="kv-row">
+            <span class="kv-label">Organização Militar (OM)</span>
+            <span class="kv-val" id="om">-</span>
+          </div>
+          <div class="kv-row">
+            <span class="kv-label">Especialidades</span>
+            <span class="kv-val" id="especialidades">-</span>
+          </div>
+        </div>
+
+        <div style="margin-top: 16px;">
+          <label style="margin-bottom: 8px;">Procedimentos Solicitados</label>
+          <div id="procedimentosInfoLista" style="display: flex; flex-direction: column; gap: 8px;"></div>
+        </div>
+
+        <div class="kv-row" style="margin-top: 12px; border-top: 1px solid var(--border-color); padding-top: 12px;">
+          <span class="kv-label">Observação Médica</span>
+          <span class="kv-val" id="observacao" style="font-weight: normal; font-size: 0.92em;">-</span>
+        </div>
+      </div>
+
+      <!-- Formulário de Triagem -->
+      <form id="triagemForm" style="display: none; margin-top: 24px;">
+        <h2 class="section-title">Complete seus dados para encaminhamento</h2>
+
+        <div class="row2">
+          <div>
+            <label for="cpfPrec">CPF / PREC</label>
+            <input type="text" id="cpfPrec" required placeholder="000.000.000-00 ou PREC">
+          </div>
+          <div>
+            <label for="idade">Idade</label>
+            <input type="number" id="idade" required min="0" max="130" placeholder="Ex: 35">
+          </div>
+        </div>
+
+        <label for="telefone">Telefone de Contato (WhatsApp)</label>
+        <input type="text" id="telefone" required placeholder="(00) 00000-0000" maxlength="15">
+
+        <label for="clinicaLaboratorio">Clínica / Laboratório (OCS Credenciada)</label>
+        <select id="clinicaLaboratorio" required disabled>
+          <option value="">Carregando clínicas credenciadas...</option>
+        </select>
+
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-top: 18px; padding: 12px; background: var(--bg-muted); border-radius: var(--radius-sm);">
+          <input type="checkbox" id="aceitoTermos" required style="width: auto; margin-top: 3px; accent-color: var(--color-primary);">
+          <label for="aceitoTermos" style="margin: 0; font-size: 0.85em; font-weight: normal; color: var(--text-main); cursor: pointer;">
+            Declaro que as informações acima são verídicas e estou ciente de que esta solicitação passará por auditoria regulamentar do FUSEX.
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Confirmar Solicitação</button>
+      </form>
+
+      <!-- Seção de Confirmação e Resultado -->
+      <div id="resultSection" style="display: none; margin-top: 24px;">
+        <div class="alert alert-success">
+          <div style="flex: 1;">
+            <div id="resultMensagem" style="font-weight: 600; font-size: 1.05em; margin-bottom: 4px;"></div>
+            <div style="font-size: 0.9em;">Sua triagem foi concluída e o encaminhamento está registrado.</div>
+          </div>
+        </div>
+
+        <div id="opcoes" style="display: flex; flex-direction: column; gap: 8px; margin-top: 16px;"></div>
+
+        <button type="button" id="btnConsultarGuia" class="btn btn-primary" style="margin-top: 20px;">
+          Visualizar Pré-Guia Médica
+        </button>
+      </div>
+
     </div>
-    <p style="margin-top: 10px;"><strong>Observação:</strong> <span id="observacao"></span></p>
-  </div>
+  </main>
 
-  <div id="errorSection" hidden></div>
-  <div id="jaPreenchida" hidden>
-    <div>Esta solicitação já foi preenchida anteriormente.</div>
-    <button type="button" id="btnJaPreenchida" style="margin-top: 12px;">Consultar Pré-Guia</button>
-  </div>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get('token');
 
-  <form id="triagemForm" hidden>
-    <hr>
-    <h2>Complete seus dados</h2>
+    const loading = document.getElementById('loading');
+    const infoSection = document.getElementById('infoSection');
+    const errorSection = document.getElementById('errorSection');
+    const jaPreenchida = document.getElementById('jaPreenchida');
+    const triagemForm = document.getElementById('triagemForm');
+    const resultSection = document.getElementById('resultSection');
+    const clinicaSelect = document.getElementById('clinicaLaboratorio');
+    const telInput = document.getElementById('telefone');
 
-    <label>CPF/PREC</label>
-    <input type="text" id="cpfPrec" required>
+    // Máscara de telefone interativa
+    telInput.addEventListener('input', (e) => {
+      let v = e.target.value.replace(/\D/g, '');
+      if (v.length > 11) v = v.slice(0, 11);
+      if (v.length > 10) {
+        v = `(${v.slice(0, 2)}) ${v.slice(2, 7)}-${v.slice(7)}`;
+      } else if (v.length > 6) {
+        v = `(${v.slice(0, 2)}) ${v.slice(2, 6)}-${v.slice(6)}`;
+      } else if (v.length > 2) {
+        v = `(${v.slice(0, 2)}) ${v.slice(2)}`;
+      } else if (v.length > 0) {
+        v = `(${v}`;
+      }
+      e.target.value = v;
+    });
 
-    <label>Idade</label>
-    <input type="number" id="idade" required min="0">
-
-    <label>Telefone</label>
-    <input type="text" id="telefone" required placeholder="(00) 00000-0000" maxlength="15">
-
-    <label>Clínica/Laboratório de preferência</label>
-    <select id="clinicaLaboratorio" required disabled>
-      <option value="">Carregando clínicas...</option>
-    </select>
-
-    <div class="checkbox-line">
-      <input type="checkbox" id="aceitoTermos" required>
-      <label for="aceitoTermos" style="margin:0; font-weight:normal;">Li e aceito os termos</label>
-    </div>
-
-    <button type="submit">Enviar</button>
-  </form>
-
-  <div id="resultSection" hidden>
-    <h2 id="resultMensagem"></h2>
-    <div id="opcoes"></div>
-    <button type="button" id="btnConsultarGuia" style="margin-top: 16px;">Consultar Pré-Guia</button>
-  </div>
-</div>
-
-<script>
-  const params = new URLSearchParams(window.location.search);
-  const token = params.get('token');
-
-  const loading = document.getElementById('loading');
-  const infoSection = document.getElementById('infoSection');
-  const errorSection = document.getElementById('errorSection');
-  const jaPreenchida = document.getElementById('jaPreenchida');
-  const triagemForm = document.getElementById('triagemForm');
-  const resultSection = document.getElementById('resultSection');
-  const clinicaSelect = document.getElementById('clinicaLaboratorio');
-  const telInput = document.getElementById('telefone');
-
-  telInput.addEventListener('input', (e) => {
-    let v = e.target.value.replace(/\D/g, '');
-    if (v.length > 11) v = v.slice(0, 11);
-    if (v.length > 10) {
-      v = `(${v.slice(0, 2)}) ${v.slice(2, 7)}-${v.slice(7)}`;
-    } else if (v.length > 6) {
-      v = `(${v.slice(0, 2)}) ${v.slice(2, 6)}-${v.slice(6)}`;
-    } else if (v.length > 2) {
-      v = `(${v.slice(0, 2)}) ${v.slice(2)}`;
-    } else if (v.length > 0) {
-      v = `(${v}`;
-    }
-    e.target.value = v;
-  });
-
-  function irParaPreGuia() {
-    window.location.href = `guia.html?token=${encodeURIComponent(token)}`;
-  }
-
-  document.getElementById('btnConsultarGuia').addEventListener('click', irParaPreGuia);
-  document.getElementById('btnJaPreenchida').addEventListener('click', irParaPreGuia);
-
-  async function carregarOcsPorEspecialidades(especialidades) {
-    clinicaSelect.disabled = true;
-    clinicaSelect.innerHTML = '<option value="">Carregando clínicas...</option>';
-
-    if (!especialidades || especialidades.length === 0) {
-      clinicaSelect.innerHTML = '<option value="">Especialidades da solicitação não encontradas</option>';
-      return;
+    function irParaPreGuia() {
+      window.location.href = `guia.html?token=${encodeURIComponent(token)}`;
     }
 
-    try {
-      const query = especialidades.map(encodeURIComponent).join(',');
-      const res = await fetch(`/api/ocs?especialidades=${query}`);
-      const data = await res.json();
+    document.getElementById('btnConsultarGuia').addEventListener('click', irParaPreGuia);
+    document.getElementById('btnJaPreenchida').addEventListener('click', irParaPreGuia);
 
-      if (data.length === 0) {
-        clinicaSelect.innerHTML = '<option value="">Nenhuma clínica encontrada para as especialidades desta solicitação</option>';
+    async function carregarOcsPorEspecialidades(especialidades) {
+      clinicaSelect.disabled = true;
+      clinicaSelect.innerHTML = '<option value="">Carregando clínicas credenciadas...</option>';
+
+      if (!especialidades || especialidades.length === 0) {
+        clinicaSelect.innerHTML = '<option value="">Especialidades da solicitação não encontradas</option>';
         return;
       }
 
-      clinicaSelect.innerHTML = '<option value="">Selecione a clínica...</option>';
-      data.forEach(o => {
-        const option = document.createElement('option');
-        option.value = o.ocsId;
-        const local = (o.ocsEnderecoCidade && o.ocsEnderecoUf) ? ` (${o.ocsEnderecoCidade}/${o.ocsEnderecoUf})` : '';
-        option.textContent = `${o.ocsNome}${local}`;
-        clinicaSelect.appendChild(option);
-      });
-      clinicaSelect.disabled = false;
-    } catch (err) {
-      clinicaSelect.innerHTML = '<option value="">Erro ao carregar clínicas</option>';
-    }
-  }
+      try {
+        const query = especialidades.map(encodeURIComponent).join(',');
+        const res = await fetch(`/api/ocs?especialidades=${query}`);
+        const data = await res.json();
 
-  async function carregarSolicitacao() {
-    if (!token) {
-      loading.hidden = true;
-      errorSection.hidden = false;
-      errorSection.textContent = 'Link inválido: token não informado.';
-      return;
-    }
-    try {
-      const res = await fetch(`/api/solicitacoes/publico/${token}`);
-      const data = await res.json();
-      loading.hidden = true;
+        if (data.length === 0) {
+          clinicaSelect.innerHTML = '<option value="">Nenhuma clínica credenciada encontrada para estas especialidades</option>';
+          return;
+        }
 
-      if (!res.ok) {
-        errorSection.hidden = false;
-        errorSection.textContent = data.error || 'Solicitação não encontrada.';
-        return;
-      }
-
-      infoSection.hidden = false;
-      document.getElementById('nomePaciente').textContent = data.nomePaciente;
-      document.getElementById('om').textContent = data.om;
-      document.getElementById('especialidades').textContent = (data.especialidades || []).join(', ');
-
-      const procLista = document.getElementById('procedimentosInfoLista');
-      procLista.innerHTML = '';
-      if (data.procedimentos && data.procedimentos.length > 0) {
-        data.procedimentos.forEach(p => {
-          const item = document.createElement('div');
-          item.className = 'opcao';
-          item.style.marginTop = '4px';
-          item.style.padding = '8px 10px';
-          item.innerHTML = `<strong>${p.descricao}</strong><br><span style="color:#666; font-size:0.85em;">Código DGP: ${p.codigoDgp}</span>`;
-          procLista.appendChild(item);
+        clinicaSelect.innerHTML = '<option value="">Selecione a clínica / laboratório desejado...</option>';
+        data.forEach(o => {
+          const option = document.createElement('option');
+          option.value = o.ocsId;
+          const local = (o.ocsEnderecoCidade && o.ocsEnderecoUf) ? ` (${o.ocsEnderecoCidade}/${o.ocsEnderecoUf})` : '';
+          option.textContent = `${o.ocsNome}${local}`;
+          clinicaSelect.appendChild(option);
         });
-      } else {
-        procLista.innerHTML = '<span style="color:#888; font-size:0.9em;">Nenhum procedimento informado.</span>';
+        clinicaSelect.disabled = false;
+      } catch (err) {
+        clinicaSelect.innerHTML = '<option value="">Erro ao carregar clínicas</option>';
       }
-
-      document.getElementById('observacao').textContent = data.observacao || '-';
-
-      if (data.triagemPreenchida) {
-        jaPreenchida.hidden = false;
-      } else {
-        triagemForm.hidden = false;
-        carregarOcsPorEspecialidades(data.especialidades);
-      }
-    } catch (err) {
-      loading.hidden = true;
-      errorSection.hidden = false;
-      errorSection.textContent = 'Erro ao carregar solicitação. Tente novamente.';
     }
-  }
 
-  triagemForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    const payload = {
-      cpfPrec: document.getElementById('cpfPrec').value,
-      idade: Number(document.getElementById('idade').value),
-      telefone: document.getElementById('telefone').value,
-      ocsId: Number(document.getElementById('clinicaLaboratorio').value),
-      aceitoTermos: document.getElementById('aceitoTermos').checked
-    };
-
-    try {
-      const res = await fetch(`/api/solicitacoes/publico/${token}/triagem`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json; charset=UTF-8' },
-        body: JSON.stringify(payload)
-      });
-      const data = await res.json();
-
-      if (!res.ok) {
-        const msg = data.campos
-          ? Object.entries(data.campos).map(([k, v]) => `${k}: ${v}`).join(' | ')
-          : (data.error || 'Erro ao enviar');
-        throw new Error(msg);
+    async function carregarSolicitacao() {
+      if (!token) {
+        loading.style.display = 'none';
+        errorSection.hidden = false;
+        errorSection.textContent = 'Link inválido: token de solicitação não informado na URL.';
+        return;
       }
 
-      triagemForm.hidden = true;
-      resultSection.hidden = false;
-      document.getElementById('resultMensagem').textContent = data.mensagem;
+      try {
+        const res = await fetch(`/api/solicitacoes/publico/${token}`);
+        const data = await res.json();
+        loading.style.display = 'none';
 
-      const opcoesDiv = document.getElementById('opcoes');
-      opcoesDiv.innerHTML = '';
-      (data.opcoes || []).forEach(o => {
-        const div = document.createElement('div');
-        div.className = 'opcao';
-        div.innerHTML = `<strong>${o.tipo}</strong><br>${o.descricao}`;
-        opcoesDiv.appendChild(div);
-      });
-    } catch (err) {
-      alert(err.message);
+        if (!res.ok) {
+          errorSection.hidden = false;
+          errorSection.textContent = data.error || 'Solicitação médica não encontrada ou expirada.';
+          return;
+        }
+
+        infoSection.style.display = 'block';
+        document.getElementById('nomePaciente').textContent = data.nomePaciente || '-';
+        document.getElementById('om').textContent = data.om || '-';
+        document.getElementById('especialidades').textContent = (data.especialidades && data.especialidades.length > 0)
+          ? data.especialidades.join(', ')
+          : '-';
+
+        const procLista = document.getElementById('procedimentosInfoLista');
+        procLista.innerHTML = '';
+        if (data.procedimentos && data.procedimentos.length > 0) {
+          data.procedimentos.forEach(p => {
+            const item = document.createElement('div');
+            item.style.background = 'var(--bg-subtle)';
+            item.style.border = '1px solid var(--border-color)';
+            item.style.borderRadius = 'var(--radius-sm)';
+            item.style.padding = '8px 12px';
+            item.innerHTML = `<div style="font-weight: 600; font-size: 0.9em; color: var(--color-primary);">${p.descricao}</div>` +
+                             `<div style="font-size: 0.78em; color: var(--text-muted); margin-top: 2px;">Código DGP: <strong>${p.codigoDgp}</strong></div>`;
+            procLista.appendChild(item);
+          });
+        } else {
+          procLista.innerHTML = '<span style="color: var(--text-muted); font-size: 0.88em;">Nenhum procedimento informado.</span>';
+        }
+
+        document.getElementById('observacao').textContent = data.observacao || 'Nenhuma observação registrada.';
+
+        if (data.triagemPreenchida) {
+          jaPreenchida.style.display = 'flex';
+        } else {
+          triagemForm.style.display = 'block';
+          if (data.cpfPrec) {
+            document.getElementById('cpfPrec').value = data.cpfPrec;
+          }
+          if (data.idade) {
+            document.getElementById('idade').value = data.idade;
+          }
+          if (data.telefone) {
+            document.getElementById('telefone').value = data.telefone;
+          }
+          carregarOcsPorEspecialidades(data.especialidades);
+        }
+      } catch (err) {
+        loading.style.display = 'none';
+        errorSection.hidden = false;
+        errorSection.textContent = 'Erro de comunicação ao carregar a solicitação. Tente novamente.';
+      }
     }
-  });
 
-  carregarSolicitacao();
-</script>
+    triagemForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const payload = {
+        cpfPrec: document.getElementById('cpfPrec').value.trim(),
+        idade: Number(document.getElementById('idade').value),
+        telefone: document.getElementById('telefone').value.trim(),
+        ocsId: Number(document.getElementById('clinicaLaboratorio').value),
+        aceitoTermos: document.getElementById('aceitoTermos').checked
+      };
+
+      try {
+        const res = await fetch(`/api/solicitacoes/publico/${token}/triagem`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json; charset=UTF-8' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+
+        if (!res.ok) {
+          const msg = data.campos
+            ? Object.entries(data.campos).map(([k, v]) => `${k}: ${v}`).join(' | ')
+            : (data.error || 'Erro ao processar dados de triagem');
+          throw new Error(msg);
+        }
+
+        triagemForm.style.display = 'none';
+        resultSection.style.display = 'block';
+        document.getElementById('resultMensagem').textContent = data.mensagem || 'Triagem registrada com sucesso!';
+
+        const opcoesDiv = document.getElementById('opcoes');
+        opcoesDiv.innerHTML = '';
+        (data.opcoes || []).forEach(o => {
+          const div = document.createElement('div');
+          div.style.background = 'var(--bg-surface)';
+          div.style.border = '1px solid var(--color-success-border)';
+          div.style.borderRadius = 'var(--radius-sm)';
+          div.style.padding = '10px 14px';
+          div.innerHTML = `<div style="font-weight: 600; color: var(--color-success-text); font-size: 0.9em;">${o.tipo}</div>` +
+                          `<div style="font-size: 0.86em; color: var(--text-main); margin-top: 2px;">${o.descricao}</div>`;
+          opcoesDiv.appendChild(div);
+        });
+      } catch (err) {
+        alert(err.message);
+      }
+    });
+
+    carregarSolicitacao();
+  </script>
 </body>
 </html>

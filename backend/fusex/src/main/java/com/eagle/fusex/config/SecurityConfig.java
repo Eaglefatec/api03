@@ -1,5 +1,6 @@
 package com.eagle.fusex.config;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -72,18 +73,33 @@ public class SecurityConfig {
             .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
             .authorizeHttpRequests((authorize) -> authorize
                 .requestMatchers("/h2-console/**").permitAll()
+                .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                 .requestMatchers("/solicitacoes/publico/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/procedimentos/**", "/ocs/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/procedimentos/**", "/ocs/**", "/medicos/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/solicitacoes").hasAnyRole("MEDICO", "ADMIN")
+                .requestMatchers("/pacientes", "/pacientes/**").hasAnyRole("MEDICO", "ADMIN")
+                .requestMatchers("/auth/**").authenticated()
                 .requestMatchers("/solicitacoes/*/pre-guia").hasAnyRole("EG", "MEDICO", "ADMIN")
                 .requestMatchers("/encaminhamentos/**").hasAnyRole("MEDICO", "ADMIN")
                 .requestMatchers("/importacao/**").hasRole("ADMIN")
-                .requestMatchers("/*.html", "/static/**", "/", "/error").permitAll()
+                .requestMatchers(
+                    "/",
+                    "/*.html",
+                    "/css/**",
+                    "/js/**",
+                    "/images/**",
+                    "/favicon.ico",
+                    "/static/**",
+                    "/error"
+                ).permitAll()
                 .anyRequest().authenticated()
             )
-            .httpBasic(Customizer.withDefaults());
+            .httpBasic(basic -> basic.authenticationEntryPoint((request, response, authException) -> {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.setContentType("application/json;charset=UTF-8");
+                response.getWriter().write("{\"error\": \"Não autorizado: credenciais ausentes ou inválidas.\"}");
+            }));
 
         return http.build();
     }
 }
-
