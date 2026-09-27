@@ -20,8 +20,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class TriagemPreGuiaService {
@@ -44,6 +46,7 @@ public class TriagemPreGuiaService {
         this.ocsProcedimentoRepository = ocsProcedimentoRepository;
     }
 
+    @Transactional(readOnly = true)
     public SolicitacaoPublicaResponse buscarPorToken(String token) {
         SolicitacaoMedica solicitacao = validarSolicitacao(token);
 
@@ -58,10 +61,15 @@ public class TriagemPreGuiaService {
                 ))
                 .toList();
 
+        Set<com.eagle.fusex.solicitacao.Especialidade> especialidadesCopia =
+                solicitacao.getEspecialidades() != null
+                        ? new HashSet<>(solicitacao.getEspecialidades())
+                        : Set.of();
+
         return new SolicitacaoPublicaResponse(
                 solicitacao.getPaciente().getNome(),
                 solicitacao.getPaciente().getOm(),
-                solicitacao.getEspecialidades(),
+                especialidadesCopia,
                 solicitacao.getObservacao(),
                 triagemPreenchida,
                 procedimentos

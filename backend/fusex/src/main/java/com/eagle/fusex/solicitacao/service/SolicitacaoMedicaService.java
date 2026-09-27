@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -55,6 +54,11 @@ public class SolicitacaoMedicaService {
 
         SolicitacaoMedica solicitacao = new SolicitacaoMedica();
         solicitacao.setMedico(medico);
+        if (request.getMedicoResponsavelId() != null) {
+            Medico medicoResponsavel = medicoRepository.findById(request.getMedicoResponsavelId())
+                    .orElseThrow(() -> new MedicoInvalidoException("Selecione um médico responsável válido"));
+            solicitacao.setMedicoResponsavel(medicoResponsavel);
+        }
         solicitacao.setPaciente(paciente);
         solicitacao.setEspecialidades(request.getEspecialidades());
         solicitacao.setObservacao(request.getObservacao());
@@ -86,8 +90,12 @@ public class SolicitacaoMedicaService {
     }
 
     private void atualizarDadosPaciente(Paciente paciente, CriarSolicitacaoRequest request) {
-        paciente.setNome(request.getNomePaciente());
-        paciente.setOm(request.getOm());
+        if (paciente.getNome() == null || paciente.getNome().isBlank()) {
+            paciente.setNome(request.getNomePaciente());
+        }
+        if (paciente.getOm() == null || paciente.getOm().isBlank()) {
+            paciente.setOm(request.getOm());
+        }
         pacienteRepository.save(paciente);
     }
 
@@ -109,12 +117,12 @@ public class SolicitacaoMedicaService {
     }
 
     private void invalidarSolicitacaoAnterior(Long medicoId, Long pacienteId) {
-        Optional<SolicitacaoMedica> anterior = solicitacaoRepository
+        List<SolicitacaoMedica> anteriores = solicitacaoRepository
                 .findByMedicoIdAndPacienteIdAndValidaTrue(medicoId, pacienteId);
 
-        anterior.ifPresent(sol -> {
+        for (SolicitacaoMedica sol : anteriores) {
             sol.setValida(false);
             solicitacaoRepository.save(sol);
-        });
+        }
     }
 }

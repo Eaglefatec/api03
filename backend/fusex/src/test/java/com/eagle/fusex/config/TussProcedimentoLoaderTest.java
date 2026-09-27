@@ -33,6 +33,7 @@ class TussProcedimentoLoaderTest {
 
         loader.run();
 
+        @SuppressWarnings("unchecked")
         ArgumentCaptor<List<Procedimento>> captor = ArgumentCaptor.forClass(List.class);
         verify(procedimentoRepository).saveAll(captor.capture());
 

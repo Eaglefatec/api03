@@ -2,30 +2,33 @@ package com.eagle.fusex.encaminhamento;
 
 import com.eagle.fusex.medico.Medico;
 import com.eagle.fusex.medico.MedicoRepository;
-import com.eagle.fusex.shared.exception.MedicoInvalidoException;
 import com.eagle.fusex.shared.exception.ArquivoInvalidoException;
+import com.eagle.fusex.shared.exception.MedicoInvalidoException;
+import com.eagle.fusex.shared.storage.FileStorageService;
 import com.eagle.fusex.encaminhamento.dto.EncaminhamentoResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
 public class EncaminhamentoService {
 
+    private static final Logger log = LoggerFactory.getLogger(EncaminhamentoService.class);
+
     private final MedicoRepository medicoRepository;
     private final EncaminhamentoRepository encaminhamentoRepository;
-    private final String uploadDir = "uploads";
+    private final FileStorageService fileStorageService;
 
-    public EncaminhamentoService(MedicoRepository medicoRepository, EncaminhamentoRepository encaminhamentoRepository) {
+    public EncaminhamentoService(MedicoRepository medicoRepository,
+                                 EncaminhamentoRepository encaminhamentoRepository,
+                                 FileStorageService fileStorageService) {
         this.medicoRepository = medicoRepository;
         this.encaminhamentoRepository = encaminhamentoRepository;
-        criarDiretorioUpload();
+        this.fileStorageService = fileStorageService;
     }
 
     public EncaminhamentoResponse enviarEncaminhamento(Long medicoId, MultipartFile arquivo) {
@@ -36,14 +39,8 @@ public class EncaminhamentoService {
         String nomeArquivoOriginal = arquivo.getOriginalFilename();
         String extensao = extrairExtensao(nomeArquivoOriginal);
         String nomeArquivoUnico = UUID.randomUUID() + "." + extensao;
-        String caminhoArquivo = uploadDir + "/" + nomeArquivoUnico;
 
-        try {
-            Path path = Paths.get(caminhoArquivo);
-            Files.write(path, arquivo.getBytes());
-        } catch (IOException e) {
-            throw new RuntimeException("Erro ao salvar arquivo", e);
-        }
+        String caminhoArquivo = fileStorageService.salvar(arquivo, nomeArquivoUnico);
 
         Encaminhamento encaminhamento = new Encaminhamento();
         encaminhamento.setMedico(medico);
@@ -55,6 +52,8 @@ public class EncaminhamentoService {
         encaminhamento.setStatus(StatusEncaminhamento.ENVIADO);
 
         Encaminhamento salvo = encaminhamentoRepository.save(encaminhamento);
+
+        log.info("Encaminhamento salvo com sucesso. ID={}, médico={}", salvo.getId(), medico.getNome());
 
         return new EncaminhamentoResponse(
                 salvo.getId(),
@@ -76,9 +75,8 @@ public class EncaminhamentoService {
         String nomeArquivo = arquivo.getOriginalFilename();
         long tamanho = arquivo.getSize();
 
-        System.out.println("DEBUG: Nome do arquivo = " + nomeArquivo);
-        System.out.println("DEBUG: Tamanho = " + tamanho);
-        System.out.println("DEBUG: Content-Type = " + arquivo.getContentType());
+        log.debug("Validando arquivo: nome={}, tamanho={}, contentType={}",
+                nomeArquivo, tamanho, arquivo.getContentType());
 
         // Validar extensão (mais leniente)
         String nomeMinusculo = nomeArquivo != null ? nomeArquivo.toLowerCase() : "";
@@ -87,7 +85,7 @@ public class EncaminhamentoService {
                                 nomeMinusculo.endsWith(".jpeg") ||
                                 nomeMinusculo.endsWith(".png");
 
-        System.out.println("DEBUG: Extensão válida = " + extensaoValida);
+        log.debug("Extensão válida: {}", extensaoValida);
 
         if (!extensaoValida) {
             throw new ArquivoInvalidoException("Carregue o encaminhamento em PDF, JPG ou PNG");
@@ -104,16 +102,5 @@ public class EncaminhamentoService {
             return "bin";
         }
         return nomeArquivo.substring(nomeArquivo.lastIndexOf(".") + 1).toLowerCase();
-    }
-
-    private void criarDiretorioUpload() {
-        try {
-            Path path = Paths.get(uploadDir);
-            if (!Files.exists(path)) {
-                Files.createDirectories(path);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException("Erro ao criar diretório de uploads", e);
-        }
     }
 }

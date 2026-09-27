@@ -113,8 +113,9 @@ Para que uma User Story seja considerada finalizada, os seguintes critérios té
 <img src="https://cdn.simpleicons.org/openjdk/ED8B00" height="32"/>  <!-- Java -->
 <img src="https://cdn.simpleicons.org/spring/6DB33F" height="31"/> <!-- Spring Boot -->
 <img src="https://cdn.simpleicons.org/mysql/4479A1" height="31"/>  <!-- MySQL -->
-<img src="https://cdn.simpleicons.org/docker/2496ED" height="31"/> <!-- Docker
-  
+<img src="https://cdn.simpleicons.org/docker/2496ED" height="31"/> <!-- Docker -->
+</p>
+
 ### 🛠️ Ferramentas & DevOps
 <p>
 <img src="https://cdn.simpleicons.org/git/F05032" height="32"/> <!-- Git -->

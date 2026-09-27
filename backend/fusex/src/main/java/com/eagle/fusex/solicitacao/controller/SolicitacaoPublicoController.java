@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/solicitacoes/publico")
+@RequestMapping("/solicitacoes/publico/{token}")
 public class SolicitacaoPublicoController {
 
     private final TriagemPreGuiaService service;
@@ -19,13 +19,13 @@ public class SolicitacaoPublicoController {
         this.service = service;
     }
 
-    @GetMapping("/{token}")
+    @GetMapping
     public ResponseEntity<SolicitacaoPublicaResponse> buscarSolicitacao(@PathVariable String token) {
         SolicitacaoPublicaResponse response = service.buscarPorToken(token);
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/{token}/triagem")
+    @PostMapping("/triagem")
     public ResponseEntity<TriagemResponse> preencherTriagem(@PathVariable String token,
                                                              @Valid @RequestBody PreencherTriagemRequest request) {
         TriagemResponse response = service.preencherTriagem(token, request);

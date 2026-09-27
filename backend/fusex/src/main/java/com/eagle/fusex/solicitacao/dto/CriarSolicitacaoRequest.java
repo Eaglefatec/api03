@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 
 import java.util.List;
 import java.util.Set;
@@ -16,18 +17,25 @@ public class CriarSolicitacaoRequest {
     @Positive(message = "medicoId deve ser positivo")
     private Long medicoId;
 
+    @Positive(message = "medicoResponsavelId deve ser positivo")
+    private Long medicoResponsavelId;
+
     @NotBlank(message = "nomePaciente é obrigatório")
+    @Size(max = 255, message = "nomePaciente deve ter no máximo 255 caracteres")
     private String nomePaciente;
 
     @NotBlank(message = "om é obrigatório")
+    @Size(max = 10, message = "om deve ter no máximo 10 caracteres")
     private String om;
 
     @NotBlank(message = "cpfPrec é obrigatório")
+    @Size(max = 20, message = "cpfPrec deve ter no máximo 20 caracteres")
     private String cpfPrec;
 
     @NotEmpty(message = "especialidades não pode estar vazio")
     private Set<Especialidade> especialidades;
 
+    @Size(max = 500, message = "observacao deve ter no máximo 500 caracteres")
     private String observacao;
 
     @Valid
@@ -72,6 +80,14 @@ public class CriarSolicitacaoRequest {
 
     public void setMedicoId(Long medicoId) {
         this.medicoId = medicoId;
+    }
+
+    public Long getMedicoResponsavelId() {
+        return medicoResponsavelId;
+    }
+
+    public void setMedicoResponsavelId(Long medicoResponsavelId) {
+        this.medicoResponsavelId = medicoResponsavelId;
     }
 
     public String getNomePaciente() {

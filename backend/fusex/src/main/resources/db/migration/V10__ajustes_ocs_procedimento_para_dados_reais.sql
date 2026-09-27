@@ -31,5 +31,4 @@ ALTER TABLE ocs_procedimento ADD COLUMN valor DECIMAL(10,2) NOT NULL DEFAULT 0;
 ALTER TABLE ocs_procedimento ADD COLUMN tabela_referencia VARCHAR(500) NULL;
 ALTER TABLE ocs_procedimento ADD COLUMN descricao_grupo VARCHAR(500) NULL;
 
-ALTER TABLE procedimento DROP INDEX procedimento_unique;
 ALTER TABLE procedimento ADD COLUMN proc_origem VARCHAR(20) NOT NULL DEFAULT 'TUSS';

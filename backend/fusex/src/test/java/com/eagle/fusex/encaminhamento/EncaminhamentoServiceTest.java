@@ -2,8 +2,10 @@ package com.eagle.fusex.encaminhamento;
 
 import com.eagle.fusex.medico.Medico;
 import com.eagle.fusex.medico.MedicoRepository;
-import com.eagle.fusex.shared.exception.MedicoInvalidoException;
 import com.eagle.fusex.shared.exception.ArquivoInvalidoException;
+import com.eagle.fusex.shared.exception.MedicoInvalidoException;
+import com.eagle.fusex.shared.storage.FileStorageService;
+import com.eagle.fusex.encaminhamento.dto.EncaminhamentoResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -13,6 +15,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 class EncaminhamentoServiceTest {
@@ -24,6 +29,9 @@ class EncaminhamentoServiceTest {
     private EncaminhamentoRepository encaminhamentoRepository;
 
     @Mock
+    private FileStorageService fileStorageService;
+
+    @Mock
     private MultipartFile arquivo;
 
     private EncaminhamentoService service;
@@ -31,7 +39,31 @@ class EncaminhamentoServiceTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        service = new EncaminhamentoService(medicoRepository, encaminhamentoRepository);
+        service = new EncaminhamentoService(medicoRepository, encaminhamentoRepository, fileStorageService);
+    }
+
+    @Test
+    void testEnviarEncaminhamentoComSucesso() {
+        Medico medico = new Medico("Dr. João", "123456", true);
+        when(medicoRepository.findByIdAndCredenciadoTrue(1L)).thenReturn(Optional.of(medico));
+        when(arquivo.isEmpty()).thenReturn(false);
+        when(arquivo.getContentType()).thenReturn("application/pdf");
+        when(arquivo.getOriginalFilename()).thenReturn("exame.pdf");
+        when(arquivo.getSize()).thenReturn(1024L);
+        when(fileStorageService.salvar(eq(arquivo), anyString())).thenReturn("uploads/mocked-uuid.pdf");
+
+        Encaminhamento salvo = new Encaminhamento();
+        salvo.setId(10L);
+        salvo.setMedico(medico);
+        when(encaminhamentoRepository.save(any(Encaminhamento.class))).thenReturn(salvo);
+
+        EncaminhamentoResponse response = service.enviarEncaminhamento(1L, arquivo);
+
+        assertNotNull(response);
+        assertEquals(10L, response.getId());
+        assertEquals("Encaminhamento recebido com sucesso", response.getMensagem());
+        verify(fileStorageService, times(1)).salvar(eq(arquivo), anyString());
+        verify(encaminhamentoRepository, times(1)).save(any(Encaminhamento.class));
     }
 
     @Test
