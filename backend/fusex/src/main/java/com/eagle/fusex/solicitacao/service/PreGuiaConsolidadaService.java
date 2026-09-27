@@ -15,6 +15,7 @@ import com.eagle.fusex.solicitacao.TriagemPreGuiaRepository;
 import com.eagle.fusex.solicitacao.dto.PreGuiaConsolidadaResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -44,6 +45,7 @@ public class PreGuiaConsolidadaService {
         this(solicitacaoRepository, triagemRepository, solicitacaoProcedimentoRepository, null);
     }
 
+    @Transactional(readOnly = true)
     public PreGuiaConsolidadaResponse consultar(String token) {
         SolicitacaoMedica solicitacao = solicitacaoRepository.findByTokenPublico(token)
                 .filter(SolicitacaoMedica::getValida)

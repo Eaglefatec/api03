@@ -50,6 +50,7 @@ class SolicitacaoMedicaServiceTest {
     private SolicitacaoMedicaService service;
 
     private Medico medicoCredenciado;
+    private Medico medicoResponsavel;
     private Medico medicoNaoCredenciado;
     private Paciente paciente;
     private Procedimento procedimento;
@@ -60,6 +61,9 @@ class SolicitacaoMedicaServiceTest {
 
         medicoCredenciado = new Medico("Dr. João Silva", "123456", true);
         medicoCredenciado.setId(1L);
+
+        medicoResponsavel = new Medico("Dr. Carlos Eduardo", "998877", true);
+        medicoResponsavel.setId(3L);
 
         medicoNaoCredenciado = new Medico("Dra. Maria Santos", "654321", false);
         medicoNaoCredenciado.setId(2L);
@@ -110,7 +114,7 @@ class SolicitacaoMedicaServiceTest {
         when(pacienteRepository.save(any(Paciente.class)))
                 .thenReturn(paciente);
         when(solicitacaoRepository.findByMedicoIdAndPacienteIdAndValidaTrue(1L, 1L))
-                .thenReturn(Optional.empty());
+                .thenReturn(List.of());
 
         SolicitacaoMedica solicitacaoSalva = new SolicitacaoMedica();
         solicitacaoSalva.setId(1L);
@@ -128,15 +132,15 @@ class SolicitacaoMedicaServiceTest {
     }
 
     @Test
-    void testCriarSolicitacao_PacienteExistente_AtualizaDados() {
+    void testCriarSolicitacao_PacienteExistente_PreservaDadosNaoNulos() {
         Set<Especialidade> especialidades = new HashSet<>();
         especialidades.add(Especialidade.ORTOPEDISTA);
 
         CriarSolicitacaoRequest request = new CriarSolicitacaoRequest();
         request.setMedicoId(1L);
-        request.setNomePaciente("João Silva Atualizado");
+        request.setNomePaciente("Tentativa Sobrescrita");
         request.setCpfPrec("12345678901");
-        request.setOm("OM002");
+        request.setOm("OM_ALTERADA");
         request.setEspecialidades(especialidades);
         request.setProcedimentos(umProcedimento());
 
@@ -147,7 +151,7 @@ class SolicitacaoMedicaServiceTest {
         when(pacienteRepository.save(any(Paciente.class)))
                 .thenReturn(paciente);
         when(solicitacaoRepository.findByMedicoIdAndPacienteIdAndValidaTrue(1L, 1L))
-                .thenReturn(Optional.empty());
+                .thenReturn(List.of());
 
         SolicitacaoMedica solicitacaoSalva = new SolicitacaoMedica();
         solicitacaoSalva.setId(2L);
@@ -159,11 +163,13 @@ class SolicitacaoMedicaServiceTest {
         SolicitacaoResponse response = service.criar(request);
 
         assertNotNull(response);
+        assertEquals("João Silva", paciente.getNome());
+        assertEquals("OM001", paciente.getOm());
         verify(pacienteRepository).save(any(Paciente.class));
     }
 
     @Test
-    void testCriarSolicitacao_SolicitacaoAnteriorExiste_InvalidaAnterior() {
+    void testCriarSolicitacao_MultiplasSolicitacoesAnteriores_InvalidaTodasSemExcecao() {
         Set<Especialidade> especialidades = new HashSet<>();
         especialidades.add(Especialidade.CARDIOLOGISTA);
 
@@ -175,9 +181,13 @@ class SolicitacaoMedicaServiceTest {
         request.setEspecialidades(especialidades);
         request.setProcedimentos(umProcedimento());
 
-        SolicitacaoMedica solicitacaoAnterior = new SolicitacaoMedica();
-        solicitacaoAnterior.setId(99L);
-        solicitacaoAnterior.setValida(true);
+        SolicitacaoMedica anterior1 = new SolicitacaoMedica();
+        anterior1.setId(98L);
+        anterior1.setValida(true);
+
+        SolicitacaoMedica anterior2 = new SolicitacaoMedica();
+        anterior2.setId(99L);
+        anterior2.setValida(true);
 
         when(medicoRepository.findByIdAndCredenciadoTrue(1L))
                 .thenReturn(Optional.of(medicoCredenciado));
@@ -186,7 +196,7 @@ class SolicitacaoMedicaServiceTest {
         when(pacienteRepository.save(any(Paciente.class)))
                 .thenReturn(paciente);
         when(solicitacaoRepository.findByMedicoIdAndPacienteIdAndValidaTrue(1L, 1L))
-                .thenReturn(Optional.of(solicitacaoAnterior));
+                .thenReturn(List.of(anterior1, anterior2));
 
         SolicitacaoMedica solicitacaoNova = new SolicitacaoMedica();
         solicitacaoNova.setId(3L);
@@ -198,7 +208,73 @@ class SolicitacaoMedicaServiceTest {
         SolicitacaoResponse response = service.criar(request);
 
         assertNotNull(response);
-        verify(solicitacaoRepository, times(2)).save(any(SolicitacaoMedica.class));
+        assertFalse(anterior1.getValida());
+        assertFalse(anterior2.getValida());
+        // anterior 1 + anterior 2 + nova solicitação = 3 saves
+        verify(solicitacaoRepository, times(3)).save(any(SolicitacaoMedica.class));
+    }
+
+    @Test
+    void testCriarSolicitacao_ComMedicoResponsavel_SalvaComSucesso() {
+        Set<Especialidade> especialidades = new HashSet<>();
+        especialidades.add(Especialidade.CARDIOLOGISTA);
+
+        CriarSolicitacaoRequest request = new CriarSolicitacaoRequest();
+        request.setMedicoId(1L);
+        request.setMedicoResponsavelId(3L);
+        request.setNomePaciente("João Silva");
+        request.setCpfPrec("12345678901");
+        request.setOm("OM001");
+        request.setEspecialidades(especialidades);
+        request.setProcedimentos(umProcedimento());
+
+        when(medicoRepository.findByIdAndCredenciadoTrue(1L))
+                .thenReturn(Optional.of(medicoCredenciado));
+        when(medicoRepository.findById(3L))
+                .thenReturn(Optional.of(medicoResponsavel));
+        when(pacienteRepository.findByCpfPrec("12345678901"))
+                .thenReturn(Optional.of(paciente));
+        when(pacienteRepository.save(any(Paciente.class)))
+                .thenReturn(paciente);
+        when(solicitacaoRepository.findByMedicoIdAndPacienteIdAndValidaTrue(1L, 1L))
+                .thenReturn(List.of());
+
+        SolicitacaoMedica solicitacaoSalva = new SolicitacaoMedica();
+        solicitacaoSalva.setId(5L);
+        solicitacaoSalva.setMedicoResponsavel(medicoResponsavel);
+        solicitacaoSalva.setTokenPublico("token-uuid-5");
+
+        when(solicitacaoRepository.save(any(SolicitacaoMedica.class)))
+                .thenReturn(solicitacaoSalva);
+
+        SolicitacaoResponse response = service.criar(request);
+
+        assertNotNull(response);
+        verify(medicoRepository).findById(3L);
+    }
+
+    @Test
+    void testCriarSolicitacao_ComMedicoResponsavelInvalido_LancaException() {
+        Set<Especialidade> especialidades = new HashSet<>();
+        especialidades.add(Especialidade.CARDIOLOGISTA);
+
+        CriarSolicitacaoRequest request = new CriarSolicitacaoRequest();
+        request.setMedicoId(1L);
+        request.setMedicoResponsavelId(999L);
+        request.setNomePaciente("João Silva");
+        request.setCpfPrec("12345678901");
+        request.setOm("OM001");
+        request.setEspecialidades(especialidades);
+        request.setProcedimentos(umProcedimento());
+
+        when(medicoRepository.findByIdAndCredenciadoTrue(1L))
+                .thenReturn(Optional.of(medicoCredenciado));
+        when(pacienteRepository.findByCpfPrec("12345678901"))
+                .thenReturn(Optional.of(paciente));
+        when(medicoRepository.findById(999L))
+                .thenReturn(Optional.empty());
+
+        assertThrows(MedicoInvalidoException.class, () -> service.criar(request));
     }
 
     @Test
@@ -225,7 +301,7 @@ class SolicitacaoMedicaServiceTest {
         when(pacienteRepository.save(any(Paciente.class)))
                 .thenReturn(paciente);
         when(solicitacaoRepository.findByMedicoIdAndPacienteIdAndValidaTrue(1L, 1L))
-                .thenReturn(Optional.empty());
+                .thenReturn(List.of());
         when(procedimentoRepository.findById("INEXISTENTE"))
                 .thenReturn(Optional.empty());
 

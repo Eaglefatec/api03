@@ -58,7 +58,16 @@ public class OcsController {
 
     @GetMapping(value = "/ocs", params = "especialidades")
     public ResponseEntity<List<OcsResponse>> listarOcsPorEspecialidades(@RequestParam Set<Especialidade> especialidades) {
-        List<OcsResponse> response = ocsRepository.findByEspecialidadesIn(especialidades).stream()
+        List<OcsResponse> response = ocsRepository.findDistinctByEspecialidadesIn(especialidades).stream()
+                .map(OcsResponse::from)
+                .toList();
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping(value = "/ocs")
+    public ResponseEntity<List<OcsResponse>> listarTodasOcs() {
+        List<OcsResponse> response = ocsRepository.findAll().stream()
                 .map(OcsResponse::from)
                 .toList();
 

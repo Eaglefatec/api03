@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -43,7 +44,7 @@ class SolicitacaoMedicaRepositoryTest {
     }
 
     @Test
-    @DisplayName("findByMedicoIdAndPacienteIdAndValidaTrue - Deve retornar apenas solicitação válida")
+    @DisplayName("findByMedicoIdAndPacienteIdAndValidaTrue - Deve retornar apenas solicitação válida em lista")
     void deveRetornarApenasSolicitacaoValida() {
         Medico medico = entityManager.persist(new Medico("Dra. Beatriz", "CRM222", true));
         Paciente paciente = entityManager.persist(new Paciente("Ana Lima", "99988877766", "OM02"));
@@ -63,16 +64,43 @@ class SolicitacaoMedicaRepositoryTest {
         entityManager.persist(solicitacaoValida);
         entityManager.flush();
 
-        Optional<SolicitacaoMedica> resultado = solicitacaoMedicaRepository
+        List<SolicitacaoMedica> resultado = solicitacaoMedicaRepository
                 .findByMedicoIdAndPacienteIdAndValidaTrue(medico.getId(), paciente.getId());
 
-        assertTrue(resultado.isPresent());
-        assertEquals("token-valido", resultado.get().getTokenPublico());
-        assertTrue(resultado.get().getValida());
+        assertEquals(1, resultado.size());
+        assertEquals("token-valido", resultado.get(0).getTokenPublico());
+        assertTrue(resultado.get(0).getValida());
     }
 
     @Test
-    @DisplayName("findByMedicoIdAndPacienteIdAndValidaTrue - Deve retornar vazio quando só houver solicitação inválida")
+    @DisplayName("findByMedicoIdAndPacienteIdAndValidaTrue - Deve retornar múltiplas solicitações válidas sem NonUniqueResultException")
+    void deveRetornarMultiplasSolicitacoesValidas() {
+        Medico medico = entityManager.persist(new Medico("Dra. Beatriz", "CRM222", true));
+        Paciente paciente = entityManager.persist(new Paciente("Ana Lima", "99988877766", "OM02"));
+
+        SolicitacaoMedica solicitacaoValida1 = new SolicitacaoMedica();
+        solicitacaoValida1.setMedico(medico);
+        solicitacaoValida1.setPaciente(paciente);
+        solicitacaoValida1.setTokenPublico("token-valido-1");
+        solicitacaoValida1.setValida(true);
+        entityManager.persist(solicitacaoValida1);
+
+        SolicitacaoMedica solicitacaoValida2 = new SolicitacaoMedica();
+        solicitacaoValida2.setMedico(medico);
+        solicitacaoValida2.setPaciente(paciente);
+        solicitacaoValida2.setTokenPublico("token-valido-2");
+        solicitacaoValida2.setValida(true);
+        entityManager.persist(solicitacaoValida2);
+        entityManager.flush();
+
+        List<SolicitacaoMedica> resultado = solicitacaoMedicaRepository
+                .findByMedicoIdAndPacienteIdAndValidaTrue(medico.getId(), paciente.getId());
+
+        assertEquals(2, resultado.size());
+    }
+
+    @Test
+    @DisplayName("findByMedicoIdAndPacienteIdAndValidaTrue - Deve retornar lista vazia quando só houver solicitação inválida")
     void deveRetornarVazioQuandoNaoHouverSolicitacaoValida() {
         Medico medico = entityManager.persist(new Medico("Dr. Roberto", "CRM333", true));
         Paciente paciente = entityManager.persist(new Paciente("Marcos Souza", "55544433322", "OM03"));
@@ -85,7 +113,7 @@ class SolicitacaoMedicaRepositoryTest {
         entityManager.persist(solicitacao);
         entityManager.flush();
 
-        Optional<SolicitacaoMedica> resultado = solicitacaoMedicaRepository
+        List<SolicitacaoMedica> resultado = solicitacaoMedicaRepository
                 .findByMedicoIdAndPacienteIdAndValidaTrue(medico.getId(), paciente.getId());
 
         assertTrue(resultado.isEmpty());

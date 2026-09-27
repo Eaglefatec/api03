@@ -2,11 +2,15 @@ package com.eagle.fusex.config;
 
 import com.eagle.fusex.medico.Medico;
 import com.eagle.fusex.medico.MedicoRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 @Component
 public class DataInitializer implements CommandLineRunner {
+
+    private static final Logger log = LoggerFactory.getLogger(DataInitializer.class);
 
     private final MedicoRepository medicoRepository;
 
@@ -23,7 +27,7 @@ public class DataInitializer implements CommandLineRunner {
             medicoRepository.save(medico1);
             medicoRepository.save(medico2);
 
-            System.out.println("✅ Médicos de teste inseridos com sucesso!");
+            log.info("Médicos de teste inseridos com sucesso!");
         }
     }
 }

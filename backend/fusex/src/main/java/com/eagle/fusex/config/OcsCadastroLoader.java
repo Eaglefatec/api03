@@ -5,6 +5,8 @@ import com.eagle.fusex.ocs.OcsRepository;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -26,6 +28,7 @@ import java.util.Optional;
 @Order(3)
 public class OcsCadastroLoader implements CommandLineRunner {
 
+    private static final Logger log = LoggerFactory.getLogger(OcsCadastroLoader.class);
     private static final String CSV_PATH_PADRAO = "data/ocs_cadastro.csv";
 
     private final OcsRepository ocsRepository;
@@ -49,7 +52,7 @@ public class OcsCadastroLoader implements CommandLineRunner {
     public void run(String... args) throws Exception {
         InputStream inputStream = abrirCsv();
         if (inputStream == null) {
-            System.out.println("AVISO: " + csvPath + " não encontrado — rode scripts/extrair_cadastro_ocs.py antes de subir a aplicação.");
+            log.warn("AVISO: {} não encontrado — rode scripts/extrair_cadastro_ocs.py antes de subir a aplicação.", csvPath);
             return;
         }
 
@@ -90,7 +93,7 @@ public class OcsCadastroLoader implements CommandLineRunner {
             throw new RuntimeException("Erro ao importar cadastro de OCS", e);
         }
 
-        System.out.println("✅ " + atualizadas + " OCS atualizadas com CNPJ/endereço/telefone!");
+        log.info("{} OCS atualizadas com CNPJ/endereço/telefone!", atualizadas);
     }
 
     private String vazioParaNull(String valor) {

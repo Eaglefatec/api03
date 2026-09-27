@@ -1,12 +1,15 @@
 package com.eagle.fusex.solicitacao;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
-@Repository
 public interface SolicitacaoMedicaRepository extends JpaRepository<SolicitacaoMedica, Long> {
+    @EntityGraph(attributePaths = {"medico", "paciente", "medicoResponsavel", "especialidades"})
     Optional<SolicitacaoMedica> findByTokenPublico(String tokenPublico);
-    Optional<SolicitacaoMedica> findByMedicoIdAndPacienteIdAndValidaTrue(Long medicoId, Long pacienteId);
+
+    List<SolicitacaoMedica> findByMedicoIdAndPacienteIdAndValidaTrue(Long medicoId, Long pacienteId);
 }
+

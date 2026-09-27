@@ -12,6 +12,8 @@ import com.eagle.fusex.solicitacao.Especialidade;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -38,6 +40,7 @@ import java.util.Set;
 @Order(2)
 public class OcsPrecoLoader implements CommandLineRunner {
 
+    private static final Logger log = LoggerFactory.getLogger(OcsPrecoLoader.class);
     private static final String CSV_PATH_PADRAO = "data/ocs_precos.csv";
 
     private final OcsRepository ocsRepository;
@@ -72,7 +75,7 @@ public class OcsPrecoLoader implements CommandLineRunner {
 
         InputStream inputStream = abrirCsv();
         if (inputStream == null) {
-            System.out.println("AVISO: " + csvPath + " não encontrado — rode scripts/extrair_planilhas.py antes de subir a aplicação.");
+            log.warn("AVISO: {} não encontrado — rode scripts/extrair_planilhas.py antes de subir a aplicação.", csvPath);
             return;
         }
 
@@ -109,7 +112,7 @@ public class OcsPrecoLoader implements CommandLineRunner {
             throw new RuntimeException("Erro ao importar preços por OCS", e);
         }
 
-        System.out.println("✅ " + ocsCache.size() + " OCS e " + totalPrecos + " preços de procedimento importados com sucesso!");
+        log.info("{} OCS e {} preços de procedimento importados com sucesso!", ocsCache.size(), totalPrecos);
     }
 
     private Ocs obterOuCriarOcs(CSVRecord record) {

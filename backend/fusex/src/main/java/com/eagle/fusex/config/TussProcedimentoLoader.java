@@ -6,6 +6,8 @@ import com.eagle.fusex.ocs.ProcedimentoRepository;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -27,6 +29,7 @@ import java.util.List;
 @Order(1)
 public class TussProcedimentoLoader implements CommandLineRunner {
 
+    private static final Logger log = LoggerFactory.getLogger(TussProcedimentoLoader.class);
     private static final String CSV_PATH_PADRAO = "data/tuss_procedimentos.csv";
 
     private final ProcedimentoRepository procedimentoRepository;
@@ -53,7 +56,7 @@ public class TussProcedimentoLoader implements CommandLineRunner {
 
         InputStream inputStream = abrirCsv();
         if (inputStream == null) {
-            System.out.println("AVISO: " + csvPath + " não encontrado — rode scripts/extrair_planilhas.py antes de subir a aplicação.");
+            log.warn("AVISO: {} não encontrado — rode scripts/extrair_planilhas.py antes de subir a aplicação.", csvPath);
             return;
         }
 
@@ -81,7 +84,7 @@ public class TussProcedimentoLoader implements CommandLineRunner {
         }
 
         procedimentoRepository.saveAll(procedimentos);
-        System.out.println("✅ " + procedimentos.size() + " procedimentos TUSS importados com sucesso!");
+        log.info("{} procedimentos TUSS importados com sucesso!", procedimentos.size());
     }
 
     private InputStream abrirCsv() throws IOException {

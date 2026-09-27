@@ -3,10 +3,12 @@ package com.eagle.fusex.solicitacao.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 
 public class PreencherTriagemRequest {
 
     @NotBlank(message = "cpfPrec é obrigatório")
+    @Size(max = 20, message = "cpfPrec deve ter no máximo 20 caracteres")
     private String cpfPrec;
 
     @NotNull(message = "idade é obrigatória")
@@ -14,6 +16,7 @@ public class PreencherTriagemRequest {
     private Integer idade;
 
     @NotBlank(message = "telefone é obrigatório")
+    @Size(max = 20, message = "telefone deve ter no máximo 20 caracteres")
     private String telefone;
 
     @NotNull(message = "ocsId é obrigatório")
