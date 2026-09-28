@@ -2,12 +2,14 @@
 
 # Maven wrapper script for Windows (PowerShell)
 $MAVEN_VERSION = "3.9.6"
-$MAVEN_HOME = "$PSScriptRoot\.mvn\maven-$MAVEN_VERSION"
+$MAVEN_HOME = "$PSScriptRoot\.mvn\apache-maven-$MAVEN_VERSION"
 $MAVEN_URL = "https://repo.maven.apache.org/maven2/org/apache/maven/apache-maven/$MAVEN_VERSION/apache-maven-$MAVEN_VERSION-bin.zip"
 
-# Set JAVA_HOME
+# Set JAVA_HOME only if not already set and candidate directory exists
 if (-not $env:JAVA_HOME) {
-    $env:JAVA_HOME = "C:\Program Files\Java\jdk-21.0.12.1"
+    if (Test-Path "C:\Program Files\Java\jdk-21.0.12.1") {
+        $env:JAVA_HOME = "C:\Program Files\Java\jdk-21.0.12.1"
+    }
 }
 
 # Download Maven if not present

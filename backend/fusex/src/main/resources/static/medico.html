@@ -4,214 +4,446 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FUSEX - Nova Solicitação Médica</title>
+<link rel="stylesheet" href="css/fusex-theme.css">
 <style>
-  * { box-sizing: border-box; }
-  body {
-    font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    background: #f4f5f7;
-    margin: 0;
-    padding: 24px 16px;
-    color: #222;
+  .procedimentos-lista {
+    list-style: none;
+    margin: 12px 0 0 0;
+    padding: 0;
   }
-  .container {
-    max-width: 480px;
-    margin: 0 auto;
-    background: #fff;
-    border-radius: 8px;
-    padding: 24px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-  }
-  h1 {
-    font-size: 1.3em;
-    margin-top: 0;
-    color: #1a4d8f;
-  }
-  h2 {
-    font-size: 1em;
-    color: #555;
-    margin-top: 24px;
-  }
-  label {
-    display: block;
-    margin-top: 12px;
-    margin-bottom: 4px;
-    font-size: 0.9em;
-    font-weight: 600;
-    color: #444;
-  }
-  input[type=text], input[type=number], input[type=password], textarea {
-    width: 100%;
-    padding: 8px 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 0.95em;
-  }
-  textarea { resize: vertical; min-height: 60px; }
-  .especialidades {
+  .procedimento-item {
     display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 8px;
-  }
-  .especialidades label {
-    display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 4px;
-    font-weight: normal;
-    margin: 0;
-    background: #f0f2f5;
-    padding: 6px 10px;
-    border-radius: 16px;
-    cursor: pointer;
-    font-size: 0.85em;
+    background: var(--bg-muted);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 9px 12px;
+    margin-bottom: 8px;
+    font-size: 0.88em;
   }
-  .especialidades input { margin: 0; }
-  button {
-    margin-top: 20px;
-    width: 100%;
-    padding: 10px;
-    background: #1a4d8f;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    font-size: 1em;
-    cursor: pointer;
+  .procedimento-item-nome {
+    font-weight: 500;
+    color: var(--text-main);
   }
-  button:hover { background: #143c70; }
-  .row2 { display: flex; gap: 12px; }
-  .row2 > div { flex: 1; }
-  #result, #errorMsg {
-    margin-top: 20px;
-    padding: 12px;
-    border-radius: 6px;
-    font-size: 0.9em;
+  .procedimento-item-cod {
+    font-size: 0.8em;
+    color: var(--text-muted);
+    margin-top: 2px;
   }
-  #result {
-    background: #e7f6ec;
-    border: 1px solid #a7dcb5;
-  }
-  #errorMsg {
-    background: #fdecea;
-    border: 1px solid #f3b4ac;
-    color: #a02b1f;
-  }
-  #linkOutput {
-    width: 100%;
-    padding: 8px;
-    margin-top: 8px;
-    font-size: 0.85em;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background: #fff;
-  }
-  #copyBtn {
-    margin-top: 8px;
-    background: #2f9e58;
-  }
-  #copyBtn:hover { background: #257e46; }
-  hr { border: none; border-top: 1px solid #e5e5e5; margin: 20px 0; }
 </style>
 </head>
 <body>
-<div class="container">
-  <h1>Nova Solicitação Médica</h1>
-
-  <h2>Autenticação</h2>
-  <div class="row2">
+<header class="app-header">
+  <div class="brand-badge">
+    <span class="brand-logo">FUSEX</span>
     <div>
-      <label>Usuário</label>
-      <input type="text" id="user" value="medico">
-    </div>
-    <div>
-      <label>Senha</label>
-      <input type="password" id="pass">
+      <div class="brand-title">Módulo Médico</div>
+      <div class="brand-subtitle">Emissão de Solicitações</div>
     </div>
   </div>
 
-  <hr>
-
-  <form id="solicitacaoForm">
-    <label>ID do Médico</label>
-    <input type="number" id="medicoId" value="1" required>
-
-    <label>Nome do Paciente</label>
-    <input type="text" id="nomePaciente" required>
-
-    <div class="row2">
-      <div>
-        <label>OM</label>
-        <input type="text" id="om" required>
-      </div>
-      <div>
-        <label>CPF/PREC</label>
-        <input type="text" id="cpfPrec" required>
-      </div>
+  <div class="user-profile-widget">
+    <div class="user-profile-details">
+      <div class="user-profile-name" id="medicoNome">Carregando...</div>
+      <div class="user-profile-crm" id="medicoCrm">CRM: -</div>
     </div>
-
-    <label>Especialidades</label>
-    <div class="especialidades">
-      <label><input type="checkbox" class="especialidade" value="CARDIOLOGISTA"> Cardiologista</label>
-      <label><input type="checkbox" class="especialidade" value="ORTOPEDISTA"> Ortopedista</label>
-      <label><input type="checkbox" class="especialidade" value="ENDOCRINOLOGISTA"> Endocrinologista</label>
-      <label><input type="checkbox" class="especialidade" value="GINECOLOGISTA_OBSTETRA"> Ginecologista/Obstetra</label>
-      <label><input type="checkbox" class="especialidade" value="NUTRICIONISTA"> Nutricionista</label>
-      <label><input type="checkbox" class="especialidade" value="PSIQUIATRA"> Psiquiatra</label>
-      <label><input type="checkbox" class="especialidade" value="DERMATOLOGISTA"> Dermatologista</label>
-      <label><input type="checkbox" class="especialidade" value="OUTROS"> Outros</label>
-    </div>
-
-    <label>Observação (opcional)</label>
-    <textarea id="observacao"></textarea>
-
-    <button type="submit">Criar Solicitação</button>
-  </form>
-
-  <div id="result" hidden>
-    <strong>✅ Solicitação criada!</strong>
-    <p>Envie este link ao beneficiário:</p>
-    <input type="text" id="linkOutput" readonly>
-    <button id="copyBtn" type="button">Copiar link</button>
+    <button type="button" class="btn-outline-danger" id="logoutBtn" style="cursor: pointer; border-radius: 4px;">Sair</button>
   </div>
+</header>
 
-  <div id="errorMsg" hidden></div>
+<div class="app-container">
+  <div class="card">
+    <h1 class="card-title">Nova Solicitação Médica</h1>
+    <p class="card-subtitle">Insira as informações clínicas e selecione a OCS indicada</p>
+
+    <form id="solicitacaoForm">
+      <div class="section-title">👤 Identificação do Paciente</div>
+
+      <label for="nomePaciente">Nome do Paciente</label>
+      <div class="autocomplete-wrap">
+        <input type="text" id="nomePaciente" placeholder="Digite o nome ou sílabas para buscar no cadastro..." autocomplete="off" required>
+        <ul id="pacienteSugestoes" class="autocomplete-dropdown" hidden></ul>
+      </div>
+
+      <div class="row2">
+        <div>
+          <label for="om">Organização Militar (OM)</label>
+          <input type="text" id="om" placeholder="Ex: 12º GAC" required maxlength="10">
+        </div>
+        <div>
+          <label for="cpfPrec">CPF / PREC</label>
+          <input type="text" id="cpfPrec" placeholder="Ex: 11122233344" required>
+        </div>
+      </div>
+
+      <div id="cadastroPacienteArea" style="margin-top: 10px; display: flex; align-items: center; gap: 10px;" hidden>
+        <button type="button" id="btnCadastrarPaciente" class="btn btn-secondary" style="width: auto; margin: 0; padding: 6px 14px; font-size: 0.85em; border-color: var(--color-primary); color: var(--color-primary);">
+          ➕ Cadastrar Paciente no Banco de Dados
+        </button>
+        <span id="cadastroPacienteStatus" style="font-size: 0.85em; font-weight: 600; color: var(--color-success-text);" hidden></span>
+      </div>
+
+      <div class="section-title">🩺 Especialidades Requeridas</div>
+      <div class="pill-group">
+        <label class="pill-checkbox"><input type="checkbox" class="especialidade" value="CARDIOLOGISTA"> Cardiologista</label>
+        <label class="pill-checkbox"><input type="checkbox" class="especialidade" value="ORTOPEDISTA"> Ortopedista</label>
+        <label class="pill-checkbox"><input type="checkbox" class="especialidade" value="ENDOCRINOLOGISTA"> Endocrinologista</label>
+        <label class="pill-checkbox"><input type="checkbox" class="especialidade" value="GINECOLOGISTA_OBSTETRA"> Ginecologista / Obstetra</label>
+        <label class="pill-checkbox"><input type="checkbox" class="especialidade" value="NUTRICIONISTA"> Nutricionista</label>
+        <label class="pill-checkbox"><input type="checkbox" class="especialidade" value="PSIQUIATRA"> Psiquiatra</label>
+        <label class="pill-checkbox"><input type="checkbox" class="especialidade" value="DERMATOLOGISTA"> Dermatologista</label>
+        <label class="pill-checkbox"><input type="checkbox" class="especialidade" value="OUTROS"> Outros</label>
+      </div>
+
+      <div class="section-title">🔬 Procedimentos e Exames (TUSS)</div>
+      <div class="autocomplete-wrap">
+        <input type="text" id="procedimentoBusca" placeholder="Pesquisar por descrição ou código TUSS (mín. 3 letras)..." autocomplete="off">
+        <ul id="procedimentoSugestoes" class="autocomplete-dropdown" hidden></ul>
+      </div>
+
+      <ul id="listaProcedimentos" class="procedimentos-lista"></ul>
+
+      <div class="section-title">📝 Observações Clínicas (Opcional)</div>
+      <textarea id="observacao" placeholder="Informações clínicas complementares, justificativa ou histórico breve..."></textarea>
+
+      <button type="submit" class="btn btn-primary" id="submitBtn">Criar Solicitação Médica</button>
+    </form>
+
+    <div id="result" class="alert alert-success alert-column" hidden>
+      <div><strong>✅ Solicitação gerada com sucesso!</strong></div>
+      <div style="font-size: 0.9em;">Copie o link abaixo e forneça ao paciente para o preenchimento da triagem e escolha da clínica (OCS):</div>
+      <input type="text" id="linkOutput" readonly style="background:#fff; margin-top:4px;">
+      <button id="copyBtn" type="button" class="btn btn-success" style="margin-top:4px;">📋 Copiar Link de Acesso</button>
+    </div>
+
+    <div id="errorMsg" class="alert alert-error" hidden></div>
+  </div>
 </div>
 
 <script>
+  // 1. Verificação de Sessão
+  const auth = sessionStorage.getItem('fusex_auth');
+  const medicoStr = sessionStorage.getItem('fusex_medico');
+
+  if (!auth) {
+    window.location.href = 'login.html';
+  }
+
+  const medico = medicoStr ? JSON.parse(medicoStr) : { id: 1, nome: 'Dr. João Silva', crm: '123456' };
+
+  document.getElementById('medicoNome').textContent = medico.nome || 'Médico Conectado';
+  document.getElementById('medicoCrm').textContent = medico.crm ? 'CRM: ' + medico.crm : '';
+
+  document.getElementById('logoutBtn').addEventListener('click', () => {
+    sessionStorage.removeItem('fusex_auth');
+    sessionStorage.removeItem('fusex_user');
+    sessionStorage.removeItem('fusex_medico');
+    window.location.href = 'login.html';
+  });
+
+  // Highlight pill checkboxes on change
+  document.querySelectorAll('.pill-checkbox input').forEach(input => {
+    input.addEventListener('change', () => {
+      input.closest('.pill-checkbox').classList.toggle('active', input.checked);
+    });
+  });
+
   const form = document.getElementById('solicitacaoForm');
   const resultBox = document.getElementById('result');
   const errorBox = document.getElementById('errorMsg');
   const linkOutput = document.getElementById('linkOutput');
+  const submitBtn = document.getElementById('submitBtn');
 
+  // 2. Autocomplete e Cadastro de Pacientes
+  const nomePacienteInput = document.getElementById('nomePaciente');
+  const pacienteSugestoes = document.getElementById('pacienteSugestoes');
+  const omInput = document.getElementById('om');
+  const cpfPrecInput = document.getElementById('cpfPrec');
+  const cadastroArea = document.getElementById('cadastroPacienteArea');
+  const btnCadastrarPaciente = document.getElementById('btnCadastrarPaciente');
+  const cadastroStatus = document.getElementById('cadastroPacienteStatus');
+
+  let pacienteDebounce = null;
+  let pacienteSelecionadoOuSalvo = false;
+
+  function verificarCamposPacienteNovo() {
+    const nome = nomePacienteInput.value.trim();
+    const om = omInput.value.trim();
+    const cpf = cpfPrecInput.value.trim();
+
+    if (pacienteSelecionadoOuSalvo) {
+      cadastroArea.hidden = true;
+      return;
+    }
+
+    if (nome.length >= 3 && om.length >= 2 && cpf.length >= 5) {
+      cadastroArea.hidden = false;
+      btnCadastrarPaciente.hidden = false;
+      cadastroStatus.hidden = true;
+    } else {
+      cadastroArea.hidden = true;
+    }
+  }
+
+  nomePacienteInput.addEventListener('input', () => {
+    pacienteSelecionadoOuSalvo = false;
+    verificarCamposPacienteNovo();
+
+    clearTimeout(pacienteDebounce);
+    const termo = nomePacienteInput.value.trim();
+
+    if (termo.length < 2) {
+      pacienteSugestoes.hidden = true;
+      pacienteSugestoes.innerHTML = '';
+      return;
+    }
+
+    pacienteDebounce = setTimeout(async () => {
+      try {
+        const res = await fetch('/api/pacientes?busca=' + encodeURIComponent(termo), {
+          headers: { 'Authorization': 'Basic ' + auth }
+        });
+        if (!res.ok) {
+          pacienteSugestoes.hidden = true;
+          return;
+        }
+        const lista = await res.json();
+        pacienteSugestoes.innerHTML = '';
+
+        if (!lista || lista.length === 0) {
+          const li = document.createElement('li');
+          li.style.cursor = 'default';
+          li.style.color = 'var(--text-muted)';
+          li.style.fontSize = '0.84em';
+          li.style.padding = '8px 12px';
+          li.innerHTML = '<em>Nenhum paciente cadastrado encontrado com este nome. Preencha OM e CPF/PREC manualmente.</em>';
+          pacienteSugestoes.appendChild(li);
+          pacienteSugestoes.hidden = false;
+          return;
+        }
+
+        lista.forEach(p => {
+          const li = document.createElement('li');
+          li.innerHTML = `<strong>${p.nome}</strong><div class="meta">OM: <strong>${p.om || 'Não informada'}</strong> &bull; CPF/PREC: <strong>${p.cpfPrec || 'Não informado'}</strong></div>`;
+          li.addEventListener('click', () => {
+            nomePacienteInput.value = p.nome;
+            if (p.om) omInput.value = p.om;
+            if (p.cpfPrec) cpfPrecInput.value = p.cpfPrec;
+            pacienteSugestoes.hidden = true;
+            pacienteSugestoes.innerHTML = '';
+            pacienteSelecionadoOuSalvo = true;
+            cadastroArea.hidden = true;
+          });
+          pacienteSugestoes.appendChild(li);
+        });
+
+        pacienteSugestoes.hidden = false;
+      } catch (err) {
+        pacienteSugestoes.hidden = true;
+      }
+    }, 200);
+  });
+
+  omInput.addEventListener('input', () => {
+    pacienteSelecionadoOuSalvo = false;
+    verificarCamposPacienteNovo();
+  });
+
+  cpfPrecInput.addEventListener('input', () => {
+    pacienteSelecionadoOuSalvo = false;
+    verificarCamposPacienteNovo();
+  });
+
+  btnCadastrarPaciente.addEventListener('click', async () => {
+    const nome = nomePacienteInput.value.trim();
+    const om = omInput.value.trim();
+    const cpfPrec = cpfPrecInput.value.trim();
+
+    if (!nome || !om || !cpfPrec) {
+      alert('Por favor, preencha o Nome, a OM e o CPF/PREC antes de cadastrar o paciente.');
+      return;
+    }
+
+    btnCadastrarPaciente.disabled = true;
+    btnCadastrarPaciente.textContent = 'Cadastrando paciente...';
+
+    try {
+      const res = await fetch('/api/pacientes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Basic ' + auth
+        },
+        body: JSON.stringify({ nome, om, cpfPrec })
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || 'Erro ao cadastrar paciente no banco de dados.');
+      }
+
+      pacienteSelecionadoOuSalvo = true;
+      btnCadastrarPaciente.hidden = true;
+      cadastroStatus.textContent = '✅ Paciente cadastrado com sucesso no banco de dados!';
+      cadastroStatus.hidden = false;
+    } catch (err) {
+      alert(err.message || 'Erro ao cadastrar paciente.');
+    } finally {
+      btnCadastrarPaciente.disabled = false;
+      btnCadastrarPaciente.textContent = '➕ Cadastrar Paciente no Banco de Dados';
+    }
+  });
+
+  nomePacienteInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      pacienteSugestoes.hidden = true;
+    }
+  });
+
+  // Fechar dropdowns de sugestões ao clicar fora
+  document.addEventListener('click', (e) => {
+    if (!nomePacienteInput.contains(e.target) && !pacienteSugestoes.contains(e.target)) {
+      pacienteSugestoes.hidden = true;
+    }
+    if (!procedimentoBusca.contains(e.target) && !procedimentoSugestoes.contains(e.target)) {
+      procedimentoSugestoes.hidden = true;
+    }
+  });
+
+  // 3. Autocomplete de Procedimentos TUSS
+  const procedimentoBusca = document.getElementById('procedimentoBusca');
+  const procedimentoSugestoes = document.getElementById('procedimentoSugestoes');
+  const listaProcedimentos = document.getElementById('listaProcedimentos');
+
+  let procedimentosAdicionados = [];
+  let procedimentoDebounce = null;
+
+  procedimentoBusca.addEventListener('input', () => {
+    clearTimeout(procedimentoDebounce);
+    const texto = procedimentoBusca.value.trim();
+
+    if (texto.length < 3) {
+      procedimentoSugestoes.hidden = true;
+      procedimentoSugestoes.innerHTML = '';
+      return;
+    }
+
+    procedimentoDebounce = setTimeout(async () => {
+      try {
+        const res = await fetch('/api/procedimentos?busca=' + encodeURIComponent(texto));
+        const data = await res.json();
+        procedimentoSugestoes.innerHTML = '';
+        if (!data || data.length === 0) {
+          procedimentoSugestoes.hidden = true;
+          return;
+        }
+        data.forEach(p => {
+          const li = document.createElement('li');
+          li.innerHTML = `<strong>${p.procDescricao}</strong><div class="meta">Código DGP/TUSS: ${p.procCodigoDgp}</div>`;
+          li.addEventListener('click', () => {
+            adicionarProcedimento(p);
+            procedimentoBusca.value = '';
+            procedimentoSugestoes.hidden = true;
+          });
+          procedimentoSugestoes.appendChild(li);
+        });
+        procedimentoSugestoes.hidden = false;
+      } catch (err) {
+        procedimentoSugestoes.hidden = true;
+      }
+    }, 250);
+  });
+
+  function adicionarProcedimento(p) {
+    if (procedimentosAdicionados.some(item => item.procedimentoCodigoDgp === p.procCodigoDgp)) {
+      return; // Já adicionado
+    }
+    procedimentosAdicionados.push({
+      procedimentoCodigoDgp: p.procCodigoDgp,
+      procDescricao: p.procDescricao,
+      quantidade: 1
+    });
+    renderListaProcedimentos();
+    errorBox.hidden = true;
+  }
+
+  function renderListaProcedimentos() {
+    listaProcedimentos.innerHTML = '';
+    procedimentosAdicionados.forEach((p, index) => {
+      const li = document.createElement('li');
+      li.className = 'procedimento-item';
+
+      const infoDiv = document.createElement('div');
+      infoDiv.innerHTML = `<div class="procedimento-item-nome">${p.procDescricao}</div><div class="procedimento-item-cod">TUSS: ${p.procedimentoCodigoDgp}</div>`;
+
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'btn-outline-danger';
+      btn.textContent = 'Remover';
+      btn.addEventListener('click', () => {
+        procedimentosAdicionados.splice(index, 1);
+        renderListaProcedimentos();
+      });
+
+      li.appendChild(infoDiv);
+      li.appendChild(btn);
+      listaProcedimentos.appendChild(li);
+    });
+  }
+
+  // Fechar dropdowns ao clicar fora
+  document.addEventListener('click', (e) => {
+    if (!nomePacienteInput.contains(e.target) && !pacienteSugestoes.contains(e.target)) {
+      pacienteSugestoes.hidden = true;
+    }
+    if (!procedimentoBusca.contains(e.target) && !procedimentoSugestoes.contains(e.target)) {
+      procedimentoSugestoes.hidden = true;
+    }
+  });
+
+  // 4. Submissão do Formulário
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     errorBox.hidden = true;
     resultBox.hidden = true;
 
-    const user = document.getElementById('user').value;
-    const pass = document.getElementById('pass').value;
     const especialidades = Array.from(document.querySelectorAll('.especialidade:checked')).map(el => el.value);
 
     if (especialidades.length === 0) {
-      errorBox.textContent = 'Selecione ao menos uma especialidade.';
+      errorBox.textContent = 'Por favor, selecione ao menos uma especialidade requerida.';
+      errorBox.hidden = false;
+      return;
+    }
+
+    if (procedimentosAdicionados.length === 0) {
+      errorBox.textContent = 'Adicione ao menos um procedimento ou exame à solicitação.';
       errorBox.hidden = false;
       return;
     }
 
     const payload = {
-      medicoId: Number(document.getElementById('medicoId').value),
-      nomePaciente: document.getElementById('nomePaciente').value,
-      om: document.getElementById('om').value,
-      cpfPrec: document.getElementById('cpfPrec').value,
+      medicoId: Number(medico.id || 1),
+      nomePaciente: nomePacienteInput.value.trim(),
+      om: omInput.value.trim(),
+      cpfPrec: cpfPrecInput.value.trim(),
       especialidades: especialidades,
-      observacao: document.getElementById('observacao').value
+      observacao: document.getElementById('observacao').value.trim(),
+      procedimentos: procedimentosAdicionados.map(p => ({
+        procedimentoCodigoDgp: p.procedimentoCodigoDgp,
+        quantidade: p.quantidade
+      }))
     };
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Gravando solicitação...';
 
     try {
       const res = await fetch('/api/solicitacoes', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'Basic ' + btoa(user + ':' + pass)
+          'Authorization': 'Basic ' + auth
         },
         body: JSON.stringify(payload)
       });
@@ -221,17 +453,25 @@
       if (!res.ok) {
         const msg = data.campos
           ? Object.entries(data.campos).map(([k, v]) => `${k}: ${v}`).join(' | ')
-          : (data.error || 'Erro ao criar solicitação');
+          : (data.error || 'Erro ao criar solicitação médica');
         throw new Error(msg);
       }
 
       const beneficiarioLink = window.location.origin + '/api/beneficiario.html?token=' + data.tokenPublico;
       linkOutput.value = beneficiarioLink;
       resultBox.hidden = false;
+      errorBox.hidden = true;
       form.reset();
+      document.querySelectorAll('.pill-checkbox').forEach(p => p.classList.remove('active'));
+      procedimentosAdicionados = [];
+      renderListaProcedimentos();
     } catch (err) {
       errorBox.textContent = err.message;
       errorBox.hidden = false;
+      resultBox.hidden = true;
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Criar Solicitação Médica';
     }
   });
 
@@ -240,8 +480,8 @@
     navigator.clipboard.writeText(linkOutput.value).then(() => {
       const btn = document.getElementById('copyBtn');
       const original = btn.textContent;
-      btn.textContent = 'Copiado!';
-      setTimeout(() => { btn.textContent = original; }, 1500);
+      btn.textContent = '✅ Link Copiado!';
+      setTimeout(() => { btn.textContent = original; }, 2000);
     });
   });
 </script>

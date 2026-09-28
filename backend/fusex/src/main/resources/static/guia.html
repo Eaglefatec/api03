@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FUSEX - Consulta de Pré-Guia Médica</title>
+  <link rel="stylesheet" href="css/fusex-theme.css">
+  <style>
+    @media print {
+      .guia-header-print {
+        border-bottom: 2px solid #000;
+        padding-bottom: 12px;
+        margin-bottom: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header Institucional -->
+  <header class="app-header no-print">
+    <a href="index.html" class="brand-badge">
+      <div class="brand-logo">FUSEX</div>
+      <div>
+        <div class="brand-title">Fundo de Saúde do Exército</div>
+        <div class="brand-subtitle">Consulta e Auditoria de Pré-Guia</div>
+      </div>
+    </a>
+    <div style="display: flex; gap: 8px;">
+      <a href="medico.html" class="btn btn-secondary" style="margin: 0; padding: 6px 12px; font-size: 0.84em; width: auto;">
+        Painel Médico
+      </a>
+    </div>
+  </header>
+
+  <main class="app-container wide">
+    <div class="card">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px;">
+        <div>
+          <h1 class="card-title">Pré-Guia de Encaminhamento</h1>
+          <p class="card-subtitle" style="margin-bottom: 0;">
+            Visão consolidada para conferência cadastral e auditoria de valores antes da emissão definitiva da Guia de Encaminhamento (GE).
+          </p>
+        </div>
+        <button type="button" id="btnImprimir" class="btn btn-secondary no-print" style="margin: 0; width: auto; padding: 8px 14px; font-size: 0.85em; display: none;" onclick="window.print()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 6 2 18 2 18 9"></polyline>
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+            <rect x="6" y="14" width="12" height="8"></rect>
+          </svg>
+          Imprimir / Salvar PDF
+        </button>
+      </div>
+
+      <!-- Seção de Autenticação -->
+      <div id="loginSection" style="margin-top: 24px; padding: 20px; background: var(--bg-muted); border-radius: var(--radius-md); border: 1px solid var(--border-color);" class="no-print">
+        <h2 style="font-size: 0.95em; font-weight: 600; color: var(--color-primary); margin: 0 0 12px 0;">
+          Autenticação Requerida (Acesso Restrito)
+        </h2>
+        <div class="row2">
+          <div>
+            <label for="user" style="margin-top: 0;">Usuário *</label>
+            <input type="text" id="user" placeholder="Usuário credenciado (ex: medico, admin)">
+          </div>
+          <div>
+            <label for="pass" style="margin-top: 0;">Senha *</label>
+            <input type="password" id="pass" placeholder="••••••••">
+          </div>
+        </div>
+        <button id="consultarBtn" type="button" class="btn btn-primary" style="margin-top: 14px;">
+          Consultar Dados da Pré-Guia
+        </button>
+      </div>
+
+      <!-- Mensagens de Carregamento e Erro -->
+      <div id="loading" class="alert alert-info no-print" hidden style="justify-content: center;">
+        <span>Consultando dados da pré-guia no servidor...</span>
+      </div>
+      <div id="errorMsg" class="alert alert-error no-print" hidden></div>
+
+      <!-- Resultado Detalhado da Pré-Guia -->
+      <div id="resultado" hidden style="margin-top: 24px;">
+
+        <!-- 1. Beneficiário -->
+        <h2 class="section-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          Dados do Beneficiário
+        </h2>
+        <div class="kv-list">
+          <div class="kv-row">
+            <span class="kv-label">Nome Completo</span>
+            <span class="kv-val" id="benNome">-</span>
+          </div>
+          <div class="kv-row">
+            <span class="kv-label">Idade</span>
+            <span class="kv-val" id="benIdade">-</span>
+          </div>
+          <div class="kv-row">
+            <span class="kv-label">CPF / PREC</span>
+            <span class="kv-val" id="benCpf">-</span>
+          </div>
+          <div class="kv-row">
+            <span class="kv-label">Telefone de Contato</span>
+            <span class="kv-val" id="benTelefone">-</span>
+          </div>
+        </div>
+
+        <!-- 2. OCS Credenciada -->
+        <h2 class="section-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="9" y1="9" x2="15" y2="9"></line>
+            <line x1="9" y1="13" x2="15" y2="13"></line>
+            <line x1="9" y1="17" x2="13" y2="17"></line>
+          </svg>
+          Organização Civil de Saúde (OCS Credenciada)
+        </h2>
+        <div class="kv-list">
+          <div class="kv-row">
+            <span class="kv-label">Razão Social / Nome</span>
+            <span class="kv-val" id="ocsNome">-</span>
+          </div>
+          <div class="kv-row">
+            <span class="kv-label">CNPJ / Inscrição Federal</span>
+            <span class="kv-val" id="ocsCnpj">-</span>
+          </div>
+          <div class="kv-row">
+            <span class="kv-label">Endereço</span>
+            <span class="kv-val" id="ocsEndereco">-</span>
+          </div>
+          <div class="kv-row">
+            <span class="kv-label">Contato Responsável</span>
+            <span class="kv-val" id="ocsContato">-</span>
+          </div>
+          <div class="kv-row">
+            <span class="kv-label">Telefone</span>
+            <span class="kv-val" id="ocsTelefone">-</span>
+          </div>
+        </div>
+
+        <!-- 3. Médico Emissor -->
+        <h2 class="section-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+          </svg>
+          Médico Solicitante / Emissor
+        </h2>
+        <div class="kv-list">
+          <div class="kv-row">
+            <span class="kv-label">Nome do Médico</span>
+            <span class="kv-val" id="emissorNome">-</span>
+          </div>
+          <div class="kv-row">
+            <span class="kv-label">Registro Profissional (CRM)</span>
+            <span class="kv-val" id="emissorCrm">-</span>
+          </div>
+        </div>
+
+        <!-- 4. Procedimentos -->
+        <h2 class="section-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="1" x2="12" y2="23"></line>
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+          </svg>
+          Procedimentos
+        </h2>
+        <div id="procedimentosLista"></div>
+
+        <div id="totalAuditBox" class="audit-total-box" style="display: none;">
+          <span class="audit-total-label">Custo Total</span>
+          <span class="audit-total-value" id="totalAuditValor">R$ 0,00</span>
+        </div>
+
+        <!-- 5. Informações Gerais -->
+        <h2 class="section-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          Informações Gerais
+        </h2>
+        <div class="kv-list">
+          <div class="kv-row">
+            <span class="kv-label">Data de Registro</span>
+            <span class="kv-val" id="infoData">-</span>
+          </div>
+          <div class="kv-row">
+            <span class="kv-label">Unidade Gestora de Origem (UG)</span>
+            <span class="kv-val" id="infoUnidade">-</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get('token');
+
+    const loginSection = document.getElementById('loginSection');
+    const loading = document.getElementById('loading');
+    const errorMsg = document.getElementById('errorMsg');
+    const resultado = document.getElementById('resultado');
+    const btnImprimir = document.getElementById('btnImprimir');
+    const totalAuditBox = document.getElementById('totalAuditBox');
+    const totalAuditValor = document.getElementById('totalAuditValor');
+
+    // Auto-preencher credenciais se houver sessão ativa
+    const savedAuth = sessionStorage.getItem('fusex_auth');
+    const savedUser = sessionStorage.getItem('fusex_user');
+    if (savedUser) {
+      document.getElementById('user').value = savedUser;
+    }
+
+    function preencher(id, valor, rotuloPendente) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      if (valor === null || valor === undefined || valor === '') {
+        el.textContent = rotuloPendente || 'Não informado';
+        el.classList.add('pendente');
+      } else {
+        el.textContent = valor;
+        el.classList.remove('pendente');
+      }
+    }
+
+    async function consultar() {
+      errorMsg.hidden = true;
+      resultado.hidden = true;
+      btnImprimir.style.display = 'none';
+
+      if (!token) {
+        errorMsg.textContent = 'Link inválido: token não informado na URL.';
+        errorMsg.hidden = false;
+        return;
+      }
+
+      let authHeader = '';
+      const user = document.getElementById('user').value.trim();
+      const pass = document.getElementById('pass').value;
+
+      if (user && pass) {
+        authHeader = 'Basic ' + btoa(user + ':' + pass);
+      } else if (savedAuth) {
+        authHeader = 'Basic ' + savedAuth;
+      } else {
+        errorMsg.textContent = 'Por favor, informe seu usuário e senha para consultar a pré-guia.';
+        errorMsg.hidden = false;
+        return;
+      }
+
+      loading.hidden = false;
+
+      try {
+        const res = await fetch(`/api/solicitacoes/${token}/pre-guia`, {
+          headers: { 'Authorization': authHeader }
+        });
+        const data = await res.json();
+        loading.hidden = true;
+
+        if (!res.ok) {
+          errorMsg.textContent = data.error || 'Não foi possível consultar a pré-guia. Verifique suas credenciais.';
+          errorMsg.hidden = false;
+          loginSection.hidden = false;
+          return;
+        }
+
+        // Preenche Beneficiário
+        const ben = data.beneficiario || {};
+        preencher('benNome', ben.nome);
+        preencher('benIdade', ben.idade ? `${ben.idade} anos` : null);
+        preencher('benCpf', ben.cpfPrec);
+        preencher('benTelefone', ben.telefone);
+
+        // Preenche OCS
+        const ocs = data.ocs || {};
+        preencher('ocsNome', ocs.ocsNome);
+        preencher('ocsCnpj', ocs.ocsInscricaoFederal, 'Não cadastrado');
+        const endereco = [ocs.ocsEndereco, ocs.ocsEnderecoNumero, ocs.ocsEnderecoBairro, ocs.ocsEnderecoCidade, ocs.ocsEnderecoUf]
+          .filter(Boolean).join(', ');
+        preencher('ocsEndereco', endereco, 'Não cadastrado');
+        preencher('ocsContato', ocs.ocsContatoNome, 'Não cadastrado');
+        preencher('ocsTelefone', ocs.ocsContatoTelefone, 'Não cadastrado');
+
+        // Preenche Médico Emissor
+        const emissor = data.medicoEmissor || {};
+        preencher('emissorNome', emissor.nome);
+        preencher('emissorCrm', emissor.crm);
+
+        // Preenche Procedimentos & Auditoria Financeira
+        const procDiv = document.getElementById('procedimentosLista');
+        procDiv.innerHTML = '';
+
+        let total = 0;
+        let temValores = false;
+
+        const procedimentos = data.procedimentos || [];
+        if (procedimentos.length > 0) {
+          const table = document.createElement('table');
+          table.className = 'data-table';
+          table.innerHTML = `
+            <thead>
+              <tr>
+                <th style="width: 140px;">Código DGP</th>
+                <th>Descrição do Procedimento TUSS</th>
+                <th style="width: 150px; text-align: right;">Valor Unitário</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          `;
+
+          const tbody = table.querySelector('tbody');
+          procedimentos.forEach(p => {
+            const tr = document.createElement('tr');
+            let precoTexto = 'A consultar';
+            if (p.valor !== null && p.valor !== undefined) {
+              const numVal = Number(p.valor);
+              precoTexto = numVal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+              total += numVal;
+              temValores = true;
+            }
+
+            tr.innerHTML = `
+              <td><strong>${p.procedimentoCodigoDgp}</strong></td>
+              <td>${p.procedimentoDescricao}</td>
+              <td style="text-align: right; font-weight: 600; color: var(--color-primary);">${precoTexto}</td>
+            `;
+            tbody.appendChild(tr);
+          });
+
+          procDiv.appendChild(table);
+
+          if (temValores) {
+            totalAuditBox.style.display = 'flex';
+            totalAuditValor.textContent = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+          } else {
+            totalAuditBox.style.display = 'none';
+          }
+        } else {
+          procDiv.innerHTML = '<div style="color: var(--text-muted); font-size: 0.88em; padding: 8px 0;">Nenhum procedimento associado a esta solicitação.</div>';
+          totalAuditBox.style.display = 'none';
+        }
+
+        // Informações Gerais
+        const dataFormatada = (data.informacoesGerais && data.informacoesGerais.data)
+          ? new Date(data.informacoesGerais.data).toLocaleString('pt-BR')
+          : null;
+        preencher('infoData', dataFormatada);
+        preencher('infoUnidade', data.informacoesGerais && data.informacoesGerais.unidadeGestoraOrigem);
+
+        resultado.hidden = false;
+        btnImprimir.style.display = 'inline-flex';
+        loginSection.hidden = true;
+      } catch (err) {
+        loading.hidden = true;
+        errorMsg.textContent = 'Erro ao consultar a pré-guia no servidor. Tente novamente.';
+        errorMsg.hidden = false;
+        loginSection.hidden = false;
+      }
+    }
+
+    document.getElementById('consultarBtn').addEventListener('click', consultar);
+
+    ['user', 'pass'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            consultar();
+          }
+        });
+      }
+    });
+
+    // Se já estiver logado e houver token, carregar automaticamente
+    if (token && (savedAuth || (document.getElementById('user').value && document.getElementById('pass').value))) {
+      consultar();
+    }
+  </script>
+</body>
+</html>
