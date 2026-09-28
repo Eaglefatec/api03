@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: local
   application:
     name: fusex
   profiles:
@@ -28,7 +30,7 @@ spring:
       max-request-size: 10MB
 
   flyway:
-    enabled: false
+    enabled: true
 
 server:
   port: 8080
