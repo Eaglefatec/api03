@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FUSEX - Importação de Dados e Tabelas</title>
+  <link rel="stylesheet" href="css/fusex-theme.css">
+  <style>
+    .import-section-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+      margin-top: 24px;
+    }
+    .import-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: var(--shadow-sm);
+    }
+    .file-input-wrapper {
+      margin-top: 12px;
+      margin-bottom: 12px;
+    }
+    .file-hint {
+      font-size: 0.76em;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header Institucional -->
+  <header class="app-header">
+    <a href="index.html" class="brand-badge">
+      <div class="brand-logo">FUSEX</div>
+      <div>
+        <div class="brand-title">Fundo de Saúde do Exército</div>
+        <div class="brand-subtitle">Gestão Administrativa & Auditoria</div>
+      </div>
+    </a>
+    <div style="display: flex; gap: 8px;">
+      <a href="index.html" class="btn btn-secondary" style="margin: 0; padding: 6px 14px; font-size: 0.84em; width: auto;">
+        Início
+      </a>
+      <a href="medico.html" class="btn btn-secondary" style="margin: 0; padding: 6px 14px; font-size: 0.84em; width: auto;">
+        Painel Médico
+      </a>
+    </div>
+  </header>
+
+  <main class="app-container wide">
+    <!-- Card de Boas-vindas e Autenticação -->
+    <div class="card">
+      <h1 class="card-title">Importação de Dados e Tabelas</h1>
+      <p class="card-subtitle">
+        Atualize em lote o catálogo do Rol TUSS, as tabelas de preços negociadas com as OCS e o cadastro institucional de clínicas credenciadas.
+      </p>
+
+      <!-- Autenticação Administrativa -->
+      <div style="padding: 16px 20px; background: var(--bg-muted); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          <span style="font-weight: 600; font-size: 0.92em; color: var(--color-primary);">Credenciais Administrativas (HTTP Basic Auth)</span>
+        </div>
+        <div class="row2">
+          <div>
+            <label for="user" style="margin-top: 0;">Usuário *</label>
+            <input type="text" id="user" placeholder="Usuário administrador (ex: admin)">
+          </div>
+          <div>
+            <label for="pass" style="margin-top: 0;">Senha *</label>
+            <input type="password" id="pass" placeholder="••••••••">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Módulos de Importação -->
+    <div class="import-section-grid">
+
+      <!-- Módulo 1: Procedimentos TUSS -->
+      <div class="import-card">
+        <div>
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+            <h2 style="font-size: 1.05em; font-weight: 700; color: var(--color-primary); margin: 0;">
+              Procedimentos TUSS
+            </h2>
+          </div>
+          <p style="font-size: 0.84em; color: var(--text-muted); margin: 0 0 14px 0;">
+            Importa a planilha oficial com códigos DGP e termos unificados do Rol TUSS.
+          </p>
+
+          <div class="file-input-wrapper">
+            <label for="arquivoTuss" style="margin-top: 0;">Planilha do Rol TUSS (.xls, .xlsx)</label>
+            <input type="file" id="arquivoTuss" accept=".xls,.xlsx">
+            <div class="file-hint">Formatos aceitos: Microsoft Excel (.xls, .xlsx)</div>
+          </div>
+        </div>
+
+        <div>
+          <button type="button" class="btn btn-primary" data-alvo="tuss">
+            Importar Catálogo TUSS
+          </button>
+          <div id="resultadoTuss"></div>
+        </div>
+      </div>
+
+      <!-- Módulo 2: Preços por OCS -->
+      <div class="import-card">
+        <div>
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="1" x2="12" y2="23"></line>
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+            </svg>
+            <h2 style="font-size: 1.05em; font-weight: 700; color: var(--color-primary); margin: 0;">
+              Tabela de Preços por OCS
+            </h2>
+          </div>
+          <p style="font-size: 0.84em; color: var(--text-muted); margin: 0 0 14px 0;">
+            Atualiza os valores acordados para auditoria de procedimentos por clínica credenciada.
+          </p>
+
+          <div class="file-input-wrapper">
+            <label for="arquivoOcsPrecos" style="margin-top: 0;">Planilha de Preços (.xls, .xlsx)</label>
+            <input type="file" id="arquivoOcsPrecos" accept=".xls,.xlsx">
+            <div class="file-hint">Formatos aceitos: Microsoft Excel (.xls, .xlsx)</div>
+          </div>
+        </div>
+
+        <div>
+          <button type="button" class="btn btn-primary" data-alvo="ocs-precos">
+            Importar Tabela de Preços
+          </button>
+          <div id="resultadoOcsPrecos"></div>
+        </div>
+      </div>
+
+      <!-- Módulo 3: Cadastro das OCS -->
+      <div class="import-card">
+        <div>
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="9" y1="9" x2="15" y2="9"></line>
+              <line x1="9" y1="13" x2="15" y2="13"></line>
+              <line x1="9" y1="17" x2="13" y2="17"></line>
+            </svg>
+            <h2 style="font-size: 1.05em; font-weight: 700; color: var(--color-primary); margin: 0;">
+              Cadastro Geral das OCS
+            </h2>
+          </div>
+          <p style="font-size: 0.84em; color: var(--text-muted); margin: 0 0 14px 0;">
+            Atualiza dados cadastrais, CNPJ, endereços e contatos telefônicos das clínicas credenciadas.
+          </p>
+
+          <div class="file-input-wrapper">
+            <label for="arquivoOcsCadastro" style="margin-top: 0;">Planilha com Dados Cadastrais (.xls, .xlsx)</label>
+            <input type="file" id="arquivoOcsCadastro" accept=".xls,.xlsx">
+            <div class="file-hint">Formatos aceitos: Microsoft Excel (.xls, .xlsx)</div>
+          </div>
+        </div>
+
+        <div>
+          <button type="button" class="btn btn-primary" data-alvo="ocs-cadastro">
+            Importar Cadastro de Clínicas
+          </button>
+          <div id="resultadoOcsCadastro"></div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    const inputs = {
+      tuss: document.getElementById('arquivoTuss'),
+      'ocs-precos': document.getElementById('arquivoOcsPrecos'),
+      'ocs-cadastro': document.getElementById('arquivoOcsCadastro')
+    };
+
+    const resultados = {
+      tuss: document.getElementById('resultadoTuss'),
+      'ocs-precos': document.getElementById('resultadoOcsPrecos'),
+      'ocs-cadastro': document.getElementById('resultadoOcsCadastro')
+    };
+
+    // Auto-preencher credenciais se houver sessão ativa
+    const savedUser = sessionStorage.getItem('fusex_user');
+    if (savedUser) {
+      document.getElementById('user').value = savedUser;
+    }
+
+    async function importar(alvo, botao) {
+      const arquivoInput = inputs[alvo];
+      const resultado = resultados[alvo];
+      resultado.innerHTML = '';
+
+      if (!arquivoInput.files || arquivoInput.files.length === 0) {
+        resultado.innerHTML = '<div class="log-box erro">Por favor, selecione um arquivo de planilha (.xls ou .xlsx).</div>';
+        return;
+      }
+
+      const user = document.getElementById('user').value.trim();
+      const pass = document.getElementById('pass').value;
+
+      if (!user || !pass) {
+        resultado.innerHTML = '<div class="log-box erro">Informe o usuário e senha com permissão de importação.</div>';
+        return;
+      }
+
+      const originalBtnText = botao.innerHTML;
+      botao.disabled = true;
+      botao.innerHTML = 'Processando importação...';
+
+      const formData = new FormData();
+      formData.append('arquivo', arquivoInput.files[0]);
+
+      try {
+        const res = await fetch(`/api/importacao/${alvo}`, {
+          method: 'POST',
+          headers: { 'Authorization': 'Basic ' + btoa(user + ':' + pass) },
+          body: formData
+        });
+        const data = await res.json();
+
+        if (!res.ok) {
+          resultado.innerHTML = `<div class="log-box erro">${data.error || 'Erro ao processar importação.'}</div>`;
+          return;
+        }
+
+        let html = `<div class="log-box sucesso"><strong>${data.mensagem}</strong>`;
+        if (data.avisos && data.avisos.length > 0) {
+          html += '<div style="margin-top: 8px; font-weight: 600;">Avisos encontrados:</div>';
+          data.avisos.forEach(aviso => {
+            html += `<div class="aviso">${aviso}</div>`;
+          });
+        }
+        html += '</div>';
+        resultado.innerHTML = html;
+      } catch (err) {
+        resultado.innerHTML = '<div class="log-box erro">Falha de comunicação com o servidor ao importar. Tente novamente.</div>';
+      } finally {
+        botao.disabled = false;
+        botao.innerHTML = originalBtnText;
+      }
+    }
+
+    document.querySelectorAll('button[data-alvo]').forEach(btn => {
+      btn.addEventListener('click', () => importar(btn.dataset.alvo, btn));
+    });
+  </script>
+</body>
+</html>
