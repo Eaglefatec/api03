@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUSEX - Acesso Médico</title>
+<link rel="stylesheet" href="css/fusex-theme.css">
+<style>
+  .login-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+  }
+  .login-card {
+    max-width: 400px;
+    width: 100%;
+  }
+  .login-header {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .login-footer-link {
+    text-align: center;
+    margin-top: 24px;
+    font-size: 0.85em;
+  }
+  .login-footer-link a {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .login-footer-link a:hover {
+    text-decoration: underline;
+  }
+</style>
+</head>
+<body>
+<div class="login-wrapper">
+  <div class="card login-card">
+    <div class="login-header">
+      <div style="margin-bottom: 12px;">
+        <span class="brand-logo" style="font-size: 0.9em; padding: 7px 16px;">FUSEX</span>
+      </div>
+      <h1 class="card-title" style="font-size: 1.3em;">Acesso Médico</h1>
+      <p class="card-subtitle" style="margin-bottom: 0;">Identifique-se com suas credenciais militares/funcionais</p>
+    </div>
+
+    <form id="loginForm">
+      <label for="username">Usuário</label>
+      <input type="text" id="username" placeholder="Digite seu usuário" required autofocus autocomplete="username">
+
+      <label for="password">Senha</label>
+      <input type="password" id="password" placeholder="Digite sua senha" required autocomplete="current-password">
+
+      <button type="submit" class="btn btn-primary" id="loginBtn">Entrar no Sistema</button>
+    </form>
+
+    <div id="errorMsg" class="alert alert-error" hidden></div>
+
+    <div class="login-footer-link">
+      <a href="index.html">← Voltar ao Portal Principal</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  const form = document.getElementById('loginForm');
+  const errorBox = document.getElementById('errorMsg');
+  const loginBtn = document.getElementById('loginBtn');
+
+  // Limpa sessão antiga ao abrir tela de login
+  sessionStorage.removeItem('fusex_auth');
+  sessionStorage.removeItem('fusex_user');
+  sessionStorage.removeItem('fusex_medico');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    errorBox.hidden = true;
+    errorBox.textContent = '';
+
+    const user = document.getElementById('username').value.trim();
+    const pass = document.getElementById('password').value;
+
+    if (!user || !pass) {
+      errorBox.textContent = 'Por favor, preencha o usuário e a senha.';
+      errorBox.hidden = false;
+      return;
+    }
+
+    const token = btoa(user + ':' + pass);
+    loginBtn.disabled = true;
+    loginBtn.textContent = 'Autenticando...';
+
+    try {
+      const res = await fetch('/api/auth/me', {
+        method: 'GET',
+        headers: {
+          'Authorization': 'Basic ' + token
+        }
+      });
+
+      if (!res.ok) {
+        if (res.status === 401) {
+          throw new Error('Usuário ou senha incorretos.');
+        } else {
+          throw new Error('Falha de conexão com o servidor (Status ' + res.status + ').');
+        }
+      }
+
+      const data = await res.json();
+      const roles = data.roles || [];
+
+      if (!roles.includes('ROLE_MEDICO') && !roles.includes('ROLE_ADMIN')) {
+        throw new Error('Acesso restrito: este usuário não possui perfil médico credenciado.');
+      }
+
+      // Persistência segura na sessão do navegador
+      sessionStorage.setItem('fusex_auth', token);
+      sessionStorage.setItem('fusex_user', data.username);
+      if (data.medico) {
+        sessionStorage.setItem('fusex_medico', JSON.stringify(data.medico));
+      }
+
+      window.location.href = 'medico.html';
+    } catch (err) {
+      errorBox.textContent = err.message || 'Erro ao processar login.';
+      errorBox.hidden = false;
+    } finally {
+      loginBtn.disabled = false;
+      loginBtn.textContent = 'Entrar no Sistema';
+    }
+  });
+</script>
+</body>
+</html>
