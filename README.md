@@ -116,7 +116,7 @@ Com a centralização das informações, o sistema busca reduzir erros de preenc
 ## 📜 Manual do Usuário
 
 **:link: Clique no link abaixo para visualizar o Manual do Usuário:**  
-> TO DO
+> 📖 [Manual de Instalação](docs/manual_instalacao/README.md)
 
 ---
 
