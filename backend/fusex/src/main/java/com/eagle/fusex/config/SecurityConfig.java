@@ -51,7 +51,13 @@ public class SecurityConfig {
                 .roles("ADMIN", "MEDICO", "EG")
                 .build();
 
-        return new InMemoryUserDetailsManager(medico, emissorGuia, admin);
+        UserDetails ocs = User.builder()
+                .username("ocs")
+                .password(passwordEncoder().encode("senha123"))
+                .roles("OCS")
+                .build();
+
+        return new InMemoryUserDetailsManager(medico, emissorGuia, admin, ocs);
     }
 
     @Bean
@@ -83,6 +89,7 @@ public class SecurityConfig {
                 .requestMatchers("/auth/**").authenticated()
                 .requestMatchers("/solicitacoes/*/pre-guia").hasAnyRole("EG", "MEDICO", "ADMIN")
                 .requestMatchers("/solicitacoes/*/guia-pdf", "/solicitacoes/*/guia-pdf/**").hasAnyRole("EG", "ADMIN")
+                .requestMatchers("/guias/*/validade").hasAnyRole("OCS", "ADMIN")
                 .requestMatchers("/encaminhamentos/**").hasAnyRole("MEDICO", "ADMIN")
                 .requestMatchers("/importacao/**").hasRole("ADMIN")
                 .requestMatchers(
