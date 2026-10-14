@@ -82,6 +82,7 @@ public class SecurityConfig {
                 .requestMatchers("/pacientes", "/pacientes/**").hasAnyRole("MEDICO", "ADMIN")
                 .requestMatchers("/auth/**").authenticated()
                 .requestMatchers("/solicitacoes/*/pre-guia").hasAnyRole("EG", "MEDICO", "ADMIN")
+                .requestMatchers("/solicitacoes/*/guia-pdf", "/solicitacoes/*/guia-pdf/**").hasAnyRole("EG", "ADMIN")
                 .requestMatchers("/encaminhamentos/**").hasAnyRole("MEDICO", "ADMIN")
                 .requestMatchers("/importacao/**").hasRole("ADMIN")
                 .requestMatchers(
