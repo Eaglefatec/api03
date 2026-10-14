@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FUSEX - Consulta de Validade da Guia</title>
+  <link rel="stylesheet" href="css/fusex-theme.css">
+</head>
+<body>
+
+  <header class="app-header">
+    <a href="index.html" class="brand-badge">
+      <div class="brand-logo">FUSEX</div>
+      <div>
+        <div class="brand-title">Fundo de Saúde do Exército</div>
+        <div class="brand-subtitle">Consulta de Validade da Guia (OCS)</div>
+      </div>
+    </a>
+  </header>
+
+  <main class="app-container">
+    <div class="card">
+      <h1 class="card-title">Consulta de Validade da Guia</h1>
+      <p class="card-subtitle">Informe o número da guia impresso no documento para verificar se ela ainda está dentro do prazo de validade.</p>
+
+      <div id="loginSection">
+        <h2 style="font-size: 0.95em; font-weight: 600; color: var(--color-primary); margin: 0 0 12px 0;">
+          Autenticação
+        </h2>
+        <div class="row2">
+          <div>
+            <label for="user">Usuário</label>
+            <input type="text" id="user" value="ocs">
+          </div>
+          <div>
+            <label for="pass">Senha</label>
+            <input type="password" id="pass" placeholder="••••••••">
+          </div>
+        </div>
+      </div>
+
+      <label for="numeroGuia">Número da Guia</label>
+      <input type="text" id="numeroGuia" placeholder="Ex.: ABC-123456">
+
+      <button id="consultarBtn" type="button" class="btn btn-primary">
+        Consultar Validade
+      </button>
+
+      <div id="loading" class="alert alert-info" hidden>
+        <span>Consultando...</span>
+      </div>
+      <div id="errorMsg" class="alert alert-error" hidden></div>
+
+      <div id="resultado" hidden style="margin-top: 24px;">
+        <div id="statusBox" class="alert alert-column"></div>
+
+        <div class="kv-list">
+          <div class="kv-row">
+            <span class="kv-label">Número da Guia</span>
+            <span class="kv-val" id="resNumero">-</span>
+          </div>
+          <div class="kv-row">
+            <span class="kv-label">Beneficiário</span>
+            <span class="kv-val" id="resPaciente">-</span>
+          </div>
+          <div class="kv-row">
+            <span class="kv-label">OCS Vinculada</span>
+            <span class="kv-val" id="resOcs">-</span>
+          </div>
+          <div class="kv-row">
+            <span class="kv-label">Data de Importação da Guia</span>
+            <span class="kv-val" id="resDataImportacao">-</span>
+          </div>
+          <div class="kv-row">
+            <span class="kv-label">Válida até</span>
+            <span class="kv-val" id="resDataValidade">-</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+</body>
+</html>
