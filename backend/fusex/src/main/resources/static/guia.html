@@ -193,6 +193,33 @@
           </div>
         </div>
 
+        <!-- 6. Importação da Guia Emitida -->
+        <h2 class="section-title no-print">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+          </svg>
+          Importação da Guia Emitida (PDF)
+        </h2>
+        <p class="card-subtitle no-print" style="margin-bottom: 8px;">
+          Depois de emitir a guia no sistema externo do governo, importe o PDF aqui para registrar o número e iniciar a contagem do prazo de validade.
+        </p>
+        <div class="file-upload-box no-print">
+          <input type="file" id="guiaPdfInput" accept="application/pdf">
+        </div>
+        <button type="button" id="importarGuiaBtn" class="btn btn-secondary no-print">
+          Importar PDF da Guia
+        </button>
+        <div id="importGuiaResultado" class="log-box no-print" hidden></div>
+
+        <div id="corrigirNumeroBox" class="no-print" hidden style="margin-top: 12px;">
+          <label for="numeroGuiaManual">Corrigir número da guia manualmente</label>
+          <input type="text" id="numeroGuiaManual" placeholder="Digite o número correto">
+          <button type="button" id="corrigirNumeroBtn" class="btn btn-secondary">
+            Salvar Número Corrigido
+          </button>
+        </div>
+
       </div>
     </div>
   </main>
@@ -362,6 +389,109 @@
         loginSection.hidden = false;
       }
     }
+
+    const guiaPdfInput = document.getElementById('guiaPdfInput');
+    const importarGuiaBtn = document.getElementById('importarGuiaBtn');
+    const importGuiaResultado = document.getElementById('importGuiaResultado');
+    const corrigirNumeroBox = document.getElementById('corrigirNumeroBox');
+    const numeroGuiaManual = document.getElementById('numeroGuiaManual');
+    const corrigirNumeroBtn = document.getElementById('corrigirNumeroBtn');
+
+    function authHeaderAtual() {
+      const user = document.getElementById('user').value.trim();
+      const pass = document.getElementById('pass').value;
+      if (user && pass) return 'Basic ' + btoa(user + ':' + pass);
+      if (savedAuth) return 'Basic ' + savedAuth;
+      return null;
+    }
+
+    async function importarGuiaPdf() {
+      importGuiaResultado.hidden = true;
+      corrigirNumeroBox.hidden = true;
+
+      const arquivo = guiaPdfInput.files[0];
+      if (!arquivo) {
+        importGuiaResultado.className = 'log-box erro';
+        importGuiaResultado.textContent = 'Selecione o PDF da guia emitida.';
+        importGuiaResultado.hidden = false;
+        return;
+      }
+
+      const auth = authHeaderAtual();
+      if (!auth) {
+        importGuiaResultado.className = 'log-box erro';
+        importGuiaResultado.textContent = 'Faça login para importar a guia.';
+        importGuiaResultado.hidden = false;
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('arquivo', arquivo);
+
+      try {
+        const res = await fetch(`/api/solicitacoes/${token}/guia-pdf`, {
+          method: 'POST',
+          headers: { 'Authorization': auth },
+          body: formData
+        });
+        const data = await res.json();
+
+        if (!res.ok) {
+          importGuiaResultado.className = 'log-box erro';
+          importGuiaResultado.textContent = data.error || 'Não foi possível importar a guia.';
+          importGuiaResultado.hidden = false;
+          return;
+        }
+
+        importGuiaResultado.className = 'log-box ' + (data.numeroIdentificado ? 'sucesso' : 'erro');
+        importGuiaResultado.textContent = data.mensagem + (data.numeroGuia ? ` (número: ${data.numeroGuia})` : '');
+        importGuiaResultado.hidden = false;
+
+        if (!data.numeroIdentificado) {
+          corrigirNumeroBox.hidden = false;
+        }
+      } catch (err) {
+        importGuiaResultado.className = 'log-box erro';
+        importGuiaResultado.textContent = 'Erro ao importar a guia. Tente novamente.';
+        importGuiaResultado.hidden = false;
+      }
+    }
+
+    async function corrigirNumeroGuia() {
+      const numero = numeroGuiaManual.value.trim();
+      if (!numero) return;
+
+      const auth = authHeaderAtual();
+      if (!auth) return;
+
+      try {
+        const res = await fetch(`/api/solicitacoes/${token}/guia-pdf/numero`, {
+          method: 'PATCH',
+          headers: { 'Authorization': auth, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ numeroGuia: numero })
+        });
+        const data = await res.json();
+
+        if (!res.ok) {
+          importGuiaResultado.className = 'log-box erro';
+          importGuiaResultado.textContent = data.error || 'Não foi possível corrigir o número.';
+          importGuiaResultado.hidden = false;
+          return;
+        }
+
+        importGuiaResultado.className = 'log-box sucesso';
+        importGuiaResultado.textContent = `${data.mensagem} (número: ${data.numeroGuia})`;
+        importGuiaResultado.hidden = false;
+        corrigirNumeroBox.hidden = true;
+      } catch (err) {
+        importGuiaResultado.className = 'log-box erro';
+        importGuiaResultado.textContent = 'Erro ao corrigir o número. Tente novamente.';
+        importGuiaResultado.hidden = false;
+      }
+    }
+
+    importarGuiaBtn.addEventListener('click', importarGuiaPdf);
+    corrigirNumeroBtn.addEventListener('click', corrigirNumeroGuia);
 
     document.getElementById('consultarBtn').addEventListener('click', consultar);
 

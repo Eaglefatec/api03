@@ -80,5 +80,94 @@
     </div>
   </main>
 
+  <script>
+    const numeroGuiaInput = document.getElementById('numeroGuia');
+    const loading = document.getElementById('loading');
+    const errorMsg = document.getElementById('errorMsg');
+    const resultado = document.getElementById('resultado');
+    const statusBox = document.getElementById('statusBox');
+
+    const MOTIVOS = {
+      GUIA_SUBSTITUIDA: 'Esta guia foi substituída por uma solicitação mais recente do mesmo médico e paciente.',
+      GUIA_EXPIRADA: 'O prazo de validade desta guia já passou.',
+      NUMERO_NAO_ENCONTRADO: 'Nenhuma guia foi encontrada com esse número.'
+    };
+
+    function preencher(id, valor, rotuloPendente) {
+      const el = document.getElementById(id);
+      if (valor === null || valor === undefined || valor === '') {
+        el.textContent = rotuloPendente || 'Não informado';
+        el.classList.add('pendente');
+      } else {
+        el.textContent = valor;
+        el.classList.remove('pendente');
+      }
+    }
+
+    async function consultar() {
+      errorMsg.hidden = true;
+      resultado.hidden = true;
+
+      const numeroGuia = numeroGuiaInput.value.trim();
+      if (!numeroGuia) {
+        errorMsg.textContent = 'Informe o número da guia.';
+        errorMsg.hidden = false;
+        return;
+      }
+
+      const user = document.getElementById('user').value.trim();
+      const pass = document.getElementById('pass').value;
+      if (!user || !pass) {
+        errorMsg.textContent = 'Informe usuário e senha para consultar.';
+        errorMsg.hidden = false;
+        return;
+      }
+
+      loading.hidden = false;
+
+      try {
+        const res = await fetch(`/api/guias/${encodeURIComponent(numeroGuia)}/validade`, {
+          headers: { 'Authorization': 'Basic ' + btoa(user + ':' + pass) }
+        });
+        const data = await res.json();
+        loading.hidden = true;
+
+        if (!res.ok) {
+          errorMsg.textContent = data.error || 'Não foi possível consultar a validade da guia.';
+          errorMsg.hidden = false;
+          return;
+        }
+
+        statusBox.className = 'alert alert-column ' + (data.valida ? 'alert-success' : 'alert-error');
+        statusBox.innerHTML = data.valida
+          ? '<strong>✓ Guia válida</strong>'
+          : `<strong>✗ Guia inválida</strong><span>${MOTIVOS[data.motivoInvalidez] || 'Motivo não informado.'}</span>`;
+
+        preencher('resNumero', data.numeroGuia);
+        preencher('resPaciente', data.nomePaciente, 'Não informado');
+        preencher('resOcs', data.ocsVinculada, 'Triagem ainda não preenchida');
+        preencher('resDataImportacao',
+          data.dataImportacaoGuia ? new Date(data.dataImportacaoGuia).toLocaleString('pt-BR') : null,
+          'Guia ainda não importada');
+        preencher('resDataValidade',
+          data.dataValidade ? new Date(data.dataValidade + 'T00:00:00').toLocaleDateString('pt-BR') : null,
+          'Guia ainda não importada');
+
+        resultado.hidden = false;
+      } catch (err) {
+        loading.hidden = true;
+        errorMsg.textContent = 'Erro ao consultar a validade da guia. Tente novamente.';
+        errorMsg.hidden = false;
+      }
+    }
+
+    document.getElementById('consultarBtn').addEventListener('click', consultar);
+
+    ['user', 'pass', 'numeroGuia'].forEach(id => {
+      document.getElementById(id).addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') consultar();
+      });
+    });
+  </script>
 </body>
 </html>
