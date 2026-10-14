@@ -13,4 +13,7 @@ public interface SolicitacaoMedicaRepository extends JpaRepository<SolicitacaoMe
     Optional<SolicitacaoMedica> findByTokenPublico(String tokenPublico);
 
     List<SolicitacaoMedica> findByMedicoIdAndPacienteIdAndValidaTrue(Long medicoId, Long pacienteId);
+
+    @EntityGraph(attributePaths = {"paciente", "medico", "medicoResponsavel"})
+    Optional<SolicitacaoMedica> findByNumeroGuia(String numeroGuia);
 }

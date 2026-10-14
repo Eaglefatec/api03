@@ -2,6 +2,7 @@ package com.eagle.fusex.model.entity;
 
 import com.eagle.fusex.model.enums.Especialidade;
 import jakarta.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Objects;
@@ -44,6 +45,18 @@ public class SolicitacaoMedica {
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime dataCriacao;
+
+    @Column(name = "numero_guia", unique = true)
+    private String numeroGuia;
+
+    @Column(name = "data_importacao_guia")
+    private LocalDateTime dataImportacaoGuia;
+
+    @Column(name = "data_validade")
+    private LocalDate dataValidade;
+
+    @Column(name = "caminho_arquivo_guia", length = 500)
+    private String caminhoArquivoGuia;
 
     public SolicitacaoMedica() {
     }
@@ -123,6 +136,38 @@ public class SolicitacaoMedica {
 
     public void setDataCriacao(LocalDateTime dataCriacao) {
         this.dataCriacao = dataCriacao;
+    }
+
+    public String getNumeroGuia() {
+        return numeroGuia;
+    }
+
+    public void setNumeroGuia(String numeroGuia) {
+        this.numeroGuia = numeroGuia;
+    }
+
+    public LocalDateTime getDataImportacaoGuia() {
+        return dataImportacaoGuia;
+    }
+
+    public void setDataImportacaoGuia(LocalDateTime dataImportacaoGuia) {
+        this.dataImportacaoGuia = dataImportacaoGuia;
+    }
+
+    public LocalDate getDataValidade() {
+        return dataValidade;
+    }
+
+    public void setDataValidade(LocalDate dataValidade) {
+        this.dataValidade = dataValidade;
+    }
+
+    public String getCaminhoArquivoGuia() {
+        return caminhoArquivoGuia;
+    }
+
+    public void setCaminhoArquivoGuia(String caminhoArquivoGuia) {
+        this.caminhoArquivoGuia = caminhoArquivoGuia;
     }
 
     @Override
