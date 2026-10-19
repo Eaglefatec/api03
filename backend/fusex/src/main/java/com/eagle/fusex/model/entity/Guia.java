@@ -44,6 +44,10 @@ public class Guia {
     @Column(nullable = false)
     private StatusGuia status;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "lote_id")
+    private Lote lote;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
@@ -133,6 +137,14 @@ public class Guia {
 
     public void setStatus(StatusGuia status) {
         this.status = status;
+    }
+
+    public Lote getLote() {
+        return lote;
+    }
+
+    public void setLote(Lote lote) {
+        this.lote = lote;
     }
 
     public LocalDateTime getCreatedAt() {

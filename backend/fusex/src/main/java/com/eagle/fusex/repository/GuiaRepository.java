@@ -10,4 +10,5 @@ public interface GuiaRepository extends JpaRepository<Guia, Long> {
     List<Guia> findByOcs_LoginUsuarioOrderByCreatedAtDesc(String loginUsuario);
     List<Guia> findByOcs_LoginUsuarioAndStatusOrderByCreatedAtDesc(String loginUsuario, StatusGuia status);
     boolean existsByNumeroGuia(String numeroGuia);
+    long countByLoteId(Long loteId);
 }
