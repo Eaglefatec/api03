@@ -47,6 +47,10 @@ public class Lote {
     @Column(name = "espelho_tipo_arquivo", nullable = false)
     private String espelhoTipoArquivo;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fechamento_id")
+    private Fechamento fechamento;
+
     public Lote() {
     }
 
@@ -144,6 +148,14 @@ public class Lote {
 
     public void setEspelhoTipoArquivo(String espelhoTipoArquivo) {
         this.espelhoTipoArquivo = espelhoTipoArquivo;
+    }
+
+    public Fechamento getFechamento() {
+        return fechamento;
+    }
+
+    public void setFechamento(Fechamento fechamento) {
+        this.fechamento = fechamento;
     }
 
     @Override

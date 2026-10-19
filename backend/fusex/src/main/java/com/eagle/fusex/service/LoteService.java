@@ -105,7 +105,7 @@ public class LoteService {
     @Transactional(readOnly = true)
     public List<LoteResponse> listarLotes() {
         Ocs ocs = buscarOcsLogada();
-        return loteRepository.findByOcs_LoginUsuarioOrderByDataGeracaoDesc(ocs.getLoginUsuario()).stream()
+        return loteRepository.findByOcs_LoginUsuarioAndFechamentoIsNullOrderByDataGeracaoDesc(ocs.getLoginUsuario()).stream()
                 .map(this::toResponse)
                 .toList();
     }

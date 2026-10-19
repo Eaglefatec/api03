@@ -93,6 +93,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/guias").hasAnyRole("OCS", "ADMIN")
                 .requestMatchers(HttpMethod.GET, "/guias").hasAnyRole("OCS", "ADMIN")
                 .requestMatchers("/lotes/**").hasAnyRole("OCS", "ADMIN")
+                .requestMatchers("/fechamentos/**").hasAnyRole("OCS", "ADMIN")
                 .requestMatchers("/encaminhamentos/**").hasAnyRole("MEDICO", "ADMIN")
                 .requestMatchers("/importacao/**").hasRole("ADMIN")
                 .requestMatchers(
