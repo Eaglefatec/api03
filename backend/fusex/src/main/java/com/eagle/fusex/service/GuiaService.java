@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -61,6 +62,14 @@ public class GuiaService {
         log.info("Guia {} anexada pela OCS {}", salva.getNumeroGuia(), ocs.getOcsNome());
 
         return toResponse(salva);
+    }
+
+    @Transactional(readOnly = true)
+    public List<GuiaResponse> listarGuias() {
+        Ocs ocs = buscarOcsLogada();
+        return guiaRepository.findByOcs_LoginUsuarioOrderByCreatedAtDesc(ocs.getLoginUsuario()).stream()
+                .map(this::toResponse)
+                .toList();
     }
 
     private Ocs buscarOcsLogada() {

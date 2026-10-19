@@ -91,6 +91,7 @@ public class SecurityConfig {
                 .requestMatchers("/solicitacoes/*/guia-pdf", "/solicitacoes/*/guia-pdf/**").hasAnyRole("EG", "ADMIN")
                 .requestMatchers("/guias/*/validade").hasAnyRole("OCS", "ADMIN")
                 .requestMatchers(HttpMethod.POST, "/guias").hasAnyRole("OCS", "ADMIN")
+                .requestMatchers(HttpMethod.GET, "/guias").hasAnyRole("OCS", "ADMIN")
                 .requestMatchers("/encaminhamentos/**").hasAnyRole("MEDICO", "ADMIN")
                 .requestMatchers("/importacao/**").hasRole("ADMIN")
                 .requestMatchers(
