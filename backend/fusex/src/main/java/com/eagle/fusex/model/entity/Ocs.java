@@ -61,6 +61,9 @@ public class Ocs {
     @Column(name = "ocs_contato_telefone")
     private String ocsContatoTelefone;
 
+    @Column(name = "login_usuario", unique = true)
+    private String loginUsuario;
+
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "ocs_especialidade_item", joinColumns = @JoinColumn(name = "ocs_id"))
     @Column(name = "especialidade")
@@ -191,6 +194,14 @@ public class Ocs {
 
     public void setOcsContatoTelefone(String ocsContatoTelefone) {
         this.ocsContatoTelefone = ocsContatoTelefone;
+    }
+
+    public String getLoginUsuario() {
+        return loginUsuario;
+    }
+
+    public void setLoginUsuario(String loginUsuario) {
+        this.loginUsuario = loginUsuario;
     }
 
     public Set<Especialidade> getEspecialidades() {
