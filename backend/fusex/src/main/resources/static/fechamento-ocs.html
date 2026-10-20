@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FUSEX - Fechamento Mensal</title>
+  <link rel="stylesheet" href="css/fusex-theme.css">
+</head>
+<body>
+
+  <header class="app-header">
+    <a href="index.html" class="brand-badge">
+      <div class="brand-logo">FUSEX</div>
+      <div>
+        <div class="brand-title">Fundo de Saúde do Exército</div>
+        <div class="brand-subtitle">Fechamento Mensal (OCS)</div>
+      </div>
+    </a>
+    <div style="display: flex; gap: 8px;">
+      <a href="lotes-ocs.html" class="btn btn-secondary" style="margin: 0; padding: 6px 12px; font-size: 0.84em; width: auto;">
+        ← Lotes
+      </a>
+    </div>
+  </header>
+
+  <main class="app-container wide">
+    <div class="card">
+      <h1 class="card-title">Enviar Fechamento do Mês</h1>
+      <p class="card-subtitle">Envie para a Fusex, de uma só vez, todos os lotes gerados em uma competência.</p>
+
+      <div class="alert alert-warning">
+        Atenção: os envios mensais devem ocorrer até o 15º dia útil do mês.
+      </div>
+
+      <div id="loginSection">
+        <h2 style="font-size: 0.95em; font-weight: 600; color: var(--color-primary); margin: 0 0 12px 0;">
+          Autenticação
+        </h2>
+        <div class="row2">
+          <div>
+            <label for="user">Usuário</label>
+            <input type="text" id="user" value="ocs">
+          </div>
+          <div>
+            <label for="pass">Senha</label>
+            <input type="password" id="pass" placeholder="••••••••">
+          </div>
+        </div>
+      </div>
+
+      <label for="competencia">Competência</label>
+      <input type="month" id="competencia">
+
+      <div id="errorMsg" class="alert alert-error" hidden></div>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Lote</th>
+            <th>Guias</th>
+            <th>Fatura (PDF)</th>
+            <th>Espelho</th>
+          </tr>
+        </thead>
+        <tbody id="tbResumo">
+          <tr><td colspan="4">Selecione uma competência para ver os lotes pendentes.</td></tr>
+        </tbody>
+      </table>
+
+      <div style="display: flex; justify-content: flex-end; margin-top: 16px;">
+        <button id="enviarFechamentoBtn" type="button" class="btn btn-success" disabled>Enviar Fechamento do Mês</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 class="card-title">Fechamentos Enviados</h2>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Competência</th>
+            <th>Enviado em</th>
+            <th>Lotes</th>
+            <th>Guias</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="tbEnviados">
+          <tr><td colspan="5">Nenhum fechamento enviado ainda.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <script>
+    const competenciaInput = document.getElementById('competencia');
+    const hoje = new Date();
+    competenciaInput.value = hoje.toISOString().slice(0, 7);
+  </script>
+</body>
+</html>
