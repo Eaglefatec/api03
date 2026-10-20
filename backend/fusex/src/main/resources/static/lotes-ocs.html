@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FUSEX - Lotes de Fatura</title>
+  <link rel="stylesheet" href="css/fusex-theme.css">
+</head>
+<body>
+
+  <header class="app-header">
+    <a href="index.html" class="brand-badge">
+      <div class="brand-logo">FUSEX</div>
+      <div>
+        <div class="brand-title">Fundo de Saúde do Exército</div>
+        <div class="brand-subtitle">Lotes de Fatura (OCS)</div>
+      </div>
+    </a>
+    <div style="display: flex; gap: 8px;">
+      <a href="guias-ocs.html" class="btn btn-secondary" style="margin: 0; padding: 6px 12px; font-size: 0.84em; width: auto;">
+        ← Guias
+      </a>
+      <a href="fechamento-ocs.html" class="btn btn-secondary" style="margin: 0; padding: 6px 12px; font-size: 0.84em; width: auto;">
+        Fechamento Mensal →
+      </a>
+    </div>
+  </header>
+
+  <main class="app-container wide">
+    <div class="card">
+      <h1 class="card-title">Gerar Lote de Fatura</h1>
+      <p class="card-subtitle">Selecione as guias sem lote, anexe a fatura e o espelho correspondentes e gere o lote. Ele fica guardado no sistema até o fechamento mensal.</p>
+
+      <div id="loginSection">
+        <h2 style="font-size: 0.95em; font-weight: 600; color: var(--color-primary); margin: 0 0 12px 0;">
+          Autenticação
+        </h2>
+        <div class="row2">
+          <div>
+            <label for="user">Usuário</label>
+            <input type="text" id="user" value="ocs">
+          </div>
+          <div>
+            <label for="pass">Senha</label>
+            <input type="password" id="pass" placeholder="••••••••">
+          </div>
+        </div>
+      </div>
+
+      <div id="errorMsg" class="alert alert-error" hidden></div>
+
+      <div class="section-title" style="display: flex; justify-content: space-between; align-items: center;">
+        <span>Guias disponíveis para lote</span>
+        <label style="margin: 0; font-weight: 400; display: flex; align-items: center; gap: 6px;">
+          <input type="checkbox" id="selecionarTodas" style="width: auto;">
+          Selecionar todas
+        </label>
+      </div>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Nº da Guia</th>
+            <th>Beneficiário</th>
+            <th>Data</th>
+          </tr>
+        </thead>
+        <tbody id="tbSemLote">
+          <tr><td colspan="4">Nenhuma guia sem lote no momento.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="row2" style="margin-top: 16px;">
+        <div>
+          <label for="arquivoFatura">Arquivo da Fatura (PDF)</label>
+          <div class="file-upload-box">
+            <input type="file" id="arquivoFatura" accept="application/pdf">
+          </div>
+        </div>
+        <div>
+          <label for="arquivoEspelho">Arquivo do Espelho (PDF, XLSX ou CSV)</label>
+          <div class="file-upload-box">
+            <input type="file" id="arquivoEspelho" accept=".pdf,.xlsx,.csv">
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; align-items: center; gap: 12px; margin-top: 16px;">
+        <span id="selecaoInfo" class="card-subtitle" style="margin: 0;">0 guias selecionadas</span>
+        <button id="gerarLoteBtn" type="button" class="btn btn-success">Gerar Lote de Fatura</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 class="card-title">Lotes Gerados</h2>
+      <p class="card-subtitle">Aguardando o fechamento mensal.</p>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Lote</th>
+            <th>Competência</th>
+            <th>Gerado em</th>
+            <th>Guias</th>
+            <th>Fatura</th>
+            <th>Espelho</th>
+          </tr>
+        </thead>
+        <tbody id="tbLotes">
+          <tr><td colspan="6">Nenhum lote gerado ainda.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <script>
+    const selecionarTodas = document.getElementById('selecionarTodas');
+    const selecaoInfo = document.getElementById('selecaoInfo');
+
+    function atualizarSelecaoInfo() {
+      const marcadas = document.querySelectorAll('#tbSemLote .sel:checked').length;
+      selecaoInfo.textContent = marcadas + (marcadas === 1 ? ' guia selecionada' : ' guias selecionadas');
+    }
+
+    selecionarTodas.addEventListener('change', () => {
+      document.querySelectorAll('#tbSemLote .sel').forEach(cb => cb.checked = selecionarTodas.checked);
+      atualizarSelecaoInfo();
+    });
+  </script>
+</body>
+</html>
