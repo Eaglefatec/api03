@@ -46,6 +46,7 @@
             <input type="password" id="pass" placeholder="••••••••">
           </div>
         </div>
+        <button id="carregarBtn" type="button" class="btn btn-secondary">Carregar</button>
       </div>
 
       <label for="competencia">Competência</label>
@@ -93,8 +94,126 @@
 
   <script>
     const competenciaInput = document.getElementById('competencia');
+    const errorMsg = document.getElementById('errorMsg');
+    const tbResumo = document.getElementById('tbResumo');
+    const tbEnviados = document.getElementById('tbEnviados');
+    const enviarFechamentoBtn = document.getElementById('enviarFechamentoBtn');
+
     const hoje = new Date();
     competenciaInput.value = hoje.toISOString().slice(0, 7);
+
+    const MESES = ['', 'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+    const formatarCompetencia = (ano, mes) => `${MESES[mes]}/${ano}`;
+    const STATUS_LABEL = { AGUARDANDO_FATURAMENTO: 'Aguardando faturamento' };
+
+    function authHeader() {
+      const user = document.getElementById('user').value.trim();
+      const pass = document.getElementById('pass').value;
+      if (!user || !pass) return null;
+      return 'Basic ' + btoa(user + ':' + pass);
+    }
+
+    function competenciaSelecionada() {
+      const [ano, mes] = competenciaInput.value.split('-').map(Number);
+      return { ano, mes };
+    }
+
+    async function carregarResumo(auth) {
+      const { ano, mes } = competenciaSelecionada();
+      const res = await fetch('/api/lotes', { headers: { 'Authorization': auth } });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Não foi possível carregar os lotes.');
+
+      const lotesDaCompetencia = data.filter(l => l.competenciaAno === ano && l.competenciaMes === mes);
+
+      tbResumo.innerHTML = lotesDaCompetencia.length
+        ? lotesDaCompetencia.map(l => `<tr>
+            <td>Lote ${l.numeroLote}</td>
+            <td>${l.quantidadeGuias}</td>
+            <td>${l.faturaNomeArquivo}</td>
+            <td>${l.espelhoNomeArquivo}</td>
+          </tr>`).join('')
+        : '<tr><td colspan="4">Nenhum lote pendente de envio nesta competência.</td></tr>';
+
+      enviarFechamentoBtn.disabled = lotesDaCompetencia.length === 0;
+    }
+
+    async function carregarEnviados(auth) {
+      const res = await fetch('/api/fechamentos', { headers: { 'Authorization': auth } });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Não foi possível carregar os fechamentos.');
+
+      tbEnviados.innerHTML = data.length
+        ? data.map(f => `<tr>
+            <td>${formatarCompetencia(f.competenciaAno, f.competenciaMes)}</td>
+            <td>${new Date(f.dataEnvio).toLocaleString('pt-BR')}</td>
+            <td>${f.quantidadeLotes}</td>
+            <td>${f.quantidadeGuias}</td>
+            <td>${STATUS_LABEL[f.status] || f.status}</td>
+          </tr>`).join('')
+        : '<tr><td colspan="5">Nenhum fechamento enviado ainda.</td></tr>';
+    }
+
+    async function carregarTudo() {
+      errorMsg.hidden = true;
+      const auth = authHeader();
+      if (!auth) {
+        errorMsg.textContent = 'Informe usuário e senha.';
+        errorMsg.hidden = false;
+        return;
+      }
+
+      try {
+        await carregarResumo(auth);
+        await carregarEnviados(auth);
+      } catch (err) {
+        errorMsg.textContent = err.message || 'Erro ao carregar os dados. Tente novamente.';
+        errorMsg.hidden = false;
+      }
+    }
+
+    async function enviarFechamento() {
+      errorMsg.hidden = true;
+      const auth = authHeader();
+      if (!auth) {
+        errorMsg.textContent = 'Informe usuário e senha.';
+        errorMsg.hidden = false;
+        return;
+      }
+
+      const { ano, mes } = competenciaSelecionada();
+      if (!confirm(`Confirma o envio do fechamento de ${formatarCompetencia(ano, mes)}? Depois do envio os lotes não podem ser alterados.`)) {
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/fechamentos', {
+          method: 'POST',
+          headers: { 'Authorization': auth, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ competenciaAno: ano, competenciaMes: mes })
+        });
+        const data = await res.json();
+
+        if (!res.ok) {
+          errorMsg.textContent = data.error || 'Não foi possível enviar o fechamento.';
+          errorMsg.hidden = false;
+          return;
+        }
+
+        await carregarResumo(auth);
+        await carregarEnviados(auth);
+      } catch (err) {
+        errorMsg.textContent = 'Erro ao enviar o fechamento. Tente novamente.';
+        errorMsg.hidden = false;
+      }
+    }
+
+    document.getElementById('carregarBtn').addEventListener('click', carregarTudo);
+    enviarFechamentoBtn.addEventListener('click', enviarFechamento);
+    competenciaInput.addEventListener('change', () => {
+      const auth = authHeader();
+      if (auth) carregarResumo(auth).catch(() => {});
+    });
   </script>
 </body>
 </html>

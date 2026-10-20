@@ -42,6 +42,7 @@
             <input type="password" id="pass" placeholder="••••••••">
           </div>
         </div>
+        <button id="carregarBtn" type="button" class="btn btn-secondary">Carregar Guias</button>
       </div>
 
       <div class="section-title" style="display: flex; justify-content: space-between; align-items: center;">
@@ -112,12 +113,17 @@
     const formAnexoCard = document.getElementById('formAnexoCard');
     const gAssinada = document.getElementById('gAssinada');
     const enviarGuiaBtn = document.getElementById('enviarGuiaBtn');
+    const errorMsg = document.getElementById('errorMsg');
+    const formErrorMsg = document.getElementById('formErrorMsg');
+    const tbGuias = document.getElementById('tbGuias');
+
+    const STATUS_LABEL = { SEM_LOTE: 'Sem lote', EM_LOTE: 'Em lote' };
 
     function abrirForm() {
       ['gNumero', 'gBeneficiario', 'gData', 'gArquivo'].forEach(id => document.getElementById(id).value = '');
       gAssinada.checked = false;
       enviarGuiaBtn.disabled = true;
-      document.getElementById('formErrorMsg').hidden = true;
+      formErrorMsg.hidden = true;
       formAnexoCard.hidden = false;
       formAnexoCard.scrollIntoView({ behavior: 'smooth' });
     }
@@ -126,11 +132,101 @@
       formAnexoCard.hidden = true;
     }
 
+    function authHeader() {
+      const user = document.getElementById('user').value.trim();
+      const pass = document.getElementById('pass').value;
+      if (!user || !pass) return null;
+      return 'Basic ' + btoa(user + ':' + pass);
+    }
+
+    async function carregarGuias() {
+      errorMsg.hidden = true;
+      const auth = authHeader();
+      if (!auth) {
+        errorMsg.textContent = 'Informe usuário e senha.';
+        errorMsg.hidden = false;
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/guias', { headers: { 'Authorization': auth } });
+        const data = await res.json();
+
+        if (!res.ok) {
+          errorMsg.textContent = data.error || 'Não foi possível carregar as guias.';
+          errorMsg.hidden = false;
+          return;
+        }
+
+        tbGuias.innerHTML = data.length
+          ? data.map(g => `<tr>
+              <td>${g.numeroGuia}</td>
+              <td>${g.beneficiarioPrecCp}</td>
+              <td>${new Date(g.dataAtendimento + 'T00:00:00').toLocaleDateString('pt-BR')}</td>
+              <td>${g.nomeArquivo}</td>
+              <td>${STATUS_LABEL[g.status] || g.status}</td>
+            </tr>`).join('')
+          : '<tr><td colspan="5">Nenhuma guia anexada ainda.</td></tr>';
+      } catch (err) {
+        errorMsg.textContent = 'Erro ao carregar as guias. Tente novamente.';
+        errorMsg.hidden = false;
+      }
+    }
+
+    async function enviarGuia() {
+      const auth = authHeader();
+      if (!auth) {
+        formErrorMsg.textContent = 'Informe usuário e senha.';
+        formErrorMsg.hidden = false;
+        return;
+      }
+
+      const numeroGuia = document.getElementById('gNumero').value.trim();
+      const beneficiarioPrecCp = document.getElementById('gBeneficiario').value.trim();
+      const dataAtendimento = document.getElementById('gData').value;
+      const arquivo = document.getElementById('gArquivo').files[0];
+
+      if (!numeroGuia || !beneficiarioPrecCp || !dataAtendimento || !arquivo) {
+        formErrorMsg.textContent = 'Preencha todos os campos e anexe o PDF da guia.';
+        formErrorMsg.hidden = false;
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('numeroGuia', numeroGuia);
+      formData.append('beneficiarioPrecCp', beneficiarioPrecCp);
+      formData.append('dataAtendimento', dataAtendimento);
+      formData.append('arquivo', arquivo);
+
+      try {
+        const res = await fetch('/api/guias', {
+          method: 'POST',
+          headers: { 'Authorization': auth },
+          body: formData
+        });
+        const data = await res.json();
+
+        if (!res.ok) {
+          formErrorMsg.textContent = data.error || 'Não foi possível anexar a guia.';
+          formErrorMsg.hidden = false;
+          return;
+        }
+
+        fecharForm();
+        carregarGuias();
+      } catch (err) {
+        formErrorMsg.textContent = 'Erro ao anexar a guia. Tente novamente.';
+        formErrorMsg.hidden = false;
+      }
+    }
+
     abrirFormBtn.addEventListener('click', abrirForm);
     cancelarFormBtn.addEventListener('click', fecharForm);
     gAssinada.addEventListener('change', () => {
       enviarGuiaBtn.disabled = !gAssinada.checked;
     });
+    document.getElementById('carregarBtn').addEventListener('click', carregarGuias);
+    enviarGuiaBtn.addEventListener('click', enviarGuia);
   </script>
 </body>
 </html>

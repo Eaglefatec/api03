@@ -45,6 +45,7 @@
             <input type="password" id="pass" placeholder="••••••••">
           </div>
         </div>
+        <button id="carregarBtn" type="button" class="btn btn-secondary">Carregar</button>
       </div>
 
       <div id="errorMsg" class="alert alert-error" hidden></div>
@@ -116,6 +117,19 @@
   <script>
     const selecionarTodas = document.getElementById('selecionarTodas');
     const selecaoInfo = document.getElementById('selecaoInfo');
+    const errorMsg = document.getElementById('errorMsg');
+    const tbSemLote = document.getElementById('tbSemLote');
+    const tbLotes = document.getElementById('tbLotes');
+
+    const MESES = ['', 'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+    const formatarCompetencia = (ano, mes) => `${MESES[mes]}/${ano}`;
+
+    function authHeader() {
+      const user = document.getElementById('user').value.trim();
+      const pass = document.getElementById('pass').value;
+      if (!user || !pass) return null;
+      return 'Basic ' + btoa(user + ':' + pass);
+    }
 
     function atualizarSelecaoInfo() {
       const marcadas = document.querySelectorAll('#tbSemLote .sel:checked').length;
@@ -126,6 +140,118 @@
       document.querySelectorAll('#tbSemLote .sel').forEach(cb => cb.checked = selecionarTodas.checked);
       atualizarSelecaoInfo();
     });
+
+    async function carregarSemLote(auth) {
+      const res = await fetch('/api/guias', { headers: { 'Authorization': auth } });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Não foi possível carregar as guias.');
+
+      const semLote = data.filter(g => g.status === 'SEM_LOTE');
+      selecionarTodas.checked = false;
+
+      tbSemLote.innerHTML = semLote.length
+        ? semLote.map(g => `<tr>
+            <td><input type="checkbox" class="sel" data-id="${g.id}" style="width: auto;"></td>
+            <td>${g.numeroGuia}</td>
+            <td>${g.beneficiarioPrecCp}</td>
+            <td>${new Date(g.dataAtendimento + 'T00:00:00').toLocaleDateString('pt-BR')}</td>
+          </tr>`).join('')
+        : '<tr><td colspan="4">Nenhuma guia sem lote no momento.</td></tr>';
+
+      document.querySelectorAll('#tbSemLote .sel').forEach(cb => cb.addEventListener('change', atualizarSelecaoInfo));
+      atualizarSelecaoInfo();
+    }
+
+    async function carregarLotes(auth) {
+      const res = await fetch('/api/lotes', { headers: { 'Authorization': auth } });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Não foi possível carregar os lotes.');
+
+      tbLotes.innerHTML = data.length
+        ? data.map(l => `<tr>
+            <td>Lote ${l.numeroLote}</td>
+            <td>${formatarCompetencia(l.competenciaAno, l.competenciaMes)}</td>
+            <td>${new Date(l.dataGeracao).toLocaleString('pt-BR')}</td>
+            <td>${l.quantidadeGuias}</td>
+            <td>${l.faturaNomeArquivo}</td>
+            <td>${l.espelhoNomeArquivo}</td>
+          </tr>`).join('')
+        : '<tr><td colspan="6">Nenhum lote gerado ainda.</td></tr>';
+    }
+
+    async function carregarTudo() {
+      errorMsg.hidden = true;
+      const auth = authHeader();
+      if (!auth) {
+        errorMsg.textContent = 'Informe usuário e senha.';
+        errorMsg.hidden = false;
+        return;
+      }
+
+      try {
+        await carregarSemLote(auth);
+        await carregarLotes(auth);
+      } catch (err) {
+        errorMsg.textContent = err.message || 'Erro ao carregar os dados. Tente novamente.';
+        errorMsg.hidden = false;
+      }
+    }
+
+    async function gerarLote() {
+      errorMsg.hidden = true;
+      const auth = authHeader();
+      if (!auth) {
+        errorMsg.textContent = 'Informe usuário e senha.';
+        errorMsg.hidden = false;
+        return;
+      }
+
+      const guiaIds = [...document.querySelectorAll('#tbSemLote .sel:checked')].map(cb => cb.dataset.id);
+      const fatura = document.getElementById('arquivoFatura').files[0];
+      const espelho = document.getElementById('arquivoEspelho').files[0];
+
+      if (!guiaIds.length) {
+        errorMsg.textContent = 'Selecione ao menos uma guia para gerar o lote.';
+        errorMsg.hidden = false;
+        return;
+      }
+      if (!fatura || !espelho) {
+        errorMsg.textContent = 'Anexe a fatura e o espelho.';
+        errorMsg.hidden = false;
+        return;
+      }
+
+      const formData = new FormData();
+      guiaIds.forEach(id => formData.append('guiaIds', id));
+      formData.append('fatura', fatura);
+      formData.append('espelho', espelho);
+
+      try {
+        const res = await fetch('/api/lotes', {
+          method: 'POST',
+          headers: { 'Authorization': auth },
+          body: formData
+        });
+        const data = await res.json();
+
+        if (!res.ok) {
+          errorMsg.textContent = data.error || 'Não foi possível gerar o lote.';
+          errorMsg.hidden = false;
+          return;
+        }
+
+        document.getElementById('arquivoFatura').value = '';
+        document.getElementById('arquivoEspelho').value = '';
+        await carregarSemLote(auth);
+        await carregarLotes(auth);
+      } catch (err) {
+        errorMsg.textContent = 'Erro ao gerar o lote. Tente novamente.';
+        errorMsg.hidden = false;
+      }
+    }
+
+    document.getElementById('carregarBtn').addEventListener('click', carregarTudo);
+    document.getElementById('gerarLoteBtn').addEventListener('click', gerarLote);
   </script>
 </body>
 </html>
