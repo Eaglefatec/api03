@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FUSEX - Guias da OCS</title>
+  <link rel="stylesheet" href="css/fusex-theme.css">
+</head>
+<body>
+
+  <header class="app-header">
+    <a href="index.html" class="brand-badge">
+      <div class="brand-logo">FUSEX</div>
+      <div>
+        <div class="brand-title">Fundo de Saúde do Exército</div>
+        <div class="brand-subtitle">Guias da OCS</div>
+      </div>
+    </a>
+    <div style="display: flex; gap: 8px;">
+      <a href="lotes-ocs.html" class="btn btn-secondary" style="margin: 0; padding: 6px 12px; font-size: 0.84em; width: auto;">
+        Lotes de Fatura →
+      </a>
+    </div>
+  </header>
+
+  <main class="app-container wide">
+    <div class="card">
+      <h1 class="card-title">Guias Anexadas</h1>
+      <p class="card-subtitle">Anexe cada guia assinada pelo beneficiário para depois agrupá-las em lotes de fatura.</p>
+
+      <div id="loginSection">
+        <h2 style="font-size: 0.95em; font-weight: 600; color: var(--color-primary); margin: 0 0 12px 0;">
+          Autenticação
+        </h2>
+        <div class="row2">
+          <div>
+            <label for="user">Usuário</label>
+            <input type="text" id="user" value="ocs">
+          </div>
+          <div>
+            <label for="pass">Senha</label>
+            <input type="password" id="pass" placeholder="••••••••">
+          </div>
+        </div>
+      </div>
+
+      <div class="section-title" style="display: flex; justify-content: space-between; align-items: center;">
+        <span>Guias já anexadas</span>
+        <button id="abrirFormBtn" type="button" class="btn btn-primary">+ Anexar guia</button>
+      </div>
+
+      <div id="errorMsg" class="alert alert-error" hidden></div>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Nº da Guia</th>
+            <th>Beneficiário (Prec CP)</th>
+            <th>Data do Atendimento</th>
+            <th>Arquivo</th>
+            <th>Situação</th>
+          </tr>
+        </thead>
+        <tbody id="tbGuias">
+          <tr><td colspan="5">Nenhuma guia anexada ainda.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card" id="formAnexoCard" hidden>
+      <h2 class="card-title">Anexar Guia</h2>
+
+      <div class="row2">
+        <div>
+          <label for="gNumero">Nº da Guia</label>
+          <input type="text" id="gNumero" placeholder="Ex.: 202610606">
+        </div>
+        <div>
+          <label for="gBeneficiario">Beneficiário (Prec CP)</label>
+          <input type="text" id="gBeneficiario" placeholder="Ex.: 34596112300">
+        </div>
+      </div>
+
+      <label for="gData">Data do Atendimento</label>
+      <input type="date" id="gData">
+
+      <label for="gArquivo">Guia Assinada (PDF)</label>
+      <div class="file-upload-box">
+        <input type="file" id="gArquivo" accept="application/pdf">
+      </div>
+
+      <div class="alert alert-warning" style="margin-top: 16px; display: flex; gap: 10px; align-items: flex-start;">
+        <input type="checkbox" id="gAssinada" style="width: auto; margin-top: 3px;">
+        <label for="gAssinada" style="margin: 0;">
+          <strong>Esta guia está assinada corretamente pelo beneficiário?</strong><br>
+          <span style="font-size: 0.9em;">Marque para confirmar. Sem a confirmação o envio fica bloqueado.</span>
+        </label>
+      </div>
+
+      <div id="formErrorMsg" class="alert alert-error" hidden></div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px;">
+        <button id="cancelarFormBtn" type="button" class="btn btn-secondary">Cancelar</button>
+        <button id="enviarGuiaBtn" type="button" class="btn btn-success" disabled>Enviar Guia</button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const abrirFormBtn = document.getElementById('abrirFormBtn');
+    const cancelarFormBtn = document.getElementById('cancelarFormBtn');
+    const formAnexoCard = document.getElementById('formAnexoCard');
+    const gAssinada = document.getElementById('gAssinada');
+    const enviarGuiaBtn = document.getElementById('enviarGuiaBtn');
+
+    function abrirForm() {
+      ['gNumero', 'gBeneficiario', 'gData', 'gArquivo'].forEach(id => document.getElementById(id).value = '');
+      gAssinada.checked = false;
+      enviarGuiaBtn.disabled = true;
+      document.getElementById('formErrorMsg').hidden = true;
+      formAnexoCard.hidden = false;
+      formAnexoCard.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function fecharForm() {
+      formAnexoCard.hidden = true;
+    }
+
+    abrirFormBtn.addEventListener('click', abrirForm);
+    cancelarFormBtn.addEventListener('click', fecharForm);
+    gAssinada.addEventListener('change', () => {
+      enviarGuiaBtn.disabled = !gAssinada.checked;
+    });
+  </script>
+</body>
+</html>
