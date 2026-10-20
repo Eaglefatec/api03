@@ -4,147 +4,131 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FUSEX - Guias da OCS</title>
-  <link rel="stylesheet" href="css/fusex-theme.css">
+  <link rel="stylesheet" href="css/ocs-mockup-theme.css">
 </head>
 <body>
 
-  <header class="app-header">
-    <a href="index.html" class="brand-badge">
-      <div class="brand-logo">FUSEX</div>
-      <div>
-        <div class="brand-title">Fundo de Saúde do Exército</div>
-        <div class="brand-subtitle">Guias da OCS</div>
-      </div>
-    </a>
-    <div style="display: flex; gap: 8px;">
-      <a href="lotes-ocs.html" class="btn btn-secondary" style="margin: 0; padding: 6px 12px; font-size: 0.84em; width: auto;">
-        Lotes de Fatura →
-      </a>
+  <aside>
+    <a href="index.html" class="brand"><i>✚</i><span>FUSEX<small>Guias, Lotes e Fechamento (OCS)</small></span></a>
+    <nav class="nav">
+      <a href="guias-ocs.html" class="on">Guias do mês</a>
+      <a href="lotes-ocs.html">Lotes de fatura</a>
+      <a href="fechamento-ocs.html">Fechamento mensal</a>
+    </nav>
+    <div class="who" id="who">
+      <b>Não autenticado</b>
+      Faça login para continuar
     </div>
-  </header>
+  </aside>
 
-  <main class="app-container wide">
+  <main>
+    <h1>Guias da OCS</h1>
+    <p class="sub">Anexe cada guia assinada durante o mês de competência.</p>
+
     <div class="card">
-      <h1 class="card-title">Guias Anexadas</h1>
-      <p class="card-subtitle">Anexe cada guia assinada pelo beneficiário para depois agrupá-las em lotes de fatura.</p>
-
-      <div id="loginSection">
-        <h2 style="font-size: 0.95em; font-weight: 600; color: var(--color-primary); margin: 0 0 12px 0;">
-          Autenticação
-        </h2>
-        <div class="row2">
-          <div>
-            <label for="user">Usuário</label>
-            <input type="text" id="user" value="ocs">
-          </div>
-          <div>
-            <label for="pass">Senha</label>
-            <input type="password" id="pass" placeholder="••••••••">
-          </div>
+      <h2>Autenticação</h2>
+      <div class="row">
+        <div><label for="user">Usuário</label><input id="user" value="ocs"></div>
+        <div><label for="pass">Senha</label><input id="pass" type="password" placeholder="••••••••"></div>
+        <div style="display: flex; align-items: flex-end;">
+          <button id="carregarBtn" class="btn" style="width: 100%;">Entrar e Carregar</button>
         </div>
-        <button id="carregarBtn" type="button" class="btn btn-secondary">Carregar Guias</button>
       </div>
-
-      <div class="section-title" style="display: flex; justify-content: space-between; align-items: center;">
-        <span>Guias já anexadas</span>
-        <button id="abrirFormBtn" type="button" class="btn btn-primary">+ Anexar guia</button>
-      </div>
-
-      <div id="errorMsg" class="alert alert-error" hidden></div>
-
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>Nº da Guia</th>
-            <th>Beneficiário (Prec CP)</th>
-            <th>Data do Atendimento</th>
-            <th>Arquivo</th>
-            <th>Situação</th>
-          </tr>
-        </thead>
-        <tbody id="tbGuias">
-          <tr><td colspan="5">Nenhuma guia anexada ainda.</td></tr>
-        </tbody>
-      </table>
     </div>
 
-    <div class="card" id="formAnexoCard" hidden>
-      <h2 class="card-title">Anexar Guia</h2>
+    <div id="erroGlobal" class="erro" hidden></div>
 
-      <div class="row2">
-        <div>
-          <label for="gNumero">Nº da Guia</label>
-          <input type="text" id="gNumero" placeholder="Ex.: 202610606">
-        </div>
-        <div>
-          <label for="gBeneficiario">Beneficiário (Prec CP)</label>
-          <input type="text" id="gBeneficiario" placeholder="Ex.: 34596112300">
-        </div>
+    <div class="stats">
+      <div class="stat"><b id="sGuias">0</b><span>Guias anexadas no mês</span></div>
+      <div class="stat"><b id="sSemLote">0</b><span>Guias ainda sem lote</span></div>
+    </div>
+
+    <div class="card">
+      <div class="head">
+        <h2>Guias anexadas</h2>
+        <button class="btn" id="abrirModalBtn">+ Anexar guia</button>
       </div>
-
-      <label for="gData">Data do Atendimento</label>
-      <input type="date" id="gData">
-
-      <label for="gArquivo">Guia Assinada (PDF)</label>
-      <div class="file-upload-box">
-        <input type="file" id="gArquivo" accept="application/pdf">
-      </div>
-
-      <div class="alert alert-warning" style="margin-top: 16px; display: flex; gap: 10px; align-items: flex-start;">
-        <input type="checkbox" id="gAssinada" style="width: auto; margin-top: 3px;">
-        <label for="gAssinada" style="margin: 0;">
-          <strong>Esta guia está assinada corretamente pelo beneficiário?</strong><br>
-          <span style="font-size: 0.9em;">Marque para confirmar. Sem a confirmação o envio fica bloqueado.</span>
-        </label>
-      </div>
-
-      <div id="formErrorMsg" class="alert alert-error" hidden></div>
-
-      <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px;">
-        <button id="cancelarFormBtn" type="button" class="btn btn-secondary">Cancelar</button>
-        <button id="enviarGuiaBtn" type="button" class="btn btn-success" disabled>Enviar Guia</button>
+      <div class="tw">
+        <table>
+          <thead>
+            <tr>
+              <th>Nº da guia</th>
+              <th>Beneficiário (Prec CP)</th>
+              <th>Data do atendimento</th>
+              <th>Arquivo</th>
+              <th>Situação</th>
+            </tr>
+          </thead>
+          <tbody id="tbGuias">
+            <tr><td colspan="5">Entre com usuário e senha para carregar as guias.</td></tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </main>
 
+  <div class="ov" id="mAnexo" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+    <div class="modal">
+      <h2 id="mTitle">Anexar guia</h2>
+      <div class="row">
+        <div><label for="gNum">Nº da guia</label><input id="gNum" placeholder="Ex.: 202610606"></div>
+        <div><label for="gBen">Beneficiário (Prec CP)</label><input id="gBen" placeholder="Ex.: 34596112300"></div>
+      </div>
+      <div class="row" style="margin-top: 12px">
+        <div><label for="gData">Data do atendimento</label><input type="date" id="gData"></div>
+      </div>
+      <div style="margin-top: 12px">
+        <label for="gFile">Guia assinada (PDF)</label>
+        <input type="file" id="gFile" accept="application/pdf">
+      </div>
+      <div class="sign">
+        <input type="checkbox" id="gSign">
+        <label for="gSign" style="color: var(--tx); font-size: 14px; margin: 0;">
+          <b>Esta guia está assinada corretamente pelo beneficiário?</b><br>
+          <span style="color: var(--mut); font-size: 12px;">Marque para confirmar. Sem a confirmação o envio fica bloqueado.</span>
+        </label>
+      </div>
+      <div id="modalErro" class="erro" hidden></div>
+      <div class="acts">
+        <button class="btn o" id="cancelarAnexoBtn">Cancelar</button>
+        <button class="btn g" id="gSend" disabled>Enviar guia</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
   <script>
-    const abrirFormBtn = document.getElementById('abrirFormBtn');
-    const cancelarFormBtn = document.getElementById('cancelarFormBtn');
-    const formAnexoCard = document.getElementById('formAnexoCard');
-    const gAssinada = document.getElementById('gAssinada');
-    const enviarGuiaBtn = document.getElementById('enviarGuiaBtn');
-    const errorMsg = document.getElementById('errorMsg');
-    const formErrorMsg = document.getElementById('formErrorMsg');
-    const tbGuias = document.getElementById('tbGuias');
-
+    const $ = id => document.getElementById(id);
     const STATUS_LABEL = { SEM_LOTE: 'Sem lote', EM_LOTE: 'Em lote' };
+    let tt;
 
-    function abrirForm() {
-      ['gNumero', 'gBeneficiario', 'gData', 'gArquivo'].forEach(id => document.getElementById(id).value = '');
-      gAssinada.checked = false;
-      enviarGuiaBtn.disabled = true;
-      formErrorMsg.hidden = true;
-      formAnexoCard.hidden = false;
-      formAnexoCard.scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function fecharForm() {
-      formAnexoCard.hidden = true;
+    function toast(m, err) {
+      const t = $('toast');
+      t.textContent = m;
+      t.className = 'toast on' + (err ? ' err' : '');
+      clearTimeout(tt);
+      tt = setTimeout(() => t.classList.remove('on'), 3600);
     }
 
     function authHeader() {
-      const user = document.getElementById('user').value.trim();
-      const pass = document.getElementById('pass').value;
+      const user = $('user').value.trim();
+      const pass = $('pass').value;
       if (!user || !pass) return null;
       return 'Basic ' + btoa(user + ':' + pass);
     }
 
+    function mostrarErroGlobal(msg) {
+      const el = $('erroGlobal');
+      el.textContent = msg;
+      el.hidden = false;
+    }
+
     async function carregarGuias() {
-      errorMsg.hidden = true;
+      $('erroGlobal').hidden = true;
       const auth = authHeader();
       if (!auth) {
-        errorMsg.textContent = 'Informe usuário e senha.';
-        errorMsg.hidden = false;
+        mostrarErroGlobal('Informe usuário e senha.');
         return;
       }
 
@@ -153,44 +137,61 @@
         const data = await res.json();
 
         if (!res.ok) {
-          errorMsg.textContent = data.error || 'Não foi possível carregar as guias.';
-          errorMsg.hidden = false;
+          mostrarErroGlobal(data.error || 'Não foi possível carregar as guias.');
           return;
         }
 
-        tbGuias.innerHTML = data.length
+        $('who').innerHTML = `<b>${$('user').value.trim()}</b>Autenticado`;
+
+        $('tbGuias').innerHTML = data.length
           ? data.map(g => `<tr>
               <td>${g.numeroGuia}</td>
               <td>${g.beneficiarioPrecCp}</td>
               <td>${new Date(g.dataAtendimento + 'T00:00:00').toLocaleDateString('pt-BR')}</td>
               <td>${g.nomeArquivo}</td>
-              <td>${STATUS_LABEL[g.status] || g.status}</td>
+              <td><span class="tag ${g.status === 'SEM_LOTE' ? 't-wait' : 't-ok'}">${STATUS_LABEL[g.status] || g.status}</span></td>
             </tr>`).join('')
           : '<tr><td colspan="5">Nenhuma guia anexada ainda.</td></tr>';
+
+        $('sGuias').textContent = data.length;
+        $('sSemLote').textContent = data.filter(g => g.status === 'SEM_LOTE').length;
       } catch (err) {
-        errorMsg.textContent = 'Erro ao carregar as guias. Tente novamente.';
-        errorMsg.hidden = false;
+        mostrarErroGlobal('Erro ao carregar as guias. Tente novamente.');
       }
+    }
+
+    function abrirModal() {
+      ['gNum', 'gBen', 'gData', 'gFile'].forEach(id => $(id).value = '');
+      $('gSign').checked = false;
+      $('gSend').disabled = true;
+      $('modalErro').hidden = true;
+      $('mAnexo').classList.add('on');
+      $('gNum').focus();
+    }
+
+    function fecharModal() {
+      $('mAnexo').classList.remove('on');
     }
 
     async function enviarGuia() {
       const auth = authHeader();
       if (!auth) {
-        formErrorMsg.textContent = 'Informe usuário e senha.';
-        formErrorMsg.hidden = false;
+        $('modalErro').textContent = 'Informe usuário e senha.';
+        $('modalErro').hidden = false;
         return;
       }
 
-      const numeroGuia = document.getElementById('gNumero').value.trim();
-      const beneficiarioPrecCp = document.getElementById('gBeneficiario').value.trim();
-      const dataAtendimento = document.getElementById('gData').value;
-      const arquivo = document.getElementById('gArquivo').files[0];
+      const numeroGuia = $('gNum').value.trim();
+      const beneficiarioPrecCp = $('gBen').value.trim();
+      const dataAtendimento = $('gData').value;
+      const arquivo = $('gFile').files[0];
 
       if (!numeroGuia || !beneficiarioPrecCp || !dataAtendimento || !arquivo) {
-        formErrorMsg.textContent = 'Preencha todos os campos e anexe o PDF da guia.';
-        formErrorMsg.hidden = false;
+        $('modalErro').textContent = 'Preencha todos os campos e anexe o PDF da guia.';
+        $('modalErro').hidden = false;
         return;
       }
+      if (!$('gSign').checked) return;
 
       const formData = new FormData();
       formData.append('numeroGuia', numeroGuia);
@@ -207,26 +208,26 @@
         const data = await res.json();
 
         if (!res.ok) {
-          formErrorMsg.textContent = data.error || 'Não foi possível anexar a guia.';
-          formErrorMsg.hidden = false;
+          $('modalErro').textContent = data.error || 'Não foi possível anexar a guia.';
+          $('modalErro').hidden = false;
           return;
         }
 
-        fecharForm();
-        carregarGuias();
+        fecharModal();
+        await carregarGuias();
+        toast('Guia ' + data.numeroGuia + ' anexada com sucesso.');
       } catch (err) {
-        formErrorMsg.textContent = 'Erro ao anexar a guia. Tente novamente.';
-        formErrorMsg.hidden = false;
+        $('modalErro').textContent = 'Erro ao anexar a guia. Tente novamente.';
+        $('modalErro').hidden = false;
       }
     }
 
-    abrirFormBtn.addEventListener('click', abrirForm);
-    cancelarFormBtn.addEventListener('click', fecharForm);
-    gAssinada.addEventListener('change', () => {
-      enviarGuiaBtn.disabled = !gAssinada.checked;
-    });
-    document.getElementById('carregarBtn').addEventListener('click', carregarGuias);
-    enviarGuiaBtn.addEventListener('click', enviarGuia);
+    $('carregarBtn').addEventListener('click', carregarGuias);
+    $('abrirModalBtn').addEventListener('click', abrirModal);
+    $('cancelarAnexoBtn').addEventListener('click', fecharModal);
+    $('gSign').addEventListener('change', () => { $('gSend').disabled = !$('gSign').checked; });
+    $('gSend').addEventListener('click', enviarGuia);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') fecharModal(); });
   </script>
 </body>
 </html>

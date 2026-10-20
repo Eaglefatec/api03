@@ -4,117 +4,136 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FUSEX - Fechamento Mensal</title>
-  <link rel="stylesheet" href="css/fusex-theme.css">
+  <link rel="stylesheet" href="css/ocs-mockup-theme.css">
 </head>
 <body>
 
-  <header class="app-header">
-    <a href="index.html" class="brand-badge">
-      <div class="brand-logo">FUSEX</div>
-      <div>
-        <div class="brand-title">Fundo de Saúde do Exército</div>
-        <div class="brand-subtitle">Fechamento Mensal (OCS)</div>
-      </div>
-    </a>
-    <div style="display: flex; gap: 8px;">
-      <a href="lotes-ocs.html" class="btn btn-secondary" style="margin: 0; padding: 6px 12px; font-size: 0.84em; width: auto;">
-        ← Lotes
-      </a>
+  <aside>
+    <a href="index.html" class="brand"><i>✚</i><span>FUSEX<small>Guias, Lotes e Fechamento (OCS)</small></span></a>
+    <nav class="nav">
+      <a href="guias-ocs.html">Guias do mês</a>
+      <a href="lotes-ocs.html">Lotes de fatura</a>
+      <a href="fechamento-ocs.html" class="on">Fechamento mensal</a>
+    </nav>
+    <div class="who" id="who">
+      <b>Não autenticado</b>
+      Faça login para continuar
     </div>
-  </header>
+  </aside>
 
-  <main class="app-container wide">
+  <main>
+    <h1>Fechamento Mensal</h1>
+    <p class="sub">Envie para a Fusex, de uma só vez, todos os lotes gerados em uma competência.</p>
+    <div class="warn">⚠ Atenção: os envios mensais devem ocorrer até o 15º dia útil do mês.</div>
+
     <div class="card">
-      <h1 class="card-title">Enviar Fechamento do Mês</h1>
-      <p class="card-subtitle">Envie para a Fusex, de uma só vez, todos os lotes gerados em uma competência.</p>
-
-      <div class="alert alert-warning">
-        Atenção: os envios mensais devem ocorrer até o 15º dia útil do mês.
-      </div>
-
-      <div id="loginSection">
-        <h2 style="font-size: 0.95em; font-weight: 600; color: var(--color-primary); margin: 0 0 12px 0;">
-          Autenticação
-        </h2>
-        <div class="row2">
-          <div>
-            <label for="user">Usuário</label>
-            <input type="text" id="user" value="ocs">
-          </div>
-          <div>
-            <label for="pass">Senha</label>
-            <input type="password" id="pass" placeholder="••••••••">
-          </div>
+      <h2>Autenticação</h2>
+      <div class="row">
+        <div><label for="user">Usuário</label><input id="user" value="ocs"></div>
+        <div><label for="pass">Senha</label><input id="pass" type="password" placeholder="••••••••"></div>
+        <div style="display: flex; align-items: flex-end;">
+          <button id="carregarBtn" class="btn" style="width: 100%;">Entrar e Carregar</button>
         </div>
-        <button id="carregarBtn" type="button" class="btn btn-secondary">Carregar</button>
+      </div>
+    </div>
+
+    <div id="erroGlobal" class="erro" hidden></div>
+
+    <div class="card">
+      <h2>Enviar fechamento do mês</h2>
+      <div class="row">
+        <div><label for="competencia">Competência</label><input type="month" id="competencia"></div>
       </div>
 
-      <label for="competencia">Competência</label>
-      <input type="month" id="competencia">
+      <div class="tw" style="margin-top: 12px;">
+        <table>
+          <thead>
+            <tr>
+              <th>Lote</th>
+              <th>Guias</th>
+              <th>Fatura (PDF)</th>
+              <th>Espelho</th>
+            </tr>
+          </thead>
+          <tbody id="tbResumo">
+            <tr><td colspan="4">Entre com usuário e senha para carregar os lotes.</td></tr>
+          </tbody>
+        </table>
+      </div>
 
-      <div id="errorMsg" class="alert alert-error" hidden></div>
-
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>Lote</th>
-            <th>Guias</th>
-            <th>Fatura (PDF)</th>
-            <th>Espelho</th>
-          </tr>
-        </thead>
-        <tbody id="tbResumo">
-          <tr><td colspan="4">Selecione uma competência para ver os lotes pendentes.</td></tr>
-        </tbody>
-      </table>
-
-      <div style="display: flex; justify-content: flex-end; margin-top: 16px;">
-        <button id="enviarFechamentoBtn" type="button" class="btn btn-success" disabled>Enviar Fechamento do Mês</button>
+      <div class="acts">
+        <button id="enviarFechamentoBtn" class="btn g" disabled>Enviar fechamento do mês</button>
       </div>
     </div>
 
     <div class="card">
-      <h2 class="card-title">Fechamentos Enviados</h2>
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>Competência</th>
-            <th>Enviado em</th>
-            <th>Lotes</th>
-            <th>Guias</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody id="tbEnviados">
-          <tr><td colspan="5">Nenhum fechamento enviado ainda.</td></tr>
-        </tbody>
-      </table>
+      <h2>Fechamentos enviados</h2>
+      <div class="tw">
+        <table>
+          <thead>
+            <tr>
+              <th>Competência</th>
+              <th>Enviado em</th>
+              <th>Lotes</th>
+              <th>Guias</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="tbEnviados">
+            <tr><td colspan="5">Nenhum fechamento enviado ainda.</td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </main>
 
+  <div class="ov" id="mConf" role="dialog" aria-modal="true" aria-labelledby="cfT">
+    <div class="modal" style="max-width: 460px;">
+      <h2 id="cfT">Confirmar envio do fechamento do mês</h2>
+      <p id="cfTxt"></p>
+      <div id="modalErro" class="erro" hidden></div>
+      <div class="acts">
+        <button class="btn o" id="cancelarEnvioBtn">Voltar</button>
+        <button class="btn g" id="confirmarEnvioBtn">Confirmar envio</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
   <script>
-    const competenciaInput = document.getElementById('competencia');
-    const errorMsg = document.getElementById('errorMsg');
-    const tbResumo = document.getElementById('tbResumo');
-    const tbEnviados = document.getElementById('tbEnviados');
-    const enviarFechamentoBtn = document.getElementById('enviarFechamentoBtn');
-
-    const hoje = new Date();
-    competenciaInput.value = hoje.toISOString().slice(0, 7);
-
+    const $ = id => document.getElementById(id);
     const MESES = ['', 'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
     const formatarCompetencia = (ano, mes) => `${MESES[mes]}/${ano}`;
     const STATUS_LABEL = { AGUARDANDO_FATURAMENTO: 'Aguardando faturamento' };
+    let tt;
+
+    const hoje = new Date();
+    $('competencia').value = hoje.toISOString().slice(0, 7);
+
+    function toast(m, err) {
+      const t = $('toast');
+      t.textContent = m;
+      t.className = 'toast on' + (err ? ' err' : '');
+      clearTimeout(tt);
+      tt = setTimeout(() => t.classList.remove('on'), 3600);
+    }
 
     function authHeader() {
-      const user = document.getElementById('user').value.trim();
-      const pass = document.getElementById('pass').value;
+      const user = $('user').value.trim();
+      const pass = $('pass').value;
       if (!user || !pass) return null;
       return 'Basic ' + btoa(user + ':' + pass);
     }
 
+    function mostrarErroGlobal(msg) {
+      const el = $('erroGlobal');
+      el.textContent = msg;
+      el.hidden = false;
+    }
+
     function competenciaSelecionada() {
-      const [ano, mes] = competenciaInput.value.split('-').map(Number);
+      const [ano, mes] = $('competencia').value.split('-').map(Number);
       return { ano, mes };
     }
 
@@ -126,7 +145,7 @@
 
       const lotesDaCompetencia = data.filter(l => l.competenciaAno === ano && l.competenciaMes === mes);
 
-      tbResumo.innerHTML = lotesDaCompetencia.length
+      $('tbResumo').innerHTML = lotesDaCompetencia.length
         ? lotesDaCompetencia.map(l => `<tr>
             <td>Lote ${l.numeroLote}</td>
             <td>${l.quantidadeGuias}</td>
@@ -135,7 +154,7 @@
           </tr>`).join('')
         : '<tr><td colspan="4">Nenhum lote pendente de envio nesta competência.</td></tr>';
 
-      enviarFechamentoBtn.disabled = lotesDaCompetencia.length === 0;
+      $('enviarFechamentoBtn').disabled = lotesDaCompetencia.length === 0;
     }
 
     async function carregarEnviados(auth) {
@@ -143,48 +162,51 @@
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Não foi possível carregar os fechamentos.');
 
-      tbEnviados.innerHTML = data.length
+      $('tbEnviados').innerHTML = data.length
         ? data.map(f => `<tr>
             <td>${formatarCompetencia(f.competenciaAno, f.competenciaMes)}</td>
             <td>${new Date(f.dataEnvio).toLocaleString('pt-BR')}</td>
             <td>${f.quantidadeLotes}</td>
             <td>${f.quantidadeGuias}</td>
-            <td>${STATUS_LABEL[f.status] || f.status}</td>
+            <td><span class="tag t-info">${STATUS_LABEL[f.status] || f.status}</span></td>
           </tr>`).join('')
         : '<tr><td colspan="5">Nenhum fechamento enviado ainda.</td></tr>';
     }
 
     async function carregarTudo() {
-      errorMsg.hidden = true;
+      $('erroGlobal').hidden = true;
       const auth = authHeader();
       if (!auth) {
-        errorMsg.textContent = 'Informe usuário e senha.';
-        errorMsg.hidden = false;
+        mostrarErroGlobal('Informe usuário e senha.');
         return;
       }
 
       try {
+        $('who').innerHTML = `<b>${$('user').value.trim()}</b>Autenticado`;
         await carregarResumo(auth);
         await carregarEnviados(auth);
       } catch (err) {
-        errorMsg.textContent = err.message || 'Erro ao carregar os dados. Tente novamente.';
-        errorMsg.hidden = false;
+        mostrarErroGlobal(err.message || 'Erro ao carregar os dados. Tente novamente.');
       }
     }
 
-    async function enviarFechamento() {
-      errorMsg.hidden = true;
+    function pedirEnvio() {
+      if ($('enviarFechamentoBtn').disabled) return;
+      const { ano, mes } = competenciaSelecionada();
+      $('cfTxt').innerHTML = `Você está prestes a enviar o fechamento de <b>${formatarCompetencia(ano, mes)}</b> para a Fusex. Depois do envio os lotes não podem ser alterados. Confirma o envio?`;
+      $('modalErro').hidden = true;
+      $('mConf').classList.add('on');
+    }
+
+    function fecharConf() {
+      $('mConf').classList.remove('on');
+    }
+
+    async function confirmarEnvio() {
       const auth = authHeader();
-      if (!auth) {
-        errorMsg.textContent = 'Informe usuário e senha.';
-        errorMsg.hidden = false;
-        return;
-      }
+      if (!auth) return;
 
       const { ano, mes } = competenciaSelecionada();
-      if (!confirm(`Confirma o envio do fechamento de ${formatarCompetencia(ano, mes)}? Depois do envio os lotes não podem ser alterados.`)) {
-        return;
-      }
 
       try {
         const res = await fetch('/api/fechamentos', {
@@ -195,25 +217,30 @@
         const data = await res.json();
 
         if (!res.ok) {
-          errorMsg.textContent = data.error || 'Não foi possível enviar o fechamento.';
-          errorMsg.hidden = false;
+          $('modalErro').textContent = data.error || 'Não foi possível enviar o fechamento.';
+          $('modalErro').hidden = false;
           return;
         }
 
+        fecharConf();
         await carregarResumo(auth);
         await carregarEnviados(auth);
+        toast('Fechamento de ' + formatarCompetencia(ano, mes) + ' enviado para a Fusex.');
       } catch (err) {
-        errorMsg.textContent = 'Erro ao enviar o fechamento. Tente novamente.';
-        errorMsg.hidden = false;
+        $('modalErro').textContent = 'Erro ao enviar o fechamento. Tente novamente.';
+        $('modalErro').hidden = false;
       }
     }
 
-    document.getElementById('carregarBtn').addEventListener('click', carregarTudo);
-    enviarFechamentoBtn.addEventListener('click', enviarFechamento);
-    competenciaInput.addEventListener('change', () => {
+    $('carregarBtn').addEventListener('click', carregarTudo);
+    $('enviarFechamentoBtn').addEventListener('click', pedirEnvio);
+    $('cancelarEnvioBtn').addEventListener('click', fecharConf);
+    $('confirmarEnvioBtn').addEventListener('click', confirmarEnvio);
+    $('competencia').addEventListener('change', () => {
       const auth = authHeader();
       if (auth) carregarResumo(auth).catch(() => {});
     });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') fecharConf(); });
   </script>
 </body>
 </html>
