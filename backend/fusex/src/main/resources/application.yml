@@ -33,7 +33,7 @@ spring:
 fusex:
   guia:
     validade-dias: 60
-    numero-regex: "(?i)guia\\s*n[º°o]?\\s*[:\\-]?\\s*([A-Z0-9./-]{4,})"
+    numero-regex: "(?i)guia\\s+de\\s+encaminhamento\\s+n[ºr°.]*\\s*:?\\s*([A-Z0-9./-]{4,})"
 
 server:
   port: 8080
