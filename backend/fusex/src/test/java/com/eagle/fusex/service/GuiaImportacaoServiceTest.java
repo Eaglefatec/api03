@@ -29,7 +29,7 @@ import static org.mockito.Mockito.*;
 
 class GuiaImportacaoServiceTest {
 
-    private static final String REGEX = "(?i)guia\\s*n[º°o]?\\s*[:\\-]?\\s*([A-Z0-9./-]{4,})";
+    private static final String REGEX = "(?i)guia\\s+de\\s+encaminhamento\\s+n[ºr°.]*\\s*:?\\s*([A-Z0-9./-]{4,})";
 
     @Mock
     private SolicitacaoMedicaRepository solicitacaoRepository;
@@ -64,7 +64,7 @@ class GuiaImportacaoServiceTest {
 
     @Test
     void testImportarPdf_ComNumeroReconhecivel_ExtraiNumeroGuia() throws Exception {
-        byte[] pdf = gerarPdf("Guia No: ABC-123456");
+        byte[] pdf = gerarPdf("GUIA DE ENCAMINHAMENTO Nr: 202610904 / FUSEX");
         MockMultipartFile arquivo = new MockMultipartFile("arquivo", "guia.pdf", "application/pdf", pdf);
 
         SolicitacaoMedica solicitacao = new SolicitacaoMedica();
@@ -75,8 +75,8 @@ class GuiaImportacaoServiceTest {
         GuiaImportacaoResponse response = service.importarPdf("token-1", arquivo);
 
         assertTrue(response.isNumeroIdentificado());
-        assertEquals("ABC-123456", response.getNumeroGuia());
-        assertEquals("ABC-123456", solicitacao.getNumeroGuia());
+        assertEquals("202610904", response.getNumeroGuia());
+        assertEquals("202610904", solicitacao.getNumeroGuia());
         assertNotNull(solicitacao.getDataImportacaoGuia());
         assertEquals(solicitacao.getDataImportacaoGuia().toLocalDate().plusDays(60), solicitacao.getDataValidade());
     }

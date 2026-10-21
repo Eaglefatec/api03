@@ -80,7 +80,7 @@ public class GuiaImportacaoService {
 
     private String extrairNumeroGuia(MultipartFile arquivo) {
         try (PDDocument documento = Loader.loadPDF(arquivo.getBytes())) {
-            String texto = new PDFTextStripper().getText(documento);
+            String texto = new PDFTextStripper().getText(documento).replace(' ', ' ');
             Matcher matcher = numeroGuiaPattern.matcher(texto);
             if (matcher.find()) {
                 return matcher.group(1).trim();
