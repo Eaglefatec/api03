@@ -1,4 +1,4 @@
-# **FLUXO ÚNICO DE SAÚDE E EXAMES - FUSEX - EXÉRCITO BRASILEIRO**
+# **SISMED - SISTEMA INTEGRADO DE SAÚDE MILITAR**
 
 Projeto desenvolvido pela equipe Eagle do 3º semestre de Banco de Dados da FATEC de São José dos Campos, no contexto da metodologia de ensino Aprendizagem por Projetos Integrados (API), em parceria com o Exército Brasileiro.
 
@@ -83,32 +83,16 @@ Com a centralização das informações, o sistema busca reduzir erros de preenc
 
 ---
 <a id="tecnologias-utilizadas"></a>
-## 💻 Tecnologias Utilizadas
+<div align="center">
 
-### 🎨 Frontend 
-
-> TO DO
-
-### ⚙️ Backend & Dados
-<p>
-<img src="https://cdn.simpleicons.org/openjdk/ED8B00" height="32"/>  <!-- Java -->
-<img src="https://cdn.simpleicons.org/spring/6DB33F" height="31"/> <!-- Spring Boot -->
-<img src="https://cdn.simpleicons.org/mysql/4479A1" height="31"/>  <!-- MySQL -->
-<img src="https://cdn.simpleicons.org/docker/2496ED" height="31"/> <!-- Docker -->
-</p>
-
-### 🛠️ Ferramentas & DevOps
-<p>
-<img src="https://cdn.simpleicons.org/git/F05032" height="32"/> <!-- Git -->
-<img src="https://cdn.simpleicons.org/github/4B4B4B" height="32"/> <!-- GitHub -->
-<img src="https://cdn.simpleicons.org/jira/0052CC" height="32"/> <!-- Jira -->
-<img src="https://cdn.simpleicons.org/excalidraw/6965DB" height="32"/> <!-- Excalidraw -->
-
-<!-- IntelliJ IDEA -->
-<a href="https://www.jetbrains.com/idea/">
-  <img src="https://resources.jetbrains.com/storage/products/intellij-idea/img/meta/intellij-idea_logo_300x300.png" height="31" alt="IntelliJ IDEA"/>
-</a>
-</p>
+## Tecnologias Utilizadas
+![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
+![Apache Maven](https://img.shields.io/badge/Apache%20Maven-%23C71A36.svg?style=for-the-badge&logo=Apache%20Maven&logoColor=white)
+![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+![MySQL](https://img.shields.io/badge/mysql-%234479A1.svg?style=for-the-badge&logo=mysql&logoColor=white)
+![IntelliJ IDEA](https://img.shields.io/badge/IntelliJ_IDEA-%23000000.svg?style=for-the-badge&logo=intellij-idea&logoColor=white)
+</div>
 
 ---
 
