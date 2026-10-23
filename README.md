@@ -50,15 +50,15 @@ Com a centralização das informações, o sistema busca reduzir erros de preenc
 
 | Sprint | Prioridade | ID | User Story | Estimativa |
 | :----: | :--------: | :---: | :-----: | :--------: |
-|  **1** |  **Alta** | **US03** | Como EG, quero emitir as guias com auxílio digital, para evitar erros de preenchimento.                                                               | |
-|  **1** |  **Alta**  | **US02** | Como Beneficiário, quero fornecer digitalmente uma pré-guia para a Fusex, para ter mais agilidade na emissão da guia. | |
-|  **1** |  **Alta**  | **US01** | Como médico, quero enviar minha solicitação médica digitalmente para um sistema na Fusex. | |
-|  **2** |  **Média**  | **US08** | Como ACM, quero receber digitalmente a guia, a fatura e o espelho para tornar o processo de lisura mais eficiente e menos sujeito a incorreções. | |
-|  **2** |  **Média**  | **US09** | Como ACM, quero digitalizar o cruzamento dos dados recebidos da OCS com as condições contratadas, para ter um relatório de divergências automatizado. | |
-|  **2** |  **Média**  | **US07** | Como OCS, quero receber a Guia e checar a validade dela, para não correr o risco de glosa por perda de validade. | |
-|  **3** |  **Baixa**  | **US05** | Como EG, quero notificar e enviar a Guia APROVADA digitalmente, para que o Beneficiário possa ter sua solicitação prontamente atendida. | |
-|  **3** |  **Baixa**  | **US04** | Como EG, quero coletar aprovação das Guias com os responsáveis, para reduzir o tempo atual de validação para menos de três dias. | |
-|  **3** |  **Baixa**  | **US06** | Como Chefe / Médico, quero assinar as guias digitalmente, para tornar esse processo mais rápido e eficiente. | |
+|  **1** |  **Alta** | **US03** | Como EG, quero emitir as guias com auxílio digital, para evitar erros de preenchimento.                                                               | 3 |
+|  **1** |  **Alta**  | **US02** | Como Beneficiário, quero fornecer digitalmente uma pré-guia para a Fusex, para ter mais agilidade na emissão da guia. | 5 |
+|  **1** |  **Alta**  | **US01** | Como médico, quero enviar minha solicitação médica digitalmente para um sistema na Fusex. | 8 |
+|  **2** |  **Média**  | **US08** | Como ACM, quero receber digitalmente a guia, a fatura e o espelho para tornar o processo de lisura mais eficiente e menos sujeito a incorreções. | 13 |
+|  **2** |  **Média**  | **US09** | Como ACM, quero digitalizar o cruzamento dos dados recebidos da OCS com as condições contratadas, para ter um relatório de divergências automatizado. | 8 |
+|  **2** |  **Média**  | **US07** | Como OCS, quero receber a Guia e checar a validade dela, para não correr o risco de glosa por perda de validade. | 5 |
+|  **3** |  **Baixa**  | **US05** | Como EG, quero notificar e enviar a Guia APROVADA digitalmente, para que o Beneficiário possa ter sua solicitação prontamente atendida. | 8 |
+|  **3** |  **Baixa**  | **US04** | Como EG, quero coletar aprovação das Guias com os responsáveis, para reduzir o tempo atual de validação para menos de três dias. | 5 |
+|  **3** |  **Baixa**  | **US06** | Como Chefe / Médico, quero assinar as guias digitalmente, para tornar esse processo mais rápido e eficiente. | 5 |
 
 [Legendas](docs/Backlog/legendas.md)
 
