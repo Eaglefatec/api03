@@ -60,11 +60,11 @@ Com a centralização das informações, o sistema busca reduzir erros de preenc
 |  **3** |  **Baixa**  | **US04** | Como EG, quero coletar aprovação das Guias com os responsáveis, para reduzir o tempo atual de validação para menos de três dias. | |
 |  **3** |  **Baixa**  | **US06** | Como Chefe / Médico, quero assinar as guias digitalmente, para tornar esse processo mais rápido e eficiente. | |
 
-[Legendas](docs/Backlog/Legendas)
+[Legendas](docs/Backlog/legendas.md)
 
-### 📍 [DoR e DoD](docs/Backlog/DoR_e_DoD)
-### ✅ [Padrão de Commits](docs/Backlog/padrão-de-commits)
-### 🌿 [Git Flow](https://github.com/Eaglefatec/api03/blob/main/docs/git-flow.md)
+### 📍 [DoR e DoD](docs/Backlog/dor-e-dod.md)
+### ✅ [Padrão de Commits](docs/Backlog/padrao-de-commits.md)
+### 🌿 [Estratégia de Branches](/docs/Backlog/estrategia-de-branches.md)
 
 </details>
 
