@@ -1,0 +1,6 @@
+[submodule "api03-backend"]
+	path = api03-backend
+	url = git@github.com:Eaglefatec/api03-backend.git
+[submodule "api03-frontend"]
+	path = api03-frontend
+	url = git@github.com:Eaglefatec/api03-frontend.git
