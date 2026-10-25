@@ -1,4 +1,7 @@
+<div align="center">
+
 # **SISMED - SISTEMA INTEGRADO DE SAÚDE MILITAR**
+</div>
 
 Projeto desenvolvido pela equipe Eagle do 3º semestre de Banco de Dados da FATEC de São José dos Campos, no contexto da metodologia de ensino Aprendizagem por Projetos Integrados (API), em parceria com o Exército Brasileiro.
 
@@ -20,19 +23,34 @@ Projeto desenvolvido pela equipe Eagle do 3º semestre de Banco de Dados da FATE
 ---
 <a id="a-dor"></a>
 ## 🎯 A Dor 
-O processo atual de emissão, utilização e faturamento das guias envolve diversas etapas manuais e consultas realizadas separadamente pelos funcionários do FUSEX.
 
-Além disso, as informações são movimentadas entre diferentes envolvidos (beneficiário, FUSEX, OCS e setores responsáveis pela análise e aprovação gerando a necessidade de conferências e lançamentos manuais). No faturamento, o gestor precisa conferir a guia, a fatura e o espelho, verificando procedimentos, valores, materiais e contratos, além de identificar e corrigir possíveis divergências por meio de glosas.
+O processo atual de emissão, utilização e faturamento das guias da FUSEX é **fragmentado, altamente manual e suscetível a inconsistências.** Os principais gargalos incluem:
 
-Em resumo: o cliente enfrenta um processo fragmentado, manual e sujeito a inconsistências, com dificuldade para acompanhar todas as etapas do atendimento, desde a solicitação médica até o faturamento e a auditoria.
+#### Descentralização e Dependência de Papel:
+Informações dispersas entre beneficiários, médicos, FUSEX, OCS e setores de aprovação, exigindo deslocamentos físicos e conferências manuais.
+#### Riscos de Fraude e Perda:
+Encaminhamentos físicos sujeitos a extravios e reutilizações indevidas (cópias/xerox), além do risco de atendimentos com guias vencidas.
+#### Esforço Cognitivo Elevado na Lisura:
+No fechamento mensal, o ACM precisa cruzar manualmente faturas, espelhos, guias assinadas e contratos, tornando a identificação de divergências e a aplicação de glosas um processo lento e oneroso.
+  
+**Em resumo:** O cliente enfrenta um fluxo engessado e sem rastreabilidade, desde a solicitação médica até o faturamento final.
 
 ---
 <a id="a-solucao"></a>
 ## 🚀 A Solução 
 
-Desenvolver um sistema integrado para gestão de guias, OCS e faturamento, centralizando as informações e automatizando as principais etapas do processo. O sistema permitirá acompanhar a solicitação desde o pedido médico, passando pela autorização, emissão da guia, atendimento na OCS, assinatura do beneficiário, envio do faturamento e auditoria, até a integração com o SisFat.
+Desenvolver um **ecossistema digital integrado** para a gestão completa de guias, OCS e faturamento, centralizando os dados e automatizando as etapas críticas do processo. A plataforma atua de ponta a ponta:
 
-Com a centralização das informações, o sistema busca reduzir erros de preenchimento, agilizar a emissão das guias, facilitar o controle das OCS, diminuir inconsistências no faturamento e garantir maior rastreabilidade de todo o processo.
+#### Digitalização e Autonomia:
+Envio eletrônico de encaminhamentos por médicos credenciados, pré-guias online para beneficiários e validação ágil de validade (leitura digital) pelas OCS.
+#### Fluxo de Aprovação Desburocratizado:
+Assinatura digital por médicos e chefias da FUSEX, eliminando o trânsito físico de papéis e reduzindo o tempo de espera do beneficiário.
+#### Lisura Inteligente (incluindo Glosas):
+Padronização do recebimento via documentos em PDF importáveis (Fatura, Espelho e Guias) e cruzamento automatizado de dados contra as tabelas contratuais.
+
+**O resultado:** Redução drástica de erros e retrabalho, eliminação de gargalos no faturamento, maior controle sobre as OCS e total rastreabilidade de ponta a ponta.
+
+---
 
 **:link: Clique no link abaixo para visualizar o repositório do Frontend e Backend:**
 > 🎨 [Frontend](https://github.com/Eaglefatec/api03-frontend.git)
