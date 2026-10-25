@@ -53,6 +53,7 @@ Como EG, quero consultar as Pré-guias, para auxiliar o preenchimento da GUIA no
 - Há wireframes e/ou protótipos de telas aprovados.
 - Critérios de Aceite e regras de negócio documentados e validados com o time.
 - Sem dependências bloqueadoras e validação prévia com a equipe.
+
 **Específico da Sprint 1**
 
 - Regras de Credenciamento Mapeadas: A base de validação de médicos credenciados (FUSEX) e exames válidos por OCS está claramente mapeada.
@@ -64,6 +65,7 @@ Como EG, quero consultar as Pré-guias, para auxiliar o preenchimento da GUIA no
 
 - Código devidamente versionado no Git e revisado pela equipe.
 - Casos de uso testados e aprovados pelo time.
+
 **Específico da Sprint 1**
 
 - Validação de Upload e Armazenamento: Os arquivos de encaminhamento foram testados quanto ao armazenamento seguro e rejeição de formatos/tamanhos inválidos.

@@ -53,6 +53,7 @@ Como Chefe / Médico, quero assinar as guias digitalmente, para tornar esse proc
 - Há wireframes e/ou protótipos de telas aprovados.
 - Critérios de Aceite e regras de negócio documentados e validados com o time.
 - Sem dependências bloqueadoras e validação prévia com a equipe.
+
 **Específico da Sprint 3**
 
 - Fluxo de Alçada Definido: Os perfis com permissão para assinatura digital (Chefe da FUSEX e Médicos) estão mapeados no sistema de controle de acesso.
@@ -64,6 +65,7 @@ Como Chefe / Médico, quero assinar as guias digitalmente, para tornar esse proc
 
 - Código devidamente versionado no Git e revisado pela equipe.
 - Casos de uso testados e aprovados pelo time.
+
 **Específico da Sprint 3**
 
 - Assinatura Digital Funcional: O processo de assinatura digital via checkbox aplica corretamente o carimbo de data, hora e identificação do responsável no PDF da guia.

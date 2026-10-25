@@ -53,6 +53,7 @@ Como ACM, quero digitalizar o cruzamento dos dados recebidos da OCS com as condi
 - Há wireframes e/ou protótipos de telas aprovados.
 - Critérios de Aceite e regras de negócio documentados e validados com o time.
 - Sem dependências bloqueadoras e validação prévia com a equipe.
+
 **Específico da Sprint 2**
 
 - Layout do Documento Definido: O layout padrão do documento em PDF importável (contendo Fatura, Espelho e Guias-Assinadas) está estruturado e documentado.
@@ -64,6 +65,7 @@ Como ACM, quero digitalizar o cruzamento dos dados recebidos da OCS com as condi
 
 - Código devidamente versionado no Git e revisado pela equipe.
 - Casos de uso testados e aprovados pelo time.
+
 **Específico da Sprint 2**
 
 - Leitura de Validade por Código: O mecanismo de checagem de validade e alertas visuais (verde/vermelho) foi validado no atendimento da OCS.
