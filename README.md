@@ -16,7 +16,7 @@ Projeto desenvolvido pela equipe Eagle do 3º semestre de Banco de Dados da FATE
   <p>
     <a href="#tecnologias-utilizadas">Tecnologias Utilizadas</a> &nbsp;|&nbsp;
     <a href="#estrutura-do-projeto">Estrutura do Projeto</a> &nbsp;|&nbsp;
-    <a href="#manual-instalacao-usuario">Manuais</a> &nbsp;|&nbsp;
+    <a href="#manuais">Manuais</a> &nbsp;|&nbsp;
     <a href="#autores">Equipe</a>
   </p>
 </div>
@@ -96,8 +96,8 @@ Padronização do recebimento via documentos em PDF importáveis (Fatura, Espelh
 | Sprint | Período | Documentação | Demonstração | Status |
 |:---:|---|---|---|---|
 | 1 | 07/09 - 27/09 | [Ver Documentação](docs/sprints/sprint-01) | <div align="center">[Ver Vídeo](https://youtu.be/bo2MY-XA9kM)</div> | ✅ |
-| 2 | 05/10 - 25/10 | [Ver Documentação](docs/sprints/sprint-02) | <div align="center">[Ver Vídeo]()</div> | ✅ |
-| 3 | 02/11 - 22/11 | [Ver Documentação]() | <div align="center">[Ver Vídeo]()</div> | 🔒 TO DO |
+| 2 | 05/10 - 25/10 | [Ver Documentação](docs/sprints/sprint-02) | <div align="center">[Ver Vídeo](https://www.youtube.com/watch?v=26RdR4IOUng)</div> | ✅ |
+| 3 | 02/11 - 22/11 | [Ver Documentação](docs/sprints/sprint-03) | <div align="center">[Ver Vídeo]()</div> | 🔒 TO DO |
 </div>
 
 ---
@@ -164,11 +164,9 @@ Padronização do recebimento via documentos em PDF importáveis (Fatura, Espelh
 
 ---
 
-<a id="manual-instalacao-usuario"></a>
+<a id="manuais"></a>
 
 ## 📘 [Manual de Instalação](docs/sprints/sprint-02/manual-instalacao.md)
-
-## 📚 [Manual do Usuário]()
 
 ---
 
