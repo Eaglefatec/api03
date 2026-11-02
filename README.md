@@ -1,4 +1,7 @@
-# **FLUXO ÚNICO DE SAÚDE E EXAMES - FUSEX - EXÉRCITO BRASILEIRO**
+<div align="center">
+
+# **SISMED - SISTEMA INTEGRADO DE SAÚDE MILITAR**
+</div>
 
 Projeto desenvolvido pela equipe Eagle do 3º semestre de Banco de Dados da FATEC de São José dos Campos, no contexto da metodologia de ensino Aprendizagem por Projetos Integrados (API), em parceria com o Exército Brasileiro.
 
@@ -12,7 +15,8 @@ Projeto desenvolvido pela equipe Eagle do 3º semestre de Banco de Dados da FATE
   </p>
   <p>
     <a href="#tecnologias-utilizadas">Tecnologias Utilizadas</a> &nbsp;|&nbsp;
-    <a href="#manual-do-usuario">Manual do Usuário</a> &nbsp;|&nbsp;
+    <a href="#estrutura-do-projeto">Estrutura do Projeto</a> &nbsp;|&nbsp;
+    <a href="#manuais">Manuais</a> &nbsp;|&nbsp;
     <a href="#autores">Equipe</a>
   </p>
 </div>
@@ -20,19 +24,34 @@ Projeto desenvolvido pela equipe Eagle do 3º semestre de Banco de Dados da FATE
 ---
 <a id="a-dor"></a>
 ## 🎯 A Dor 
-O processo atual de emissão, utilização e faturamento das guias envolve diversas etapas manuais e consultas realizadas separadamente pelos funcionários do FUSEX.
 
-Além disso, as informações são movimentadas entre diferentes envolvidos (beneficiário, FUSEX, OCS e setores responsáveis pela análise e aprovação gerando a necessidade de conferências e lançamentos manuais). No faturamento, o gestor precisa conferir a guia, a fatura e o espelho, verificando procedimentos, valores, materiais e contratos, além de identificar e corrigir possíveis divergências por meio de glosas.
+O processo atual de emissão, utilização e faturamento das guias da FUSEX é **fragmentado, altamente manual e suscetível a inconsistências.** Os principais gargalos incluem:
 
-Em resumo: o cliente enfrenta um processo fragmentado, manual e sujeito a inconsistências, com dificuldade para acompanhar todas as etapas do atendimento, desde a solicitação médica até o faturamento e a auditoria.
+#### Descentralização e Dependência de Papel:
+Informações dispersas entre beneficiários, médicos, FUSEX, OCS e setores de aprovação, exigindo deslocamentos físicos e conferências manuais.
+#### Riscos de Fraude e Perda:
+Encaminhamentos físicos sujeitos a extravios e reutilizações indevidas (cópias/xerox), além do risco de atendimentos com guias vencidas.
+#### Esforço Cognitivo Elevado na Lisura:
+No fechamento mensal, o ACM precisa cruzar manualmente faturas, espelhos, guias assinadas e contratos, tornando a identificação de divergências e a aplicação de glosas um processo lento e oneroso.
+  
+**Em resumo:** O cliente enfrenta um fluxo engessado e sem rastreabilidade, desde a solicitação médica até o faturamento final.
 
 ---
 <a id="a-solucao"></a>
 ## 🚀 A Solução 
 
-Desenvolver um sistema integrado para gestão de guias, OCS e faturamento, centralizando as informações e automatizando as principais etapas do processo. O sistema permitirá acompanhar a solicitação desde o pedido médico, passando pela autorização, emissão da guia, atendimento na OCS, assinatura do beneficiário, envio do faturamento e auditoria, até a integração com o SisFat.
+Desenvolver um **ecossistema digital integrado** para a gestão completa de guias, OCS e faturamento, centralizando os dados e automatizando as etapas críticas do processo. A plataforma atua de ponta a ponta:
 
-Com a centralização das informações, o sistema busca reduzir erros de preenchimento, agilizar a emissão das guias, facilitar o controle das OCS, diminuir inconsistências no faturamento e garantir maior rastreabilidade de todo o processo.
+#### Digitalização e Autonomia:
+Envio eletrônico de encaminhamentos por médicos credenciados, pré-guias online para beneficiários e validação ágil de validade (leitura digital) pelas OCS.
+#### Fluxo de Aprovação Desburocratizado:
+Assinatura digital por médicos e chefias da FUSEX, eliminando o trânsito físico de papéis e reduzindo o tempo de espera do beneficiário.
+#### Lisura Inteligente (incluindo Glosas):
+Padronização do recebimento via documentos em PDF importáveis (Fatura, Espelho e Guias) e cruzamento automatizado de dados contra as tabelas contratuais.
+
+**O resultado:** Redução drástica de erros e retrabalho, eliminação de gargalos no faturamento, maior controle sobre as OCS e total rastreabilidade de ponta a ponta.
+
+---
 
 **:link: Clique no link abaixo para visualizar o repositório do Frontend e Backend:**
 > 🎨 [Frontend](https://github.com/Eaglefatec/api03-frontend.git)
@@ -48,23 +67,23 @@ Com a centralização das informações, o sistema busca reduzir erros de preenc
  Backlog
 </summary> <br />
 
-| Sprint | Prioridade | Rank |    US    | User Story                                                                                                                                            | Dificuldade |
-| :----: | :--------: |:----: | :------: | ----------------------------------------------------------------------------------------------------------------------------------------------------- | :---------: |
-|  **1** |  **Alta**  | 1 | **US03** | Como EG, quero emitir as guias com auxílio digital, para evitar erros de preenchimento.                                                               |    Média    |
-|  **1** |  **Média** | 4 | **US02** | Como Beneficiário, quero fornecer digitalmente uma pré-guia para a Fusex, para ter mais agilidade na emissão da guia.                                 |     Alta    |
-|  **1** |  **Média** | 6 | **US01** | Como médico, quero enviar minha solicitação médica digitalmente para um sistema na Fusex.                                                             |    Baixa    |
-|  **2** |  **Alta**  | 2 | **US08** | Como ACM, quero receber digitalmente a guia, a fatura e o espelho para tornar o processo de lisura mais eficiente e menos sujeito a incorreções.      |    Média    |
-|  **2** |  **Alta**  | 3 | **US09** | Como ACM, quero digitalizar o cruzamento dos dados recebidos da OCS com as condições contratadas, para ter um relatório de divergências automatizado. |     Alta    |
-|  **2** |  **Baixa** | 7 | **US07** | Como OCS, quero receber a Guia e checar a validade dela, para não correr o risco de glosa por perda de validade.                                      |    Baixa    |
-|  **3** |  **Média** | 5 | **US05** | Como EG, quero notificar e enviar a Guia APROVADA digitalmente, para que o Beneficiário possa ter sua solicitação prontamente atendida.               |    Baixa    |
-|  **3** |  **Baixa** | 8 | **US04** | Como EG, quero coletar aprovação das Guias com os responsáveis, para reduzir o tempo atual de validação para menos de três dias.                      |     Alta    |
-|  **3** |  **Baixa** | 9 | **US06** | Como Chefe / Médico, quero assinar as guias digitalmente, para tornar esse processo mais rápido e eficiente.                                          |     Alta    |
+| Sprint | Prioridade | ID | User Story | Estimativa |
+| :----: | :--------: | :---: | :-----: | :--------: |
+|  **1** |  **Alta**  | **US01** | Como médico, quero enviar minha solicitação médica digitalmente para um sistema na Fusex. | 8 |
+|  **1** |  **Alta**  | **US02** | Como Beneficiário, quero fornecer digitalmente uma pré-guia para a Fusex, para ter mais agilidade na emissão da guia. | 5 |
+|  **1** |  **Alta** | **US03** | Como EG, quero emitir as guias com auxílio digital, para evitar erros de preenchimento.                                                               | 3 |
+|  **2** |  **Média**  | **US07** | Como OCS, quero receber a Guia e checar a validade dela, para não correr o risco de glosa por perda de validade. | 5 |
+|  **2** |  **Média**  | **US08** | Como ACM, quero receber digitalmente a guia, a fatura e o espelho para tornar o processo de lisura mais eficiente e menos sujeito a incorreções. | 13 |
+|  **2** |  **Média**  | **US09** | Como ACM, quero digitalizar o cruzamento dos dados recebidos da OCS com as condições contratadas, para ter um relatório de divergências automatizado. | 8 |
+|  **3** |  **Baixa**  | **US04** | Como EG, quero coletar aprovação das Guias com os responsáveis, para reduzir o tempo atual de validação para menos de três dias. | 5 |
+|  **3** |  **Baixa**  | **US05** | Como EG, quero notificar e enviar a Guia APROVADA digitalmente, para que o Beneficiário possa ter sua solicitação prontamente atendida. | 8 |
+|  **3** |  **Baixa**  | **US06** | Como Chefe / Médico, quero assinar as guias digitalmente, para tornar esse processo mais rápido e eficiente. | 5 |
 
-[Legendas](docs/Backlog/Legendas)
+[Legendas](docs/Backlog/legendas.md)
 
-### 📍 [DoR e DoD](docs/Backlog/DoR_e_DoD)
-### ✅ [Padrão de Commits](docs/Backlog/padrão-de-commits)
-### 🌿 [Git Flow](https://github.com/Eaglefatec/api03/blob/main/docs/git-flow.md)
+### 📍 [DoR e DoD](docs/Backlog/dor-e-dod.md)
+### ✅ [Padrão de Commits](docs/Backlog/padrao-de-commits.md)
+### 🌿 [Estratégia de Branches](/docs/Backlog/estrategia-de-branches.md)
 
 </details>
 
@@ -76,47 +95,78 @@ Com a centralização das informações, o sistema busca reduzir erros de preenc
 ## Cronograma de Sprints
 | Sprint | Período | Documentação | Demonstração | Status |
 |:---:|---|---|---|---|
-| 1 | 07/09 - 27/09 | [Ver Documentação](https://docs.google.com/document/d/1eZ3Eu4DxbGu6Xt57trghgvPsKqgVh6zzKEHZEWdSqEE/edit?usp=sharing) | <div align="center">[Ver Vídeo](https://youtu.be/8q4aP0abE3M)</div> | ✅ |
-| 2 | 05/10 - 25/10 | [Ver Documentação]() | <div align="center">[Ver Vídeo]()</div> | 🔒 TO DO |
-| 3 | 02/11 - 22/11 | [Ver Documentação]() | <div align="center">[Ver Vídeo]()</div> | 🔒 TO DO |
+| 1 | 07/09 - 27/09 | [Ver Documentação](docs/sprints/sprint-01) | <div align="center">[Ver Vídeo](https://youtu.be/bo2MY-XA9kM)</div> | ✅ |
+| 2 | 05/10 - 25/10 | [Ver Documentação](docs/sprints/sprint-02) | <div align="center">[Ver Vídeo](https://www.youtube.com/watch?v=26RdR4IOUng)</div> | ✅ |
+| 3 | 02/11 - 22/11 | [Ver Documentação](docs/sprints/sprint-03) | <div align="center">[Ver Vídeo]()</div> | 🔒 TO DO |
 </div>
 
 ---
 <a id="tecnologias-utilizadas"></a>
-## 💻 Tecnologias Utilizadas
+<div align="center">
 
-### 🎨 Frontend 
+## Tecnologias Utilizadas
+![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
+![Apache Maven](https://img.shields.io/badge/Apache%20Maven-%23C71A36.svg?style=for-the-badge&logo=Apache%20Maven&logoColor=white)
+![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+![MySQL](https://img.shields.io/badge/mysql-%234479A1.svg?style=for-the-badge&logo=mysql&logoColor=white)
+![IntelliJ IDEA](https://img.shields.io/badge/IntelliJ_IDEA-%23000000.svg?style=for-the-badge&logo=intellij-idea&logoColor=white)
+</div>
 
-> TO DO
+---
+<a id="estrutura-do-projeto"></a>
 
-### ⚙️ Backend & Dados
-<p>
-<img src="https://cdn.simpleicons.org/openjdk/ED8B00" height="32"/>  <!-- Java -->
-<img src="https://cdn.simpleicons.org/spring/6DB33F" height="31"/> <!-- Spring Boot -->
-<img src="https://cdn.simpleicons.org/mysql/4479A1" height="31"/>  <!-- MySQL -->
-<img src="https://cdn.simpleicons.org/docker/2496ED" height="31"/> <!-- Docker -->
-</p>
+## 📌 Estrutura do Projeto
 
-### 🛠️ Ferramentas & DevOps
-<p>
-<img src="https://cdn.simpleicons.org/git/F05032" height="32"/> <!-- Git -->
-<img src="https://cdn.simpleicons.org/github/4B4B4B" height="32"/> <!-- GitHub -->
-<img src="https://cdn.simpleicons.org/jira/0052CC" height="32"/> <!-- Jira -->
-<img src="https://cdn.simpleicons.org/excalidraw/6965DB" height="32"/> <!-- Excalidraw -->
+<details closed>
+<summary>
+ Estrutura
+</summary> <br />
 
-<!-- IntelliJ IDEA -->
-<a href="https://www.jetbrains.com/idea/">
-  <img src="https://resources.jetbrains.com/storage/products/intellij-idea/img/meta/intellij-idea_logo_300x300.png" height="31" alt="IntelliJ IDEA"/>
-</a>
-</p>
+```
+.
+├── api03-backend
+│  
+├── api03-frontend
+│   
+├── contexto
+│   
+├── docs
+│   ├── Backlog
+│   │   ├── dor-e-dod.md
+│   │   ├── estrategia-de-branches.md
+│   │   ├── legendas.md
+│   │   └── padrao-de-commits.md
+│   ├── sprints
+│   │   ├── sprint-01
+│   │   │   └── README.md
+│   │   ├── sprint-02
+│   │   │   └── README.md
+│   │   └── sprint-03
+│   │       └── README.md
+│   └── user-stories
+│       ├── US01.md
+│       ├── US02.md
+│       ├── US03.md
+│       ├── US04.md
+│       ├── US05.md
+│       ├── US06.md
+│       ├── US07.md
+│       ├── US08.md
+│       └── US09.md
+│
+├── modelos-importacao
+│   
+└── README.md
+```
+
+</details>
 
 ---
 
-<a id="manual-do-usuario"></a>
-## 📜 Manual do Usuário
+<a id="manuais"></a>
 
-**:link: Clique no link abaixo para visualizar o Manual do Usuário:**  
-> 📖 [Manual de Instalação](docs/manual_instalacao/README.md)
+## 📘 [Manual de Instalação](docs/sprints/sprint-02/manual-instalacao.md)
 
 ---
 
@@ -129,9 +179,8 @@ Com a centralização das informações, o sistema busca reduzir erros de preenc
 |-----------|-----------------|---------------|
 | Fernando Monteiro | Product Owner | <a href="https://github.com/fernandocosta45"><img src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a> <a href="https://www.linkedin.com/in/fernando-m-da-costa-818282401/"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"></a> |
 | Breno Cefas | Scrum Master | <a href="https://github.com/cefasbreno"><img src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a> <a href="https://www.linkedin.com/in/breno-cefas-7aa909271/"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"></a> |
-| Alessandro Cabral | Desenvolvedor | <a href="https://github.com/alessandrocabralfatec"><img src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a> <a href="https://www.linkedin.com/in/alessandro-augusto-ferreira-cabral-9b805553/"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"></a> |
-| Breno Andrade | Desenvolvedor | <a href="https://github.com/brenobsa"><img src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a> <a href="https://www.linkedin.com/in/breno-andrade-241a0521b/"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"></a> |
-| Erick Faria | Desenvolvedor | <a href="https://github.com/ErickvFaria"><img src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a> <a href="https://www.linkedin.com/in/érick-vinícius-79193b253?utm_source=share_via&utm_content=profile&utm_medium=member_ios"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"></a> |
-| João Pedro Barni | Desenvolvedor | <a href="https://github.com/jp-Barni"><img src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a> <a href="https://www.linkedin.com/in/joao-pedro-barni-lima/"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"></a> |
+| Breno Andrade | Desenvolvedor | <a href="https://github.com/brenobsa"><img src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a> <a href="https://www.linkedin.com/in/breno-andrade-241a0521b/"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white"></a> |
+| Erick Faria | Desenvolvedor | <a href="https://github.com/ErickvFaria"><img src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a> <a href="https://www.linkedin.com/in/érick-vinícius-79193b253?utm_source=share_via&utm_content=profile&utm_medium=member_ios"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white"></a> |
+| Matheus Ambrósio | Desenvolvedor | <a href="https://github.com/Froguie"><img src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a> <a href=""><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white"></a> |
 | Rodrigo Pereira | Desenvolvedor | <a href="https://github.com/ropcastr"><img src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a> <a href="https://www.linkedin.com/in/rpcastro/"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"></a> |
 </div>
