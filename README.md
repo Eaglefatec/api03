@@ -84,6 +84,7 @@ Padronização do recebimento via documentos em PDF importáveis (Fatura, Espelh
 ### 📍 [DoR e DoD](docs/Backlog/dor-e-dod.md)
 ### ✅ [Padrão de Commits](docs/Backlog/padrao-de-commits.md)
 ### 🌿 [Estratégia de Branches](/docs/Backlog/estrategia-de-branches.md)
+### 📋 [Detalhamento de User Stories](/docs/user-stories)
 
 </details>
 
