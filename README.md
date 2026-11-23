@@ -133,11 +133,16 @@ Padronização do recebimento via documentos em PDF importáveis (Fatura, Espelh
 ├── contexto
 │   
 ├── docs
+│   ├── assets
+│   │   └── images
 │   ├── Backlog
 │   │   ├── dor-e-dod.md
 │   │   ├── estrategia-de-branches.md
 │   │   ├── legendas.md
 │   │   └── padrao-de-commits.md
+│   ├── manuais
+│   │   ├── manual-instalacao.md
+│   │   └── manual-usuario.md
 │   ├── sprints
 │   │   ├── sprint-01
 │   │   │   └── README.md
