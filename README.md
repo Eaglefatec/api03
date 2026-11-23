@@ -98,7 +98,7 @@ Padronização do recebimento via documentos em PDF importáveis (Fatura, Espelh
 |:---:|---|---|---|---|
 | 1 | 07/09 - 27/09 | [Ver Documentação](docs/sprints/sprint-01) | <div align="center">[Ver Vídeo](https://youtu.be/bo2MY-XA9kM)</div> | ✅ |
 | 2 | 05/10 - 25/10 | [Ver Documentação](docs/sprints/sprint-02) | <div align="center">[Ver Vídeo](https://www.youtube.com/watch?v=26RdR4IOUng)</div> | ✅ |
-| 3 | 02/11 - 22/11 | [Ver Documentação](docs/sprints/sprint-03) | <div align="center">[Ver Vídeo]()</div> | 🔒 TO DO |
+| 3 | 02/11 - 22/11 | [Ver Documentação](docs/sprints/sprint-03) | <div align="center">[Ver Vídeo](https://youtu.be/1zH_wkdL8Ic)</div> | ✅ |
 </div>
 
 ---
@@ -167,7 +167,8 @@ Padronização do recebimento via documentos em PDF importáveis (Fatura, Espelh
 
 <a id="manuais"></a>
 
-## 📘 [Manual de Instalação](docs/sprints/sprint-02/manual-instalacao.md)
+## 📓 [Manual de Instalação](docs\manuais\manual-instalacao.md)
+## 📔 [Manual do Usuário](docs\manuais\manual-usuario.md)
 
 ---
 
